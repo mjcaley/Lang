@@ -1,35 +1,32 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <boost/variant/variant.hpp>
-#include <boost/variant/get.hpp>
-#include "Interpreter/ReferenceTable.hpp"
+#include "Interpreter/Types.hpp"
 
 
 int main()
 {
     using namespace Lang;
     
-    auto ref_table = ReferenceTable();
-    auto ref = ref_table.create<Integer>();
-    auto ref2 = ref;
+    auto integer = create<Integer>();
+    auto ref2 = integer;
     {
-        auto ref3 = ref;
+        auto ref3 = integer;
     }
-    std::cout << "Number of refs: " << ref.use_count() << std::endl;
-    std::cout << *ref << std::endl;
-    std::cout << *ref.get() << std::endl;
+    std::cout << "Number of integer refs: " << integer.use_count() << std::endl;
+    std::cout << "Dereference integer: " << *integer << std::endl;
+    std::cout << "Dereference integer get(): " << *integer.get() << std::endl;
     
-    auto r = std::make_shared<Integer>(3);
-    std::cout << *r << std::endl;
+    auto integer2 = create<Integer>(3);
+    std::cout << "integer2 with constructor argument: " << *integer2 << std::endl;
     
-    ref_table.create<Integer>();
-    ref_table.create<Integer>();
-    ref_table.create<Integer>();
     
-    std::cout << ref_table.size() << std::endl;
+    auto dbl = create<Double>(4.2);
+    std::cout << "double: " << *dbl << std::endl;
     
-    std::cout << ref_table.size() << std::endl;
+    
+    auto str = create<String>("Test string");
+    std::cout << "string: " << *str << std::endl;
     
     
     return 0;

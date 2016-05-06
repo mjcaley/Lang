@@ -7,24 +7,11 @@
 
 namespace Lang
 {
-    template<typename T>
-    struct Reference
+    template<typename T, typename ... Arg>
+    std::shared_ptr<T> create(Arg... arg)
     {
-        Reference() {};
-        template<typename Arg>
-        Reference(Arg arg) { data.set(arg); };
-        
-        unsigned getRefs() const { return refs; };
-        unsigned incrementRef() { return ++refs; };
-        unsigned decrementRef() { return --refs; };
-        
-        
-        
-        T data;
-        
-    private:
-        unsigned refs { 0 };
-    };
+        return std::make_shared<T>(arg...);
+    }
     
     enum class LangType
     {
@@ -69,7 +56,6 @@ namespace Lang
     {
         Integer() = default;
         Integer(int i) { value = i; };
-        ~Integer() { std::cout << "Integer dtor" << std::endl; };
         
         long& get() override { return value; };
         void set(long i) override { value = i; };
