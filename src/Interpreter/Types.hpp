@@ -18,12 +18,7 @@ namespace Lang
         unsigned incrementRef() { return ++refs; };
         unsigned decrementRef() { return --refs; };
         
-        template<typename S>
-        friend std::ostream& operator<<(std::ostream& os, const S& obj)
-        {
-            os << obj.data.toString();
-            return os;
-        };
+        
         
         T data;
         
@@ -31,7 +26,7 @@ namespace Lang
         unsigned refs { 0 };
     };
     
-    enum class LangType : int
+    enum class LangType
     {
         INTEGER,    INT = INTEGER,
         DOUBLE,     DBL = DOUBLE,
@@ -44,7 +39,8 @@ namespace Lang
     template <typename T>
     struct Type
     {
-        virtual T get() const = 0;
+        virtual ~Type() = default;
+        
         virtual T& get() = 0;
         virtual void set(T) = 0;
         virtual LangType getType() const = 0;
@@ -54,17 +50,27 @@ namespace Lang
         virtual T operator()() { return get(); };
         virtual void operator()(T v) { set(v); };
         
-        virtual bool operator==(const T& obj) const { return get() == obj; };
-        virtual bool operator!=(const T& obj) const { return get() != obj; };
-        virtual bool operator< (const T& obj) const { return get() <  obj; };
-        virtual bool operator> (const T& obj) const { return get() >  obj; };
-        virtual bool operator<=(const T& obj) const { return get() <= obj; };
-        virtual bool operator>=(const T& obj) const { return get() >= obj; };
+        virtual bool operator==(const T& obj) { return get() == obj; };
+        virtual bool operator!=(const T& obj) { return get() != obj; };
+        virtual bool operator< (const T& obj) { return get() <  obj; };
+        virtual bool operator> (const T& obj) { return get() >  obj; };
+        virtual bool operator<=(const T& obj) { return get() <= obj; };
+        virtual bool operator>=(const T& obj) { return get() >= obj; };
+        
+        template<typename S>
+        friend std::ostream& operator<<(std::ostream& os, const S& obj)
+        {
+            os << obj.toString();
+            return os;
+        };
     };
     
     struct Integer : public Type<long>
     {
-        long get() const override { return value; };
+        Integer() = default;
+        Integer(int i) { value = i; };
+        ~Integer() { std::cout << "Integer dtor" << std::endl; };
+        
         long& get() override { return value; };
         void set(long i) override { value = i; };
         LangType getType() const override { return LangType::INTEGER; };
@@ -75,23 +81,26 @@ namespace Lang
         long operator++(int) { return value++; };
         long operator--(int) { return value--; };
         template<typename T>
-        long operator+(const T& obj) const { return value + obj; };
+        long operator+(const T& obj) { return value + obj; };
         template<typename T>
-        long operator-(const T& obj) const { return value - obj; };
+        long operator-(const T& obj) { return value - obj; };
         template<typename T>
-        long operator*(const T& obj) const { return value * obj; };
+        long operator*(const T& obj) { return value * obj; };
         template<typename T>
-        long operator/(const T& obj) const { return value / obj; };
+        long operator/(const T& obj) { return value / obj; };
         template<typename T>
-        long operator%(const T& obj) const { return value % obj; };
+        long operator%(const T& obj) { return value % obj; };
         
     private:
         long value { 0 };
     };
+    using spInteger = std::shared_ptr<Integer>;
     
     struct Double : public Type<double>
     {
-        double get() const override { return value; };
+        Double() = default;
+        Double(double d) { value = d; };
+        
         double& get() override { return value; };
         void set(double d) override { value = d; };
         LangType getType() const override { return LangType::DOUBLE; };
@@ -102,23 +111,26 @@ namespace Lang
         double operator++(int) { return value++; };
         double operator--(int) { return value--; };
         template<typename T>
-        double operator+(const T& obj) const { return value + obj; };
+        double operator+(const T& obj) { return value + obj; };
         template<typename T>
-        double operator-(const T& obj) const { return value - obj; };
+        double operator-(const T& obj) { return value - obj; };
         template<typename T>
-        double operator*(const T& obj) const { return value * obj; };
+        double operator*(const T& obj) { return value * obj; };
         template<typename T>
-        double operator/(const T& obj) const { return value / obj; };
+        double operator/(const T& obj) { return value / obj; };
         template<typename T>
-        double operator%(const T& obj) const { return value % obj; };
+        double operator%(const T& obj) { return value % obj; };
         
     private:
         double value { 0.0 };
     };
+    using spDouble = std::shared_ptr<Double>;
     
     struct String : public Type<std::string>
     {
-        std::string get() const override { return value; };
+        String() = default;
+        String(std::string s) { value = s; };
+        
         std::string& get() override { return value; };
         void set(std::string s) override { value = s; };
         LangType getType() const override { return LangType::STRING; };
@@ -127,14 +139,15 @@ namespace Lang
     private:
         std::string value;
     };
+    using spString = std::shared_ptr<String>;
     
     // struct Struct {};
     //
     // struct Trait {};
-    
      
     struct Function;
-    using Value = boost::variant< Reference<Integer>, Reference<Double>, Reference<String> >;  // Figure out how to add Function here
+    using spFunction = std::shared_ptr<Function>;
+    using Value = boost::variant< spInteger, spDouble, spString, spFunction >;
     using Parameter = std::tuple<std::string, Value>;
         
     struct FunctionDef
@@ -147,7 +160,6 @@ namespace Lang
     
     struct Function : public Type<FunctionDef>
     {
-        FunctionDef get() const override { return value; };
         FunctionDef& get() override { return value; };
         void set(FunctionDef f) override { value = f; };
         LangType getType() const override { return LangType::FUNCTION; };
