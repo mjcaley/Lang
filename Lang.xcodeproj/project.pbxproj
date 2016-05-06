@@ -58,6 +58,7 @@
 		27AA0AB81CDA3E3B0056DBCD /* Interpreter2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Interpreter2; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AA0ABF1CDA3E4D0056DBCD /* main3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main3.cpp; sourceTree = "<group>"; };
 		27AA0AC21CDA672B0056DBCD /* ReferenceTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReferenceTable.hpp; sourceTree = "<group>"; };
+		27C1A0551CDD32BE00BB8B83 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		27F9D3011CD149CF00776417 /* Scope.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scope.hpp; sourceTree = "<group>"; };
 		27F9D3021CD14B2200776417 /* LangObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangObject.hpp; sourceTree = "<group>"; };
 		27FD22421CCFA47200DA931E /* accumulators.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = accumulators.hpp; sourceTree = "<group>"; };
@@ -29737,6 +29738,7 @@
 				27FDEED51CCF9FB000DA931E /* include */,
 				27FDEED41CCF9F5300DA931E /* src */,
 				27FDEECD1CCF9F3900DA931E /* Products */,
+				27C1A0551CDD32BE00BB8B83 /* .gitignore */,
 			);
 			sourceTree = "<group>";
 		};
