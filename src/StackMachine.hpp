@@ -81,6 +81,7 @@ namespace Lang
         using x3::symbols;
         
         using x3::_val;
+        using x3::_attr;
         
         const symbols<int32_t> nullary_sym
         {
@@ -104,17 +105,16 @@ namespace Lang
         
         
         x3::rule<class operand, int32_t> const operand("operand");
-        x3::rule<class nullary_op, std::vector<int32_t>> const nullary_op("nullary_op");
-        x3::rule<class unary_op, std::vector<int32_t>> const unary_op("unary_op");
-        x3::rule<class program, std::vector<std::vector<int32_t>>> const program("program");
+        x3::rule<class nullary_op, int32_t> const nullary_op("nullary_op");
+        x3::rule<class unary_op, int32_t> const unary_op("unary_op");
+        x3::rule<class program, std::vector<int32_t>> const program("program");
         
-        auto const nullary_hit = [](auto& ctx) { std::cout << "nullary hit" << std::endl; };
-        auto const unary_hit = [](auto& ctx) { std::cout << "unary hit" << std::endl; };
+        auto const push = [](auto& ctx) { ;/*std::cout << _attr(ctx) << std::endl;*/ };
         
         auto const operand_def = int_;
-        auto const nullary_op_def = *(nullary_sym);
-        auto const unary_op_def = *(unary_sym >> operand);
-        auto const program_def = *( nullary_op[nullary_hit] | unary_op[unary_hit] );
+        auto const nullary_op_def = nullary_sym;
+        auto const unary_op_def = unary_sym;
+        auto const program_def = +( nullary_op | (unary_op | operand) );
         
         BOOST_SPIRIT_DEFINE(operand, nullary_op, unary_op, program);
     };

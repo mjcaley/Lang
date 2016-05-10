@@ -202,46 +202,59 @@ void StackMachine::print()
 int main()
 {
     auto sm = StackMachine();
-    sm.loadProgram( {
-        PUSH, 10, PUSH, 16, ADD,    // 10+16
-        PRNT,
-        PUSH, 60, PUSH, 18, SUB,    // 60-18
-        PRNT,
-        PUSH, 4, PUSH, 3, MUL,      // 4*3
-        PRNT,
-        JMP, 26,                    // Jump to address 23
-        0, 0, 0, 0, 0, 0,           // Garbage data
-        PUSH, 12, PUSH, 3, DIV,     // 12/3
-        PRNT,
-        PUSH, 11, PUSH, 2, MOD,     // 11%2
-        PRNT,
-        PUSH, 32, STORE, 0,         // Save 32 to memory address 0
-        LOAD, 0, PRNT,              // Load from memory address 0 and print
-        HALT                        // Halt
-    } );
+//    sm.loadProgram( {
+//        PUSH, 10, PUSH, 16, ADD,    // 10+16
+//        PRNT,
+//        PUSH, 60, PUSH, 18, SUB,    // 60-18
+//        PRNT,
+//        PUSH, 4, PUSH, 3, MUL,      // 4*3
+//        PRNT,
+//        JMP, 26,                    // Jump to address 23
+//        0, 0, 0, 0, 0, 0,           // Garbage data
+//        PUSH, 12, PUSH, 3, DIV,     // 12/3
+//        PRNT,
+//        PUSH, 11, PUSH, 2, MOD,     // 11%2
+//        PRNT,
+//        PUSH, 32, STORE, 0,         // Save 32 to memory address 0
+//        LOAD, 0, PRNT,              // Load from memory address 0 and print
+//        HALT                        // Halt
+//    } );
     //sm.run();
     
     //std::string program = "PUSH 3 PUSH 4 ADD HALT";
     
-    std::string program = "PUSH 3 PUSH 4 JMP 233";
+    std::string program =
+    "PUSH 10 PUSH 16 ADD"
+    "PRNT"
+    "PUSH 60 PUSH 18 SUB"
+    "PRNT"
+    "PUSH 4 PUSH 3 MUL"
+    "PRNT"
+    "JMP 26"
+    "0 0 0 0 0 0"
+    "PUSH 12 PUSH 3 DIV"
+    "PRNT"
+    "PUSH 11 PUSH 2 MOD"
+    "PRNT"
+    "PUSH 32 STORE 0"
+    "LOAD 0 PRNT"
+    "HALT";
+    
     auto iter = program.begin();
     auto end = program.end();
-    //std::vector<std::vector<int32_t>> result;
     std::vector<int32_t> result;
-    auto& grammar = sm_grammar::unary_op;
+    auto& grammar = sm_grammar::program;
     
     bool r = boost::spirit::x3::phrase_parse(iter, end, grammar, boost::spirit::x3::space, result);
     
     if (r)
     {
-        std::cout << "Success\n";
-        
-        for (auto& i : result)
-            std::cout << i << std::endl;
+        sm.loadProgram(result);
+        sm.run();
     }
     else
     {
-        std::cout << "Failed" << std::endl;
+        std::cout << "Compile failed" << std::endl;
     }
     
     return 0;
