@@ -149,27 +149,40 @@ namespace Lang
         using x3::_val;
         using x3::symbols;
         
-        const symbols<int32_t> instruction_set
+        const symbols<int32_t> nullary_sym
         {
             { "HALT", HALT },
-            { "PUSH", PUSH },
             { "POP", POP },
             { "ADD", ADD },
             { "SUB", SUB },
             { "MUL", MUL },
             { "DIV", DIV },
             { "MOD", MOD },
-            { "JMP", JMP },
-            { "LOAD", LOAD },
-            { "STORE", STORE },
             { "PRNT", PRNT }
         };
         
-        x3::rule<class operand, std::vector<boost::variant<int32_t, std::string>>> const operand("operand");
-        x3::rule<class instruction, int32_t> const instruction("instruction");
+        const symbols<int32_t> unary_sym
+        {
+            { "PUSH", PUSH },
+            { "JMP", JMP },
+            { "LOAD", LOAD },
+            { "STORE", STORE }
+        };
+        
+        
+        x3::rule<class operand, int32_t> const operand("operand");
+        x3::rule<class nullary_op, int32_t> const nullary_op("nullary_op");
+        x3::rule<class unary_op, int32_t> const unary_op("unary_op");
+        x3::rule<class program, std::vector<int32_t>> const program("program");
+        //x3::rule<class instruction, int32_t> const instruction("instruction");
         //x3::rule<class program, sm_ast::program> const program("program");
         
-        auto const operand_def = *(string("PUSH") | int_);
+        auto const operand_def = int_;
+        auto const nullary_op_def = nullary_sym;
+        auto const unary_op_def = unary_sym >> operand;
+        auto const program_def = ( nullary_op | unary_op ) >> *( nullary_op | unary_op );
+        
+        
         auto const instruction_def = *(
             string("HALT")                 |
             string("PUSH")     >> operand  |
@@ -186,7 +199,8 @@ namespace Lang
         
 //        auto const program_def = *instruction;
         
-        BOOST_SPIRIT_DEFINE(operand, instruction/*, program*/);
+        //BOOST_SPIRIT_DEFINE(operand/*, instruction/*, program*/);
+        BOOST_SPIRIT_DEFINE(operand, nullary_op, unary_op, program);
     };
 }
 
