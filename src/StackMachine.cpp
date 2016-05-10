@@ -223,11 +223,12 @@ int main()
     
     //std::string program = "PUSH 3 PUSH 4 ADD HALT";
     
-    std::string program = "PUSH 3 PUSH 12 ADD HALT";
+    std::string program = "PUSH 3 PUSH 4 JMP 233";
     auto iter = program.begin();
     auto end = program.end();
+    //std::vector<std::vector<int32_t>> result;
     std::vector<int32_t> result;
-    auto& grammar = sm_grammar::program;
+    auto& grammar = sm_grammar::unary_op;
     
     bool r = boost::spirit::x3::phrase_parse(iter, end, grammar, boost::spirit::x3::space, result);
     
