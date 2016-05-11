@@ -78,16 +78,34 @@ namespace Lang
     {
         namespace x3 = boost::spirit::x3;
         
-        using operand = int32_t;
-        using nullary = int32_t;
-        using unary = std::pair<int32_t, int32_t>;
+        struct operand
+        {
+            int32_t value;
+        };
         
-        struct instruction : x3::variant< unary, nullary >
+        struct instruction
+        {
+            int32_t value;
+        };
+        
+        struct nullary
+        {
+            instruction i;
+        };
+        
+        struct unary
+        {
+            instruction i;
+            operand o;
+        };
+        
+        struct instruction_key_value : x3::variant< unary, nullary >
         {
             using base_type::base_type;
             using base_type::operator=;
         };
         
+        using program = std::vector<instruction_key_value>;
     }
     
     namespace sm_ast
@@ -96,18 +114,18 @@ namespace Lang
         
         struct instruction_visitor : public boost::static_visitor<std::vector<int32_t>>
         {
-            std::vector<int32_t> operator()(std::pair<int32_t, int32_t>& unary_op) const
+            std::vector<int32_t> operator()(sm_ast::unary& unary_op) const
             {
-                return { unary_op.first, unary_op.second };
+                return { unary_op.i.value, unary_op.o.value };
             }
             
-            std::vector<int32_t> operator()(int32_t nullary_op) const
+            std::vector<int32_t> operator()(sm_ast::nullary& nullary_op) const
             {
-                return { nullary_op };
+                return { nullary_op.i.value };
             }
         };
         
-        std::vector<int32_t> encode_variant(std::vector<instruction>& instructions)
+        std::vector<int32_t> encode_variant(sm_ast::program& instructions)
         {
             std::vector<int32_t> finished_code;
             for (auto& i : instructions)
@@ -152,17 +170,30 @@ namespace Lang
         
         
         x3::rule<class operand, sm_ast::operand> const operand("operand");
-        //x3::rule<class nullary_op, sm_ast::instruction> const nullary_op("nullary_op");
-        //x3::rule<class unary_op, sm_ast::instruction> const unary_op("unary_op");
         x3::rule<class nullary_op, sm_ast::nullary> const nullary_op("nullary_op");
         x3::rule<class unary_op, sm_ast::unary > const unary_op("unary_op");
-        x3::rule<class program, std::vector<sm_ast::instruction> > const program("program");
+        x3::rule<class program, sm_ast::program > const program("program");
         
         auto const operand_def = int_;
         auto const nullary_op_def = nullary_sym;
         auto const unary_op_def = unary_sym >> operand;
-        auto const program_def = +( nullary_op | unary_op );
+        auto const program_def = *( (nullary_op | unary_op ) >> ';' );
         
         BOOST_SPIRIT_DEFINE(operand, nullary_op, unary_op, program);
     };
 }
+
+BOOST_FUSION_ADAPT_STRUCT(Lang::sm_ast::operand, (int32_t, value));
+
+BOOST_FUSION_ADAPT_STRUCT(Lang::sm_ast::instruction, (int32_t, value));
+
+BOOST_FUSION_ADAPT_STRUCT(
+                          Lang::sm_ast::nullary,
+                          (Lang::sm_ast::instruction, i)
+                          );
+
+BOOST_FUSION_ADAPT_STRUCT(
+                          Lang::sm_ast::unary,
+                          (Lang::sm_ast::instruction, i),
+                          (Lang::sm_ast::operand, o)
+                          );
