@@ -4,7 +4,7 @@
 using namespace StackMachine;
 
 
-void VM::run()
+bool VM::run()
 {
     running = true;
     while(running)
@@ -67,9 +67,11 @@ void VM::run()
                 break;
             default:
                 running = false;
+                return false;
                 break;
         }
     }
+    return true;
 }
 
 void VM::add()
@@ -196,4 +198,3 @@ void VM::print()
         std::cout << "PRNT" << std::endl;
     }
 }
-

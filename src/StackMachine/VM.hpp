@@ -41,7 +41,7 @@ namespace StackMachine
         
         void loadProgram(std::vector<int32_t> p) { program = p; };
         
-        void run();
+        bool run();
         
     private:
         unsigned ip { 0 };  // Instruction pointer
