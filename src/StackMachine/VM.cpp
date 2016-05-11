@@ -1,16 +1,14 @@
-#include "StackMachine.hpp"
+#include "VM.hpp"
 #include <iostream>
-#include <boost/variant.hpp>
 
-using namespace Lang;
+using namespace StackMachine;
 
 
-void StackMachine::run()
+void VM::run()
 {
     running = true;
     while(running)
     {
-        //std::cout << "ip @ " << ip << std::endl;
         switch(program[ip])
         {
             case HALT:
@@ -74,7 +72,7 @@ void StackMachine::run()
     }
 }
 
-void StackMachine::add()
+void VM::add()
 {
     const auto operand1 = stack.top();
     stack.pop();
@@ -89,7 +87,7 @@ void StackMachine::add()
     }
 }
 
-void StackMachine::subtract()
+void VM::subtract()
 {
     const auto operand1 = stack.top();
     stack.pop();
@@ -104,7 +102,7 @@ void StackMachine::subtract()
     }
 }
 
-void StackMachine::multiply()
+void VM::multiply()
 {
     const auto operand1 = stack.top();
     stack.pop();
@@ -119,7 +117,7 @@ void StackMachine::multiply()
     }
 }
 
-void StackMachine::divide()
+void VM::divide()
 {
     const auto operand1 = stack.top();
     stack.pop();
@@ -134,7 +132,7 @@ void StackMachine::divide()
     }
 }
 
-void StackMachine::modulus()
+void VM::modulus()
 {
     const auto operand1 = stack.top();
     stack.pop();
@@ -149,7 +147,7 @@ void StackMachine::modulus()
     }
 }
 
-void StackMachine::jump()
+void VM::jump()
 {
     ++ip;   // Advance to data
     ip = program[ip];
@@ -160,7 +158,7 @@ void StackMachine::jump()
     }
 }
 
-void StackMachine::load()
+void VM::load()
 {
     ++ip;   // Advance to data
     stack.push( memory[program[ip]] );
@@ -172,7 +170,7 @@ void StackMachine::load()
     }
 }
 
-void StackMachine::store()
+void VM::store()
 {
     ++ip;   // Advance to data
     const auto value = stack.top();
@@ -186,7 +184,7 @@ void StackMachine::store()
     }
 }
 
-void StackMachine::print()
+void VM::print()
 {
     const auto operand = stack.top();
     stack.pop();
@@ -199,63 +197,3 @@ void StackMachine::print()
     }
 }
 
-int main()
-{
-    auto sm = StackMachine();
-//    sm.loadProgram( {
-//        PUSH, 10, PUSH, 16, ADD,    // 10+16
-//        PRNT,
-//        PUSH, 60, PUSH, 18, SUB,    // 60-18
-//        PRNT,
-//        PUSH, 4, PUSH, 3, MUL,      // 4*3
-//        PRNT,
-//        JMP, 26,                    // Jump to address 23
-//        0, 0, 0, 0, 0, 0,           // Garbage data
-//        PUSH, 12, PUSH, 3, DIV,     // 12/3
-//        PRNT,
-//        PUSH, 11, PUSH, 2, MOD,     // 11%2
-//        PRNT,
-//        PUSH, 32, STORE, 0,         // Save 32 to memory address 0
-//        LOAD, 0, PRNT,              // Load from memory address 0 and print
-//        HALT                        // Halt
-//    } );
-    //sm.run();
-    
-    //std::string program = "PUSH 3 PUSH 4 ADD HALT";
-    
-    std::string program =
-    "PUSH 10; PUSH 16; ADD;"
-    "PRNT;"
-    "PUSH 60; PUSH 18; SUB;"
-    "PRNT;"
-    "PUSH 4; PUSH 3; MUL;"
-    "PRNT;"
-    "PUSH 12; PUSH 3; DIV;"
-    "PRNT;"
-    "PUSH 11; PUSH 2; MOD;"
-    "PRNT;"
-    "PUSH 32; STORE 0;"
-    "LOAD 0; PRNT;"
-    "HALT;";
-    
-    auto iter = program.begin();
-    auto end = program.end();
-    sm_ast::program ast;
-    auto& grammar = sm_grammar::program;
-    
-    bool r = boost::spirit::x3::phrase_parse(iter, end, grammar, boost::spirit::x3::space, ast);
-    
-    if (r)
-    {
-        std::cout << "Compile successful" << std::endl;
-        auto code = sm_ast::encode_variant(ast);
-        sm.loadProgram(code);
-        sm.run();
-    }
-    else
-    {
-        std::cout << "Compile failed" << std::endl;
-    }
-    
-    return 0;
-}

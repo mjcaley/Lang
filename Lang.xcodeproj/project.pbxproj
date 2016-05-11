@@ -11,8 +11,10 @@
 		270971661CD297F300D0FE7B /* Interpreter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270971621CD2428200D0FE7B /* Interpreter.cpp */; };
 		270971681CD29AD200D0FE7B /* Scope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270971671CD29AD200D0FE7B /* Scope.cpp */; };
 		2709716A1CD2A27E00D0FE7B /* LangObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 270971691CD2A27E00D0FE7B /* LangObject.cpp */; };
-		275625BA1CE117E0008A8DF6 /* StackMachine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275625AD1CE10EAA008A8DF6 /* StackMachine.cpp */; };
 		27AA0AC01CDA3E4D0056DBCD /* main3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27AA0ABF1CDA3E4D0056DBCD /* main3.cpp */; };
+		27B58A321CE37BCD00911C79 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B58A2F1CE37BCD00911C79 /* main.cpp */; };
+		27B58A331CE37F0900911C79 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B58A2F1CE37BCD00911C79 /* main.cpp */; };
+		27B58A341CE37F1200911C79 /* VM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275625AD1CE10EAA008A8DF6 /* VM.cpp */; };
 		27FDEED71CCFA06800DA931E /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27FDEED61CCFA06800DA931E /* main.cpp */; };
 /* End PBXBuildFile section */
 
@@ -63,15 +65,18 @@
 		270971631CD2428200D0FE7B /* Interpreter.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Interpreter.hpp; sourceTree = "<group>"; };
 		270971671CD29AD200D0FE7B /* Scope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Scope.cpp; sourceTree = "<group>"; };
 		270971691CD2A27E00D0FE7B /* LangObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangObject.cpp; sourceTree = "<group>"; };
-		275625AD1CE10EAA008A8DF6 /* StackMachine.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = StackMachine.cpp; sourceTree = "<group>"; };
-		275625AE1CE10EAA008A8DF6 /* StackMachine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StackMachine.hpp; sourceTree = "<group>"; };
+		275625AD1CE10EAA008A8DF6 /* VM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
+		275625AE1CE10EAA008A8DF6 /* VM.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VM.hpp; sourceTree = "<group>"; };
 		275625B31CE113E9008A8DF6 /* StackMachine */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = StackMachine; sourceTree = BUILT_PRODUCTS_DIR; };
-		275625B51CE113E9008A8DF6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		27667B441CD39DD100C22BB5 /* ObjectContainers.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ObjectContainers.hpp; sourceTree = "<group>"; };
 		27AA0AB31CDA37550056DBCD /* Types.hpp */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.cpp.h; path = Types.hpp; sourceTree = "<group>"; };
 		27AA0AB81CDA3E3B0056DBCD /* Interpreter2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Interpreter2; sourceTree = BUILT_PRODUCTS_DIR; };
 		27AA0ABF1CDA3E4D0056DBCD /* main3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main3.cpp; sourceTree = "<group>"; };
 		27AA0AC21CDA672B0056DBCD /* ReferenceTable.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ReferenceTable.hpp; sourceTree = "<group>"; };
+		27B58A2F1CE37BCD00911C79 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		27B58A301CE37BCD00911C79 /* Grammar.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Grammar.hpp; sourceTree = "<group>"; };
+		27B58A311CE37BCD00911C79 /* AST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AST.hpp; sourceTree = "<group>"; };
+		27B58A351CE3822D00911C79 /* StackMachine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StackMachine.hpp; sourceTree = "<group>"; };
 		27C1A0551CDD32BE00BB8B83 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		27F9D3011CD149CF00776417 /* Scope.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scope.hpp; sourceTree = "<group>"; };
 		27F9D3021CD14B2200776417 /* LangObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangObject.hpp; sourceTree = "<group>"; };
@@ -11124,10 +11129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		275625B41CE113E9008A8DF6 /* StackMachine */ = {
+		27B58A2E1CE37B2600911C79 /* StackMachine */ = {
 			isa = PBXGroup;
 			children = (
-				275625B51CE113E9008A8DF6 /* main.cpp */,
+				27B58A2F1CE37BCD00911C79 /* main.cpp */,
+				27B58A301CE37BCD00911C79 /* Grammar.hpp */,
+				27B58A311CE37BCD00911C79 /* AST.hpp */,
+				275625AD1CE10EAA008A8DF6 /* VM.cpp */,
+				275625AE1CE10EAA008A8DF6 /* VM.hpp */,
+				27B58A351CE3822D00911C79 /* StackMachine.hpp */,
 			);
 			path = StackMachine;
 			sourceTree = "<group>";
@@ -29766,7 +29776,6 @@
 			children = (
 				27FDEED51CCF9FB000DA931E /* include */,
 				27FDEED41CCF9F5300DA931E /* src */,
-				275625B41CE113E9008A8DF6 /* StackMachine */,
 				27FDEECD1CCF9F3900DA931E /* Products */,
 				27C1A0551CDD32BE00BB8B83 /* .gitignore */,
 			);
@@ -29786,12 +29795,11 @@
 		27FDEED41CCF9F5300DA931E /* src */ = {
 			isa = PBXGroup;
 			children = (
+				27B58A2E1CE37B2600911C79 /* StackMachine */,
 				27F9D3001CD149B000776417 /* Interpreter */,
 				27FDEED61CCFA06800DA931E /* main.cpp */,
 				270971601CD2412D00D0FE7B /* main2.cpp */,
 				27AA0ABF1CDA3E4D0056DBCD /* main3.cpp */,
-				275625AD1CE10EAA008A8DF6 /* StackMachine.cpp */,
-				275625AE1CE10EAA008A8DF6 /* StackMachine.hpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -29933,7 +29941,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				275625BA1CE117E0008A8DF6 /* StackMachine.cpp in Sources */,
+				27B58A341CE37F1200911C79 /* VM.cpp in Sources */,
+				27B58A331CE37F0900911C79 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -29949,6 +29958,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27B58A321CE37BCD00911C79 /* main.cpp in Sources */,
 				27FDEED71CCFA06800DA931E /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
