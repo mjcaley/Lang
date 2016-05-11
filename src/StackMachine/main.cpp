@@ -1,8 +1,48 @@
 #include "StackMachine.hpp"
+#include <algorithm>
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
+#include <iterator>
+#include <string>
 #include <utility>
+#include <boost/algorithm/string/predicate.hpp>
 
+
+struct Args
+{
+    std::vector<std::string> filenames;
+    bool help;
+};
+
+Args parse_args(int argc, char* argv[])
+{
+    using namespace boost::algorithm;
+    
+    if (argc > 3 || argc <= 1)
+    {
+        // Wrong number of arguments
+        std::cout << "Error: Incorrect number of  arguments\n";
+        std::cout << "Usage: StackMachine SRC DEST" << std::endl;
+        std::exit(-1);
+    }
+    
+    Args args;
+    
+    for (int i = 1; i < argc; i++)
+    {
+        if (equals(argv[i], "--help"))
+        {
+            args.help = true;
+        }
+        else
+        {
+            args.filenames.emplace_back(argv[i]);
+        }
+    }
+    
+    return args;
+}
 
 std::pair<bool, std::vector<int32_t>> compile(std::string& program)
 {
@@ -29,38 +69,65 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
 int main(int argc, char* argv[])
 {
     using namespace StackMachine;
+    namespace x3 = boost::spirit::x3;
     
-    std::string program =
-    "PUSH 10; PUSH 16; ADD;"
-    "PRNT;"
-    "PUSH 60; PUSH 18; SUB;"
-    "PRNT;"
-    "PUSH 4; PUSH 3; MUL;"
-    "PRNT;"
-    "PUSH 12; PUSH 3; DIV;"
-    "PRNT;"
-    "PUSH 11; PUSH 2; MOD;"
-    "PRNT;"
-    "PUSH 32; STORE 0;"
-    "LOAD 0; PRNT;"
-    "HALT;";
-    
-    auto vm = VM();
-    
+    Args args = parse_args(argc, argv);
+    if (args.filenames.size() == 1)
     {
-        auto code = compile(program);
-        if (code.first)
+        std::cout << "Binary file, running" << std::endl;
+        
+        std::ifstream in(args.filenames[0], std::ios::binary);
+        std::vector<int32_t> program;
+        if (in.is_open())
         {
-            vm.loadProgram(code.second);
+            std::vector<char> buffer (
+                                      (std::istreambuf_iterator<char>(in)),
+                                      (std::istreambuf_iterator<char>())
+                                      );
+            program.insert( program.end(), buffer.begin(), buffer.end() );
         }
-        else
-        {
-            std::cout << "Error: Failed to compile" << std::endl;
-            std::exit(-1);
-        }
+        
+        auto vm = VM();
+        vm.loadProgram(program);
+        vm.run();
+        
+        return 0;
     }
-    
-    vm.run();
-
-    return 0;
+    else if (args.filenames.size() == 2)
+    {
+        std::cout << "Text file, compiling" << std::endl;
+        
+        std::pair<bool, std::vector<int32_t>> dest;
+        
+        {
+            std::ifstream in(args.filenames[0]);
+            in.unsetf(std::ios::skipws);
+            
+            std::string src;
+            if (in.is_open())
+            {
+                std::ostringstream contents;
+                contents << in.rdbuf();
+                src = contents.str();
+            }
+            
+            dest = compile(src);
+        }
+        
+        std::ofstream out(args.filenames[1], std::ios::binary);
+        if (out.is_open() && dest.first)
+        {
+            for (auto& i : dest.second)
+            {
+                out.put(i);
+            }
+        }
+        
+        return 0;
+    }
+    else
+    {
+        // display help
+        return 0;
+    }
 }
