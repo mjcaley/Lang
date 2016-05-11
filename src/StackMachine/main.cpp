@@ -1,13 +1,34 @@
 #include "StackMachine.hpp"
+#include <cstdlib>
 #include <iostream>
+#include <utility>
 
 
-int main()
+std::pair<bool, std::vector<int32_t>> compile(std::string& program)
 {
     using namespace StackMachine;
     namespace x3 = boost::spirit::x3;
     
-    auto vm = VM();
+    auto iter = program.begin();
+    auto end = program.end();
+    AST::Program ast;
+    auto& grammar = Grammar::program;
+    
+    bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+    
+    if (result)
+    {
+        return std::make_pair(result, AST::generate_byte_code(ast) );
+    }
+    else
+    {
+        return std::make_pair(result, std::vector<int32_t>() );
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    using namespace StackMachine;
     
     std::string program =
     "PUSH 10; PUSH 16; ADD;"
@@ -24,24 +45,22 @@ int main()
     "LOAD 0; PRNT;"
     "HALT;";
     
-    auto iter = program.begin();
-    auto end = program.end();
-    AST::Program ast;
-    auto& grammar = Grammar::program;
+    auto vm = VM();
     
-    bool r = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    
-    if (r)
     {
-        std::cout << "Compile successful" << std::endl;
-        auto code = AST::generate_byte_code(ast);
-        vm.loadProgram(code);
-        vm.run();
-    }
-    else
-    {
-        std::cout << "Compile failed" << std::endl;
+        auto code = compile(program);
+        if (code.first)
+        {
+            vm.loadProgram(code.second);
+        }
+        else
+        {
+            std::cout << "Error: Failed to compile" << std::endl;
+            std::exit(-1);
+        }
     }
     
+    vm.run();
+
     return 0;
 }
