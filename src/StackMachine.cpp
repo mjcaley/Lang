@@ -242,14 +242,15 @@ int main()
     
     auto iter = program.begin();
     auto end = program.end();
-    std::vector<int32_t> result;
+    std::vector<sm_ast::instruction> result;
     auto& grammar = sm_grammar::program;
     
     bool r = boost::spirit::x3::phrase_parse(iter, end, grammar, boost::spirit::x3::space, result);
     
     if (r)
     {
-        sm.loadProgram(result);
+        auto code = sm_ast::encode_variant(result);
+        sm.loadProgram(code);
         sm.run();
     }
     else
