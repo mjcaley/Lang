@@ -12,22 +12,22 @@ namespace StackMachine { namespace Grammar {
     
     const symbols<int32_t> nullary_sym
     {
-        { "HALT", HALT },
-        { "POP", POP },
-        { "ADD", ADD },
-        { "SUB", SUB },
-        { "MUL", MUL },
-        { "DIV", DIV },
-        { "MOD", MOD },
-        { "PRNT", PRNT }
+        { "HALT", HALT },   { "halt", HALT },
+        { "POP", POP },     { "pop", POP },
+        { "ADD", ADD },     { "add", ADD },
+        { "SUB", SUB },     { "sub", SUB },
+        { "MUL", MUL },     { "mul", MUL },
+        { "DIV", DIV },     { "div", DIV },
+        { "MOD", MOD },     { "mod", MOD },
+        { "PRNT", PRNT },   { "prnt", PRNT }
     };
     
     const symbols<int32_t> unary_sym
     {
-        { "PUSH", PUSH },
-        { "JMP", JMP },
-        { "LOAD", LOAD },
-        { "STORE", STORE }
+        { "PUSH", PUSH },   { "push", PUSH },
+        { "JMP", JMP },     { "jmp", JMP },
+        { "LOAD", LOAD },   { "load", LOAD },
+        { "STORE", STORE }, { "store", STORE }
     };
     
     
