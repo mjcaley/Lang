@@ -14,6 +14,8 @@ const int VERSION_MAJOR = 1;
 const int VERSION_MINOR = 0;
 const int VERSION_PATCH = 0;
 
+const std::vector<int32_t> MAGIC { 0x48, 0x52, 0x42, 0x44, 0x52, 0x47, 0x4E, 0x53 };
+
 
 void printUsage()
 {
@@ -25,6 +27,19 @@ void printUsage()
     std::cout << '\t' << NAME << " COMPILED_FILE\n";
     std::cout << "Compiler usage:\n";
     std::cout << '\t' << NAME << " SOURCE_FILE DEST_FILE" << std::endl;
+}
+
+bool verifyFile(std::vector<int32_t>& program)
+{
+    for (int i = 0; i < MAGIC.size(); i++)
+    {
+        if (MAGIC[i] != program[i])
+        {
+            return false;
+        }
+    }
+    
+    return true;
 }
 
 std::pair<bool, std::vector<int32_t>> compile(std::string& program)
@@ -57,11 +72,16 @@ bool runProgram(std::string& filename)
     std::vector<int32_t> program;
     if (in.is_open())
     {
-        program.insert(
-            program.end(),
-            std::istreambuf_iterator<char>(in),
-            std::istreambuf_iterator<char>()
+        std::vector<int32_t> byte_code(
+            (std::istreambuf_iterator<char>(in)),
+            (std::istreambuf_iterator<char>())
         );
+        if (!verifyFile(byte_code))
+        {
+            std::cout << "Error: Could not verify file" << std::endl;
+            return false;
+        }
+        program.insert(program.end(), byte_code.begin()+8, byte_code.end());
     }
     
     auto vm = VM();
@@ -94,6 +114,10 @@ bool compileProgram(std::string& input_filename, std::string& output_filename)
         std::ofstream out(output_filename, std::ios::binary);
         if (out.is_open() && compiled.first)
         {
+            for (auto& m : MAGIC)
+            {
+                out.put(m);
+            }
             for (auto& i : compiled.second)
             {
                 out.put(i);
