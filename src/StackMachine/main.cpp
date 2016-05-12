@@ -130,9 +130,6 @@ bool compileProgram(std::string& input_filename, std::string& output_filename)
 
 int main(int argc, char* argv[])
 {
-    using namespace StackMachine;
-    namespace x3 = boost::spirit::x3;
-    
     Args args;
     bool status = parseArgs(argc, argv, args);
     
