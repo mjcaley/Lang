@@ -39,7 +39,7 @@ namespace StackMachine { namespace Grammar {
     auto const operand_def = int_;
     auto const nullary_op_def = nullary_sym;
     auto const unary_op_def = unary_sym >> operand;
-    auto const program_def = *( (nullary_op | unary_op ) >> ';' );
+    auto const program_def = *( (nullary_op | unary_op ) );
     
     BOOST_SPIRIT_DEFINE(operand, nullary_op, unary_op, program);
     
