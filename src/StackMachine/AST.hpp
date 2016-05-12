@@ -2,7 +2,6 @@
 #include <boost/spirit/home/x3.hpp>
 #include <boost/spirit/home/x3/support/ast/variant.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/algorithm/string/predicate.hpp>
 
 
 namespace StackMachine { namespace AST {
@@ -29,10 +28,16 @@ namespace StackMachine { namespace AST {
         std::string name;
     };
     
+    struct JumpArg : x3::variant< int32_t, std::string>
+    {
+        using base_type::base_type;
+        using base_type::operator=;
+    };
+    
     struct Jump
     {
         Instruction instruction;
-        std::string label;
+        JumpArg position;
     };
     
     struct InstructionCode : x3::variant< Unary, Nullary, Label, Jump >
@@ -48,9 +53,31 @@ namespace StackMachine { namespace AST {
 
 namespace StackMachine { namespace AST {
     
+    struct JumpArgGen : public boost::static_visitor<>
+    {
+        JumpArgGen(std::vector<int32_t>& byte_code,
+                std::map<std::string, int32_t>& label_map)
+        : byte_code(byte_code), label_map(label_map) {};
+        
+        void operator()(int32_t& position)
+        {
+            byte_code.emplace_back(position);
+        }
+        
+        void operator()(std::string& position)
+        {
+            byte_code.emplace_back(label_map[position]);
+        }
+        
+    private:
+        std::vector<int32_t>& byte_code;
+        std::map<std::string, int32_t>& label_map;
+    };
+    
     struct CodeGenerator : public boost::static_visitor<>
     {
-        std::vector<int32_t> byte_code;
+        CodeGenerator(std::vector<int32_t>& byte_code)
+        : byte_code(byte_code) {}
         
         void operator()(AST::Label& label)
         {
@@ -60,7 +87,8 @@ namespace StackMachine { namespace AST {
         void operator()(AST::Jump& jump)
         {
             byte_code.emplace_back(jump.instruction.byte_code);
-            byte_code.emplace_back(label_map[jump.label]);
+            JumpArgGen arg_generator(byte_code, label_map);
+            boost::apply_visitor(arg_generator, jump.position);
         }
         
         void operator()(AST::Unary& unary_op)
@@ -75,18 +103,21 @@ namespace StackMachine { namespace AST {
         }
         
     private:
+        std::vector<int32_t>& byte_code;
         std::map<std::string, int32_t> label_map;
     };
     
     std::vector<int32_t> generate_byte_code(AST::Program& instructions)
     {
-        CodeGenerator generator;
+        std::vector<int32_t> byte_code;
+        
+        CodeGenerator generator(byte_code);
         for (auto& ast : instructions)
         {
             boost::apply_visitor(generator, ast);
         }
         
-        return generator.byte_code;
+        return byte_code;
     }
 
 } }
@@ -112,5 +143,5 @@ BOOST_FUSION_ADAPT_STRUCT(StackMachine::AST::Label, (std::string, name));
 BOOST_FUSION_ADAPT_STRUCT(
                           StackMachine::AST::Jump,
                           (StackMachine::AST::Instruction, instruction),
-                          (std::string, label)
+                          (StackMachine::AST::JumpArg, position)
                           );

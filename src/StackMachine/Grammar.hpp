@@ -54,7 +54,7 @@ namespace StackMachine { namespace Grammar {
     auto const unary_op_def = unary_sym >> operand;
     
     auto const label_def = lexeme[ +alnum >> ':' ];
-    auto const jump_op_def = jump_sym >> lexeme[+alnum];
+    auto const jump_op_def = jump_sym >> ( lexeme[+alnum] | int_ );
     
     auto const program_def = *( (nullary_op | unary_op | label | jump_op) );
     
