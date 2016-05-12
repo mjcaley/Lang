@@ -20,13 +20,13 @@ const std::vector<int32_t> MAGIC { 0x48, 0x52, 0x42, 0x44, 0x52, 0x47, 0x4E, 0x5
 void printUsage()
 {
     std::cout << NAME <<
-        " v" << VERSION_MAJOR <<
-        '.' << VERSION_MINOR <<
-        '.' << VERSION_PATCH << '\n';
-    std::cout << "Running usage:\n";
-    std::cout << '\t' << NAME << " COMPILED_FILE\n";
-    std::cout << "Compiler usage:\n";
-    std::cout << '\t' << NAME << " SOURCE_FILE DEST_FILE" << std::endl;
+    " v" << VERSION_MAJOR <<
+    '.' << VERSION_MINOR <<
+    '.' << VERSION_PATCH << '\n';
+    std::cout << "Running usage:\n"
+    << '\t' << NAME << " COMPILED_FILE\n"
+    << "Compiler usage:\n"
+    << '\t' << NAME << " SOURCE_FILE DEST_FILE" << std::endl;
 }
 
 bool verifyFile(std::vector<int32_t>& program)
@@ -133,13 +133,12 @@ int main(int argc, char* argv[])
     Args args;
     bool status = parseArgs(argc, argv, args);
     
-    if (!status || args.help)
+    if (!status || args.help || args.filenames.size() <= 0)
     {
         printUsage();
         return 0;
     }
-    
-    if (args.filenames.size() == 1)
+    else if (args.filenames.size() == 1)
     {
         bool status = runProgram(args.filenames[0]);
         return status;
