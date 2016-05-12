@@ -1,4 +1,3 @@
-#include "StackMachine.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
@@ -6,42 +5,26 @@
 #include <iterator>
 #include <string>
 #include <utility>
-#include <boost/algorithm/string/predicate.hpp>
+#include "Args.hpp"
+#include "StackMachine.hpp"
 
 
-struct Args
+const std::string NAME = "StackMachine";
+const int VERSION_MAJOR = 1;
+const int VERSION_MINOR = 0;
+const int VERSION_PATCH = 0;
+
+
+void printUsage()
 {
-    std::vector<std::string> filenames;
-    bool help;
-};
-
-Args parse_args(int argc, char* argv[])
-{
-    using namespace boost::algorithm;
-    
-    if (argc > 3 || argc <= 1)
-    {
-        // Wrong number of arguments
-        std::cout << "Error: Incorrect number of  arguments\n";
-        std::cout << "Usage: StackMachine SRC DEST" << std::endl;
-        std::exit(-1);
-    }
-    
-    Args args;
-    
-    for (int i = 1; i < argc; i++)
-    {
-        if (equals(argv[i], "--help"))
-        {
-            args.help = true;
-        }
-        else
-        {
-            args.filenames.emplace_back(argv[i]);
-        }
-    }
-    
-    return args;
+    std::cout << NAME <<
+        " v" << VERSION_MAJOR <<
+        '.' << VERSION_MINOR <<
+        '.' << VERSION_PATCH << '\n';
+    std::cout << "Running usage:\n";
+    std::cout << '\t' << NAME << " COMPILED_FILE\n";
+    std::cout << "Compiler usage:\n";
+    std::cout << '\t' << NAME << " SOURCE_FILE DEST_FILE" << std::endl;
 }
 
 std::pair<bool, std::vector<int32_t>> compile(std::string& program)
@@ -66,68 +49,88 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
     }
 }
 
+bool runProgram(std::string& filename)
+{
+    using namespace StackMachine;
+    
+    std::ifstream in(filename, std::ios::binary);
+    std::vector<int32_t> program;
+    if (in.is_open())
+    {
+        program.insert(
+            program.end(),
+            std::istreambuf_iterator<char>(in),
+            std::istreambuf_iterator<char>()
+        );
+    }
+    
+    auto vm = VM();
+    vm.loadProgram(program);
+    bool status = vm.run();
+    
+    return status;
+}
+
+bool compileProgram(std::string& input_filename, std::string& output_filename)
+{
+    std::pair<bool, std::vector<int32_t>> compiled;
+    
+    {
+        std::ifstream in(input_filename);
+        in.unsetf(std::ios::skipws);
+        
+        std::string src;
+        if (in.is_open())
+        {
+            std::ostringstream contents;
+            contents << in.rdbuf();
+            src = contents.str();
+        }
+        
+        compiled = compile(src);
+    }
+    
+    {
+        std::ofstream out(output_filename, std::ios::binary);
+        if (out.is_open() && compiled.first)
+        {
+            for (auto& i : compiled.second)
+            {
+                out.put(i);
+            }
+        }
+    }
+    
+    return compiled.first;
+}
+
 int main(int argc, char* argv[])
 {
     using namespace StackMachine;
     namespace x3 = boost::spirit::x3;
     
-    Args args = parse_args(argc, argv);
+    Args args;
+    bool status = parseArgs(argc, argv, args);
+    
+    if (!status || args.help)
+    {
+        printUsage();
+        return 0;
+    }
+    
     if (args.filenames.size() == 1)
     {
-        std::cout << "Binary file, running" << std::endl;
-        
-        std::ifstream in(args.filenames[0], std::ios::binary);
-        std::vector<int32_t> program;
-        if (in.is_open())
-        {
-            std::vector<char> buffer (
-                                      (std::istreambuf_iterator<char>(in)),
-                                      (std::istreambuf_iterator<char>())
-                                      );
-            program.insert( program.end(), buffer.begin(), buffer.end() );
-        }
-        
-        auto vm = VM();
-        vm.loadProgram(program);
-        vm.run();
-        
-        return 0;
+        bool status = runProgram(args.filenames[0]);
+        return status;
     }
     else if (args.filenames.size() == 2)
     {
-        std::cout << "Text file, compiling" << std::endl;
-        
-        std::pair<bool, std::vector<int32_t>> dest;
-        
-        {
-            std::ifstream in(args.filenames[0]);
-            in.unsetf(std::ios::skipws);
-            
-            std::string src;
-            if (in.is_open())
-            {
-                std::ostringstream contents;
-                contents << in.rdbuf();
-                src = contents.str();
-            }
-            
-            dest = compile(src);
-        }
-        
-        std::ofstream out(args.filenames[1], std::ios::binary);
-        if (out.is_open() && dest.first)
-        {
-            for (auto& i : dest.second)
-            {
-                out.put(i);
-            }
-        }
-        
-        return 0;
+        bool status = compileProgram(args.filenames[0], args.filenames[1]);
+        return status;
     }
-    else
-    {
-        // display help
-        return 0;
-    }
+    
+    std::cout << "Unknown error\n\n";
+    printUsage();
+    
+    return 1;
 }
