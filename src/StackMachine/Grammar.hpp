@@ -39,6 +39,7 @@ namespace StackMachine { namespace Grammar {
     };
     
     
+    x3::rule<class identifier, std::string> const identifier("identifier");
     x3::rule<class operand, AST::Operand> const operand("operand");
     x3::rule<class nullary_op, AST::Nullary> const nullary_op("nullary_op");
     x3::rule<class unary_op, AST::Unary > const unary_op("unary_op");
@@ -49,15 +50,17 @@ namespace StackMachine { namespace Grammar {
     x3::rule<class program, AST::Program > const program("program");
     
     
+    auto const identifier_def = lexeme[(alpha > *( alnum | char_('_') ))];
     auto const operand_def = int_;
     auto const nullary_op_def = nullary_sym;
     auto const unary_op_def = unary_sym >> operand;
     
-    auto const label_def = lexeme[ +alnum >> ':' ];
-    auto const jump_op_def = jump_sym >> ( lexeme[+alnum] | int_ );
+    auto const label_def = lexeme[ identifier >> ':' ];
+    auto const jump_op_def = jump_sym >> ( identifier | int_ );
     
     auto const program_def = *( (nullary_op | unary_op | label | jump_op) );
     
+    BOOST_SPIRIT_DEFINE(identifier);
     BOOST_SPIRIT_DEFINE(label);
     BOOST_SPIRIT_DEFINE(operand);
     BOOST_SPIRIT_DEFINE(nullary_op);

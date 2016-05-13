@@ -36,20 +36,20 @@ namespace StackMachine { namespace AST {
         
         void operator()(Jump& jump)
         {
-            byte_code.emplace_back(jump.instruction.byte_code);
+            byte_code.emplace_back(jump.instruction);
             JumpArgGen arg_generator(byte_code, label_map);
             boost::apply_visitor(arg_generator, jump.position);
         }
         
         void operator()(Unary& unary_op)
         {
-            byte_code.emplace_back(unary_op.instruction.byte_code);
-            byte_code.emplace_back(unary_op.operand.byte_code);
+            byte_code.emplace_back(unary_op.instruction);
+            byte_code.emplace_back(unary_op.operand);
         }
         
         void operator()(Nullary& nullary_op)
         {
-            byte_code.emplace_back(nullary_op.instruction.byte_code);
+            byte_code.emplace_back(nullary_op.instruction);
         }
         
     private:

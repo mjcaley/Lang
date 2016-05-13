@@ -8,9 +8,8 @@ namespace StackMachine { namespace AST {
 
     namespace x3 = boost::spirit::x3;
     
-    struct Operand { int32_t byte_code; };
-    struct Instruction { int32_t byte_code; };
-    
+    using Operand = int32_t;
+    using Instruction = int32_t;
     
     struct Nullary
     {
@@ -28,7 +27,7 @@ namespace StackMachine { namespace AST {
         std::string name;
     };
     
-    struct JumpArg : x3::variant< int32_t, std::string>
+    struct JumpArg : x3::variant< int32_t, std::string >
     {
         using base_type::base_type;
         using base_type::operator=;
@@ -50,10 +49,6 @@ namespace StackMachine { namespace AST {
 
 } }
 
-
-BOOST_FUSION_ADAPT_STRUCT(StackMachine::AST::Operand, (int32_t, byte_code));
-
-BOOST_FUSION_ADAPT_STRUCT(StackMachine::AST::Instruction, (int32_t, byte_code));
 
 BOOST_FUSION_ADAPT_STRUCT(
                           StackMachine::AST::Nullary,

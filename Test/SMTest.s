@@ -1,5 +1,5 @@
-loop:
+loop_123_test:
 push 64
 prnt
-jmp loop
+jmp loop_123_test
 halt
