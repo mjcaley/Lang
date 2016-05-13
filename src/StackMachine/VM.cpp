@@ -214,7 +214,12 @@ void VM::jump_if_false()
 
 void VM::call()
 {
-    ip += 3;    // Skip
+    ++ip;   // Advance to call address
+    const auto address = program[ip];
+    ++ip;   // Advance to number of arguments
+    const auto nargs = program[ip];
+    call_stack.push(++ip);
+    ip = address;
     
     if(debug)
     {
@@ -224,7 +229,9 @@ void VM::call()
 
 void VM::ret()
 {
-    ++ip;
+    const auto ret_address = call_stack.top();
+    call_stack.pop();
+    ip = ret_address;
     
     if (debug)
     {

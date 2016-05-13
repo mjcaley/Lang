@@ -10,7 +10,7 @@ main:
     push 4
     add
     prnt
-    call 2 0
+    call twofour 0
 
 end:
     halt

@@ -33,6 +33,11 @@ namespace StackMachine { namespace AST {
             address += 3;
         }
         
+        void operator()(Call& call_op)
+        {
+            address += 3;
+        }
+        
     private:
         int address { 0 };
         std::map<std::string, int32_t>& label_map;
@@ -71,6 +76,14 @@ namespace StackMachine { namespace AST {
             byte_code.emplace_back(jump.instruction);
             JumpArgGen arg_generator(byte_code, label_map);
             boost::apply_visitor(arg_generator, jump.position);
+        }
+        
+        void operator()(Call& call)
+        {
+            byte_code.emplace_back(call.instruction);
+            JumpArgGen arg_generator(byte_code, label_map);
+            boost::apply_visitor(arg_generator, call.position);
+            byte_code.emplace_back(call.operand);
         }
         
         void operator()(Unary& unary_op)

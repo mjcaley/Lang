@@ -36,7 +36,6 @@ namespace StackMachine { namespace Grammar {
     
     const symbols<int32_t> binary_sym
     {
-        { "CALL", CALL },   { "call", CALL },
     };
     
     const symbols<int32_t> jump_sym
@@ -44,6 +43,11 @@ namespace StackMachine { namespace Grammar {
         { "JMP", JMP },     { "jmp", JMP },
         { "JT", JT },       { "jt", JT },
         { "JF", JF },       { "jf", JF }
+    };
+    
+    const symbols<int32_t> call_sym
+    {
+        { "CALL", CALL },     { "call", CALL }
     };
     
     
@@ -54,7 +58,8 @@ namespace StackMachine { namespace Grammar {
     x3::rule<class binary_op, AST::Binary > const binary_op("binary_op");
     
     x3::rule<class label, AST::Label > const label("label");
-    x3::rule<class jump_op, AST::Jump > const jump_op("jump");
+    x3::rule<class jump_op, AST::Jump > const jump_op("jump_op");
+    x3::rule<class call_op, AST::Call > const call_op("call_op");
     
     x3::rule<class program, AST::Program > const program("program");
     
@@ -67,8 +72,9 @@ namespace StackMachine { namespace Grammar {
     
     auto const label_def = lexeme[ identifier >> ':' ];
     auto const jump_op_def = jump_sym >> ( identifier | int_ );
+    auto const call_op_def = call_sym >> ( identifier | int_ ) >> operand;
     
-    auto const program_def = *( (nullary_op | unary_op | binary_op | label | jump_op) );
+    auto const program_def = *( (nullary_op | unary_op | binary_op | label | jump_op | call_op) );
     
     BOOST_SPIRIT_DEFINE(identifier);
     BOOST_SPIRIT_DEFINE(label);
@@ -77,6 +83,7 @@ namespace StackMachine { namespace Grammar {
     BOOST_SPIRIT_DEFINE(unary_op);
     BOOST_SPIRIT_DEFINE(binary_op);
     BOOST_SPIRIT_DEFINE(jump_op);
+    BOOST_SPIRIT_DEFINE(call_op);
     BOOST_SPIRIT_DEFINE(program);
     
 } };
