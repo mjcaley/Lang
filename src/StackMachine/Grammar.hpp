@@ -23,7 +23,8 @@ namespace StackMachine { namespace Grammar {
         { "MUL", MUL },     { "mul", MUL },
         { "DIV", DIV },     { "div", DIV },
         { "MOD", MOD },     { "mod", MOD },
-        { "PRNT", PRNT },   { "prnt", PRNT }
+        { "PRNT", PRNT },   { "prnt", PRNT },
+        { "RET", RET },     { "ret", RET }
     };
     
     const symbols<int32_t> unary_sym
@@ -33,9 +34,16 @@ namespace StackMachine { namespace Grammar {
         { "STORE", STORE }, { "store", STORE }
     };
     
+    const symbols<int32_t> binary_sym
+    {
+        { "CALL", CALL },   { "call", CALL },
+    };
+    
     const symbols<int32_t> jump_sym
     {
-        { "JMP", JMP },     { "jmp", JMP }
+        { "JMP", JMP },     { "jmp", JMP },
+        { "JT", JT },       { "jt", JT },
+        { "JF", JF },       { "jf", JF }
     };
     
     
@@ -43,6 +51,7 @@ namespace StackMachine { namespace Grammar {
     x3::rule<class operand, AST::Operand> const operand("operand");
     x3::rule<class nullary_op, AST::Nullary> const nullary_op("nullary_op");
     x3::rule<class unary_op, AST::Unary > const unary_op("unary_op");
+    x3::rule<class binary_op, AST::Binary > const binary_op("binary_op");
     
     x3::rule<class label, AST::Label > const label("label");
     x3::rule<class jump_op, AST::Jump > const jump_op("jump");
@@ -54,17 +63,19 @@ namespace StackMachine { namespace Grammar {
     auto const operand_def = int_;
     auto const nullary_op_def = nullary_sym;
     auto const unary_op_def = unary_sym >> operand;
+    auto const binary_op_def = binary_sym >> operand >> operand;
     
     auto const label_def = lexeme[ identifier >> ':' ];
     auto const jump_op_def = jump_sym >> ( identifier | int_ );
     
-    auto const program_def = *( (nullary_op | unary_op | label | jump_op) );
+    auto const program_def = *( (nullary_op | unary_op | binary_op | label | jump_op) );
     
     BOOST_SPIRIT_DEFINE(identifier);
     BOOST_SPIRIT_DEFINE(label);
     BOOST_SPIRIT_DEFINE(operand);
     BOOST_SPIRIT_DEFINE(nullary_op);
     BOOST_SPIRIT_DEFINE(unary_op);
+    BOOST_SPIRIT_DEFINE(binary_op);
     BOOST_SPIRIT_DEFINE(jump_op);
     BOOST_SPIRIT_DEFINE(program);
     

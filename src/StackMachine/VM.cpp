@@ -56,6 +56,12 @@ bool VM::run()
             case JMP:
                 jump();
                 break;
+            case JT:
+                jump_if_true();
+                break;
+            case JF:
+                jump_if_false();
+                break;
             case LOAD:
                 load();
                 break;
@@ -64,6 +70,12 @@ bool VM::run()
                 break;
             case PRNT:
                 print();
+                break;
+            case CALL:
+                call();
+                break;
+            case RET:
+                ret();
                 break;
             default:
                 running = false;
@@ -165,6 +177,58 @@ void VM::jump()
     if (debug)
     {
         std::cout << "JMP " << ip << std::endl;
+    }
+}
+
+void VM::jump_if_true()
+{
+    ++ip;   // Advance to data
+    const auto test = stack.top();
+    stack.pop();
+    if (test == true)
+    {
+        ip = program[ip];
+    }
+    
+    if (debug)
+    {
+        std::cout << "JT " << ip << " to " << ip << std::endl;
+    }
+}
+
+void VM::jump_if_false()
+{
+    ++ip;   // Advance to data
+    const auto test = stack.top();
+    stack.pop();
+    if (test == false)
+    {
+        ip = program[ip];
+    }
+    
+    if (debug)
+    {
+        std::cout << "JF " << ip << " to " << ip << std::endl;
+    }
+}
+
+void VM::call()
+{
+    ip += 3;    // Skip
+    
+    if(debug)
+    {
+        std::cout << "CALL " << std::endl;
+    }
+}
+
+void VM::ret()
+{
+    ++ip;
+    
+    if (debug)
+    {
+        std::cout << "RET" << std::endl;
     }
 }
 

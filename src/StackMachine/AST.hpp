@@ -22,6 +22,13 @@ namespace StackMachine { namespace AST {
         Operand operand;
     };
     
+    struct Binary
+    {
+        Instruction instruction;
+        Operand operand1;
+        Operand operand2;
+    };
+    
     struct Label
     {
         std::string name;
@@ -39,7 +46,7 @@ namespace StackMachine { namespace AST {
         JumpArg position;
     };
     
-    struct InstructionCode : x3::variant< Unary, Nullary, Label, Jump >
+    struct InstructionCode : x3::variant< Binary, Unary, Nullary, Label, Jump >
     {
         using base_type::base_type;
         using base_type::operator=;
@@ -59,6 +66,13 @@ BOOST_FUSION_ADAPT_STRUCT(
                           StackMachine::AST::Unary,
                           (StackMachine::AST::Instruction, instruction),
                           (StackMachine::AST::Operand, operand)
+                          );
+
+BOOST_FUSION_ADAPT_STRUCT(
+                          StackMachine::AST::Binary,
+                          (StackMachine::AST::Instruction, instruction),
+                          (StackMachine::AST::Operand, operand1),
+                          (StackMachine::AST::Operand, operand2)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(StackMachine::AST::Label, (std::string, name));

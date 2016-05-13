@@ -25,11 +25,17 @@ namespace StackMachine
         MOD     = 0x00000007,
         
         JMP     = 0x00000008,
+        JT      = 0x00000009,   // Jump if true
+        JF      = 0x0000000A,   // Jump if false
         
-        LOAD    = 0x00000009,
-        STORE   = 0x0000000A,
         
-        PRNT    = 0x0000000B
+        LOAD    = 0x0000000B,
+        STORE   = 0x0000000C,
+        
+        PRNT    = 0x0000000D,
+        
+        CALL    = 0x0000000E,
+        RET     = 0x0000000F
     };
     
     class VM
@@ -41,10 +47,11 @@ namespace StackMachine
         
     private:
         unsigned ip { 0 };  // Instruction pointer
-        unsigned fp;        // Frame pointer
+        unsigned fp { 0 };  // Frame pointer
         bool running { false };
 
         std::vector<int32_t> program { 0 };
+        std::stack<int32_t> call_stack;
         std::stack<int32_t> stack;
         std::map<unsigned, int32_t> memory;
         
@@ -59,6 +66,11 @@ namespace StackMachine
         
         // Control flow
         void jump();
+        void jump_if_true();
+        void jump_if_false();
+        
+        void call();
+        void ret();
         
         void load();
         void store();

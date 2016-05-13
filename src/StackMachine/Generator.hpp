@@ -28,6 +28,11 @@ namespace StackMachine { namespace AST {
             address++;
         }
         
+        void operator()(Binary& binary_op)
+        {
+            address += 3;
+        }
+        
     private:
         int address { 0 };
         std::map<std::string, int32_t>& label_map;
@@ -59,10 +64,7 @@ namespace StackMachine { namespace AST {
         CodeGenerator(std::vector<int32_t>& byte_code, std::map<std::string, int32_t>& label_map)
         : byte_code(byte_code), label_map(label_map) {}
         
-        void operator()(Label& label)
-        {
-            //label_map[label.name] = byte_code.size();
-        }
+        void operator()(Label& label) {}
         
         void operator()(Jump& jump)
         {
@@ -80,6 +82,13 @@ namespace StackMachine { namespace AST {
         void operator()(Nullary& nullary_op)
         {
             byte_code.emplace_back(nullary_op.instruction);
+        }
+        
+        void operator()(Binary& binary_op)
+        {
+            byte_code.emplace_back(binary_op.instruction);
+            byte_code.emplace_back(binary_op.operand1);
+            byte_code.emplace_back(binary_op.operand2);
         }
         
     private:
