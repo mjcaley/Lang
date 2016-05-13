@@ -67,11 +67,19 @@ bool VM::run()
                 break;
             default:
                 running = false;
+                clearMemory();
                 return false;
                 break;
         }
     }
+    
+    clearMemory();
     return true;
+}
+
+void VM::clearMemory()
+{
+    memory.clear();
 }
 
 void VM::add()

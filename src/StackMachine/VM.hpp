@@ -1,6 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <iostream>
+#include <map>
 #include <stack>
 #include <string>
 #include <vector>
@@ -34,11 +35,6 @@ namespace StackMachine
     class VM
     {
     public:
-        VM(int32_t memory_size = 1000000)
-        {
-            memory.reserve(memory_size);
-        };
-        
         void loadProgram(std::vector<int32_t> p) { program = p; };
         
         bool run();
@@ -50,7 +46,9 @@ namespace StackMachine
 
         std::vector<int32_t> program { 0 };
         std::stack<int32_t> stack;
-        std::vector<int32_t> memory;
+        std::map<unsigned, int32_t> memory;
+        
+        void clearMemory();
         
         // Arithmetic
         void add();
