@@ -60,6 +60,7 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
     }
     else
     {
+        std::cout << "Error: could not parse source" << std::endl;
         return std::make_pair(result, std::vector<int32_t>() );
     }
 }
