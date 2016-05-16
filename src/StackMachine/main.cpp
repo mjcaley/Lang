@@ -54,14 +54,14 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
     
     bool result = x3::phrase_parse(iter, end, grammar, Grammar::skipper, ast);
     
-    if (result)
+    if (result && iter == end)
     {
         return std::make_pair(result, AST::generate_byte_code(ast) );
     }
     else
     {
         std::cout << "Error: could not parse source" << std::endl;
-        return std::make_pair(result, std::vector<int32_t>() );
+        return std::make_pair(false, std::vector<int32_t>() );
     }
 }
 
