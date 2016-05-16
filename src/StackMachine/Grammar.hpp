@@ -27,8 +27,12 @@ namespace StackMachine { namespace Grammar {
         { "MUL", MUL },     { "mul", MUL },
         { "DIV", DIV },     { "div", DIV },
         { "MOD", MOD },     { "mod", MOD },
+        { "EQ", EQ },       { "eq", EQ },
+        { "LT", LT },       { "lt", LT },
+        { "GT", GT },       { "gt", GT },
         { "PRNT", PRNT },   { "prnt", PRNT },
-        { "RET", RET },     { "ret", RET }
+        { "RET", RET },     { "ret", RET },
+        { "DUP", DUP },     { "dup", DUP }
     };
     
     const symbols<int32_t> unary_sym

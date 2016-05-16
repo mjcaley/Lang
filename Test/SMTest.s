@@ -1,16 +1,24 @@
-jmp main
+            jmp main
+factorial:
+            pop
+            dup
+            push 1  
+            sub
+            dup
+            push 2
+            lt
+            jf again
+            jmp done
+again:
+            call factorial 1
+done:
+            mul
+            ret
 
-twofour:
-    push 24
-    prnt                ; Print twenty-four to standard out
-    ret
-
-main:                   ; Main function
-    push 3
-    push 4
-    add
-    prnt
-    call twofour 0
+main:
+            push 5
+            call factorial 1
+            prnt
 
 end:
-    halt
+            halt

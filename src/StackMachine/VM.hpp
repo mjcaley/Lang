@@ -28,14 +28,20 @@ namespace StackMachine
         JT      = 0x00000009,   // Jump if true
         JF      = 0x0000000A,   // Jump if false
         
+        EQ      = 0x0000000B,    // Equal
+        LT      = 0x0000000C,    // Less than
+        GT      = 0x0000000D,    // Greater than
         
-        LOAD    = 0x0000000B,
-        STORE   = 0x0000000C,
         
-        PRNT    = 0x0000000D,
+        LOAD    = 0x0000000E,
+        STORE   = 0x0000000F,
         
-        CALL    = 0x0000000E,
-        RET     = 0x0000000F
+        PRNT    = 0x00000010,
+        
+        CALL    = 0x00000011,
+        RET     = 0x00000012,
+        
+        DUP     = 0x00000013
     };
     
     class VM
@@ -47,12 +53,11 @@ namespace StackMachine
         
     private:
         unsigned ip { 0 };  // Instruction pointer
-        unsigned fp { 0 };  // Frame pointer
         bool running { false };
 
         std::vector<int32_t> program { 0 };
         std::stack<int32_t> call_stack;
-        std::stack<int32_t> stack;
+        std::stack<int32_t> data_stack;
         std::map<unsigned, int32_t> memory;
         
         void clearMemory();
@@ -69,6 +74,10 @@ namespace StackMachine
         void jump_if_true();
         void jump_if_false();
         
+        void equal();
+        void less_than();
+        void greater_than();
+        
         void call();
         void ret();
         
@@ -76,5 +85,7 @@ namespace StackMachine
         void store();
         
         void print();
+        
+        void dup();
     };
 }
