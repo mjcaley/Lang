@@ -52,7 +52,7 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
     AST::Program ast;
     auto& grammar = Grammar::program;
     
-    bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+    bool result = x3::phrase_parse(iter, end, grammar, Grammar::skipper, ast);
     
     if (result)
     {

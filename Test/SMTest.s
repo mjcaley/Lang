@@ -2,10 +2,10 @@ jmp main
 
 twofour:
     push 24
-    prnt
+    prnt                ; Print twenty-four to standard out
     ret
 
-main:
+main:                   ; Main function
     push 3
     push 4
     add

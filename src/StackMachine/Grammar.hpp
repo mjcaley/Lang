@@ -10,9 +10,13 @@ namespace StackMachine { namespace Grammar {
     using x3::alpha;
     using x3::alnum;
     using x3::char_;
+    using x3::eol;
     using x3::int_;
     using x3::lexeme;
+    using x3::space;
     using x3::symbols;
+    
+    auto const skipper = space | lexeme[ ';' >> *(char_ - eol) >> eol ];
     
     const symbols<int32_t> nullary_sym
     {
@@ -64,7 +68,7 @@ namespace StackMachine { namespace Grammar {
     x3::rule<class program, AST::Program > const program("program");
     
     
-    auto const identifier_def = lexeme[(alpha > *( alnum | char_('_') ))];
+    auto const identifier_def = lexeme[(alpha >> *( alnum | char_('_') ))];
     auto const operand_def = int_;
     auto const nullary_op_def = nullary_sym;
     auto const unary_op_def = unary_sym >> operand;
