@@ -82,7 +82,7 @@ namespace StackMachine { namespace Grammar {
     auto const jump_op_def = jump_sym >> ( identifier | int_ );
     auto const call_op_def = call_sym >> ( identifier | int_ ) >> operand;
     
-    auto const program_def = *( (nullary_op | unary_op | binary_op | label | jump_op | call_op) );
+    auto const program_def = *( (label | nullary_op | unary_op | binary_op | jump_op | call_op) );
     
     BOOST_SPIRIT_DEFINE(identifier);
     BOOST_SPIRIT_DEFINE(label);
