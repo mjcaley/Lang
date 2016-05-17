@@ -1,4 +1,5 @@
             jmp main
+
 factorial:
             pop
             dup
@@ -7,18 +8,14 @@ factorial:
             dup
             push 2
             lt
-            jf again
-            jmp done
-again:
+            jt return
             call factorial 1
-done:
+return:
             mul
             ret
 
 main:
-            push 5
+            push 10
             call factorial 1
             prnt
-
-end:
             halt
