@@ -16,7 +16,7 @@ bool VM::run()
                 
                 if (debug)
                 {
-                    std::cout << "HALT" << std::endl;
+                    nullaryDebugMessage(ip);
                 }
                 break;
             case PUSH:
@@ -26,7 +26,7 @@ bool VM::run()
                 
                 if (debug)
                 {
-                    std::cout << "PUSH " << std::endl;
+                    unaryDebugMessage(ip-2);
                 }
                 break;
             case POP:
@@ -35,7 +35,7 @@ bool VM::run()
                 
                 if (debug)
                 {
-                    std::cout << "POP" << std::endl;
+                    nullaryDebugMessage(ip-1);
                 }
                 break;
             case ADD:
@@ -115,7 +115,7 @@ void VM::add()
     
     if (debug)
     {
-        std::cout << "ADD " << operand1 << " " << operand2 << " = " << data_stack.top() << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -130,7 +130,7 @@ void VM::subtract()
     
     if (debug)
     {
-        std::cout << "SUB " << operand2 << " " << operand1 << " = " << data_stack.top() << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -145,7 +145,7 @@ void VM::multiply()
     
     if (debug)
     {
-        std::cout << "MUL " << operand1 << " " << operand2 << " = " << data_stack.top() << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -160,7 +160,7 @@ void VM::divide()
     
     if (debug)
     {
-        std::cout << "DIV " << operand2 << " " << operand1 << " = " << data_stack.top() << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -175,7 +175,7 @@ void VM::modulus()
     
     if (debug)
     {
-        std::cout << "MOD " << operand2 << " " << operand1 << " = " << data_stack.top() << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -186,12 +186,14 @@ void VM::jump()
     
     if (debug)
     {
-        std::cout << "JMP " << ip << std::endl;
+        unaryDebugMessage(ip-1);
     }
 }
 
 void VM::jump_if_true()
 {
+    auto orig_ip = ip;
+    
     ++ip;   // Advance to data
     const auto test = data_stack.top();
     data_stack.pop();
@@ -206,12 +208,14 @@ void VM::jump_if_true()
     
     if (debug)
     {
-        std::cout << "JT " << ip << " to " << ip << std::endl;
+        unaryDebugMessage(orig_ip);
     }
 }
 
 void VM::jump_if_false()
 {
+    auto orig_ip = ip;
+    
     ++ip;   // Advance to data
     const auto test = data_stack.top();
     data_stack.pop();
@@ -226,7 +230,7 @@ void VM::jump_if_false()
     
     if (debug)
     {
-        std::cout << "JF " << ip << " to " << ip << std::endl;
+        unaryDebugMessage(orig_ip);
     }
 }
 
@@ -249,7 +253,7 @@ void VM::equal()
     
     if (debug)
     {
-        std::cout << "EQ " << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -272,7 +276,7 @@ void VM::less_than()
     
     if (debug)
     {
-        std::cout << "LT " << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -295,12 +299,14 @@ void VM::greater_than()
     
     if (debug)
     {
-        std::cout << "GT " << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
 void VM::call()
 {
+    auto orig_ip = ip;
+    
     ++ip;   // Advance to call address
     const auto address = program[ip];
     ++ip;   // Advance to number of arguments
@@ -311,19 +317,21 @@ void VM::call()
     
     if(debug)
     {
-        std::cout << "CALL " << std::endl;
+        binaryDebugMessage(orig_ip);
     }
 }
 
 void VM::ret()
 {
+    auto orig_ip = ip;
+    
     const auto ret_address = call_stack.top();
     call_stack.pop();
     ip = ret_address;
     
     if (debug)
     {
-        std::cout << "RET" << std::endl;
+        nullaryDebugMessage(orig_ip);
     }
 }
 
@@ -335,7 +343,7 @@ void VM::load()
     
     if (debug)
     {
-        std::cout << "LOAD " << data_stack.top() << std::endl;
+        unaryDebugMessage(ip-2);
     }
 }
 
@@ -349,7 +357,7 @@ void VM::store()
     
     if (debug)
     {
-        std::cout << "STORE " << value << std::endl;
+        unaryDebugMessage(ip-2);
     }
 }
 
@@ -362,7 +370,7 @@ void VM::print()
     
     if (debug)
     {
-        std::cout << "PRNT" << std::endl;
+        nullaryDebugMessage(ip-1);
     }
 }
 
@@ -373,6 +381,38 @@ void VM::dup()
     
     if (debug)
     {
-        std::cout << "DUP" << std::endl;
+        nullaryDebugMessage(ip-1);
     }
+}
+
+void VM::nullaryDebugMessage(int ip)
+{
+    const auto begin = program.begin() + ip;
+    const auto end = program.begin() + (ip + 1);
+    debugMessage(begin, end);
+}
+
+void VM::unaryDebugMessage(int ip)
+{
+    const auto begin = program.begin() + ip;
+    const auto end = program.begin() + (ip + 2);
+    debugMessage(begin, end);
+}
+
+void VM::binaryDebugMessage(int ip)
+{
+    const auto begin = program.begin() + ip;
+    const auto end = program.begin() + (ip + 3);
+    debugMessage(begin, end);
+}
+
+void VM::debugMessage(std::vector<int32_t>::const_iterator iter, std::vector<int32_t>::const_iterator end)
+{
+    std::cout << InstructionSetString[*iter] << ' ';
+    iter++;
+    for (; iter != end; ++iter)
+    {
+        std::cout << *iter << ' ';
+    }
+    std::cout << std::endl;
 }

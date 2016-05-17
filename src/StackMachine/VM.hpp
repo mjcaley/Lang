@@ -44,6 +44,30 @@ namespace StackMachine
         DUP     = 0x00000013
     };
     
+    static std::map<int, std::string> InstructionSetString
+    {
+        { HALT, "HALT" },
+        { PUSH, "PUSH" },
+        { POP, "POP" },
+        { ADD, "ADD" },
+        { SUB, "SUB" },
+        { MUL, "MUL" },
+        { DIV, "DIV" },
+        { MOD, "MOD" },
+        { JMP, "JMP" },
+        { JT, "JT" },
+        { JF, "JF" },
+        { EQ, "EQ" },
+        { LT, "LT" },
+        { GT, "GT" },
+        { LOAD, "LOAD" },
+        { STORE, "STORE" },
+        { PRNT, "PRNT" },
+        { CALL, "CALL" },
+        { RET, "RET" },
+        { DUP, "DUP" }
+    };
+    
     class VM
     {
     public:
@@ -87,5 +111,10 @@ namespace StackMachine
         void print();
         
         void dup();
+        
+        void nullaryDebugMessage(int ip);
+        void unaryDebugMessage(int ip);
+        void binaryDebugMessage(int ip);
+        void debugMessage(std::vector<int32_t>::const_iterator begin, std::vector<int32_t>::const_iterator end);
     };
 }
