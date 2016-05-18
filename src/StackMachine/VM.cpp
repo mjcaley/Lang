@@ -181,12 +181,14 @@ void VM::modulus()
 
 void VM::jump()
 {
+    auto orig_ip = ip;
+    
     ++ip;   // Advance to data
     ip = program[ip];
     
     if (debug)
     {
-        unaryDebugMessage(ip-1);
+        unaryDebugMessage(orig_ip);
     }
 }
 
@@ -406,9 +408,10 @@ void VM::binaryDebugMessage(int ip)
     debugMessage(begin, end);
 }
 
-void VM::debugMessage(std::vector<int32_t>::const_iterator iter, std::vector<int32_t>::const_iterator end)
+void VM::debugMessage(std::vector<int32_t>::const_iterator iter,
+                      std::vector<int32_t>::const_iterator end)
 {
-    std::cout << InstructionSetString[*iter] << ' ';
+    std::cout << instruction_strings[*iter] << ' ';
     iter++;
     for (; iter != end; ++iter)
     {

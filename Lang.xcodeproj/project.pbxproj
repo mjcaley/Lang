@@ -101,6 +101,7 @@
 		9B70D9461CE4127300DF6B92 /* Args.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Args.cpp; sourceTree = "<group>"; };
 		9B70D9471CE4127300DF6B92 /* Args.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Args.hpp; sourceTree = "<group>"; };
 		9B70D9551CE54D8300DF6B92 /* StackMachine execute */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "StackMachine execute"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B9433EE1CEBE27C00443460 /* DualKeys.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DualKeys.hpp; sourceTree = "<group>"; };
 		9BCC00001CE79E6C009862AC /* segment_identifier.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = segment_identifier.hpp; sourceTree = "<group>"; };
 		9BCC00011CE79E6C009862AC /* select_rings.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = select_rings.hpp; sourceTree = "<group>"; };
 		9BCC00021CE79E6C009862AC /* self_turn_points.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = self_turn_points.hpp; sourceTree = "<group>"; };
@@ -12295,6 +12296,7 @@
 				27B58A351CE3822D00911C79 /* StackMachine.hpp */,
 				9B70D9461CE4127300DF6B92 /* Args.cpp */,
 				9B70D9471CE4127300DF6B92 /* Args.hpp */,
+				9B9433EE1CEBE27C00443460 /* DualKeys.hpp */,
 			);
 			path = StackMachine;
 			sourceTree = "<group>";
