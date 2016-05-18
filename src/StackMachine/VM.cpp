@@ -8,7 +8,7 @@ using namespace StackMachine;
 bool VM::run()
 {
     running = true;
-    while(running)
+    while(running && ip < program.size())
     {
         switch(program[ip])
         {
