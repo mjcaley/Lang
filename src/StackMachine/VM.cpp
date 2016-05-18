@@ -1,4 +1,5 @@
 #include "VM.hpp"
+#include <iomanip>
 #include <iostream>
 
 using namespace StackMachine;
@@ -411,11 +412,42 @@ void VM::binaryDebugMessage(int ip)
 void VM::debugMessage(std::vector<int32_t>::const_iterator iter,
                       std::vector<int32_t>::const_iterator end)
 {
-    std::cout << instruction_strings[*iter] << ' ';
+    using std::cout;
+    using std::setw;
+    using std::left;
+    using std::right;
+    using std::endl;
+    
+    // Print instructions and operands
+    cout << setw(12) << left << instruction_strings[*iter] << ' ';
     iter++;
     for (; iter != end; ++iter)
     {
-        std::cout << *iter << ' ';
+        cout << left << *iter << setw(25);
     }
-    std::cout << std::endl;
+    
+    // Print top of data and call stack
+    cout << setw(25) << right << "Call stack: [ ";
+    if (!data_stack.empty())
+    {
+        cout << data_stack.top();
+    }
+    else
+    {
+        cout << ' ';
+    }
+    cout << " ] ";
+    
+    cout << "Data stack: [ ";
+    if (!call_stack.empty())
+    {
+        call_stack.top();
+    }
+    else
+    {
+        cout << ' ';
+    }
+    cout << " ]";
+    
+    cout << endl;
 }
