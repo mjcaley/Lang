@@ -142,12 +142,14 @@ int main(int argc, char* argv[])
     else if (args.filenames.size() == 1)
     {
         bool status = runProgram(args.filenames[0]);
-        return status;
+        if (status) { return 0; }
+        else { return 1; }
     }
     else if (args.filenames.size() == 2)
     {
         bool status = compileProgram(args.filenames[0], args.filenames[1]);
-        return status;
+        if (status) { return 0; }
+        else { return 1; }
     }
     
     std::cout << "Unknown error\n\n";
