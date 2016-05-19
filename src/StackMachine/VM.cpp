@@ -1,6 +1,7 @@
 #include "VM.hpp"
 #include <iomanip>
 #include <iostream>
+#include <boost/algorithm/string/join.hpp>
 
 using namespace StackMachine;
 
@@ -417,37 +418,46 @@ void VM::debugMessage(std::vector<int32_t>::const_iterator iter,
     using std::left;
     using std::right;
     using std::endl;
+    using std::to_string;
+    using boost::algorithm::join;
     
-    // Print instructions and operands
-    cout << setw(12) << left << instruction_strings[*iter] << ' ';
-    iter++;
-    for (; iter != end; ++iter)
+    
+    std::string lcolumn, mcolumn, rcolumn;
+    
+    lcolumn = instruction_strings[*iter] + ' ';
     {
-        cout << left << *iter << setw(25);
+        iter++;
+        std::vector<std::string> operands;
+        for (; iter != end; ++iter)
+        {
+            operands.emplace_back(to_string(*iter));
+        }
+        lcolumn += join(operands, " ");
     }
     
-    // Print top of data and call stack
-    cout << setw(25) << right << "Call stack: [ ";
+    mcolumn = "Data stack: ";
     if (!data_stack.empty())
     {
-        cout << data_stack.top();
+        mcolumn += '[' + to_string(data_stack.top()) + ']';
     }
     else
     {
-        cout << ' ';
+        mcolumn += "[]";
     }
-    cout << " ] ";
     
-    cout << "Data stack: [ ";
+    
+    rcolumn = "Call stack: ";
     if (!call_stack.empty())
     {
-        call_stack.top();
+        rcolumn += '[' + to_string(call_stack.top()) + ']';
     }
     else
     {
-        cout << ' ';
+        rcolumn += "[]";
     }
-    cout << " ]";
     
-    cout << endl;
+    std::cout << setw(20) << left << lcolumn
+    << setw(40) << left << mcolumn
+    << setw(20) << left << rcolumn
+    << endl;
 }
