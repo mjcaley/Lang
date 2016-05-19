@@ -68,8 +68,8 @@ namespace StackMachine
         bool running { false };
 
         std::vector<int32_t> program { 0 };
-        std::stack<int32_t> call_stack;
-        std::stack<int32_t> data_stack;
+        std::vector<int32_t> call_stack;
+        std::vector<int32_t> data_stack;
         std::map<unsigned, int32_t> memory;
         
         void clearMemory();

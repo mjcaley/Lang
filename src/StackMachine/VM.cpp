@@ -23,7 +23,7 @@ bool VM::run()
                 break;
             case PUSH:
                 ++ip;   // Advance to data
-                data_stack.push(program[ip]);
+                data_stack.push_back(program[ip]);
                 ++ip;
                 
                 if (debug)
@@ -32,7 +32,7 @@ bool VM::run()
                 }
                 break;
             case POP:
-                data_stack.pop();
+                data_stack.pop_back();
                 ++ip;
                 
                 if (debug)
@@ -108,11 +108,11 @@ void VM::clearMemory()
 
 void VM::add()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
-    data_stack.push( operand1 + operand2 );
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
+    data_stack.push_back( operand1 + operand2 );
     ++ip;
     
     if (debug)
@@ -123,11 +123,11 @@ void VM::add()
 
 void VM::subtract()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
-    data_stack.push( operand2 - operand1 );
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
+    data_stack.push_back( operand2 - operand1 );
     ++ip;
     
     if (debug)
@@ -138,11 +138,11 @@ void VM::subtract()
 
 void VM::multiply()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
-    data_stack.push(operand1 * operand2);
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
+    data_stack.push_back(operand1 * operand2);
     ++ip;
     
     if (debug)
@@ -153,11 +153,11 @@ void VM::multiply()
 
 void VM::divide()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
-    data_stack.push( operand2 / operand1 );
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
+    data_stack.push_back( operand2 / operand1 );
     ++ip;
     
     if (debug)
@@ -168,11 +168,11 @@ void VM::divide()
 
 void VM::modulus()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
-    data_stack.push( operand2 % operand1 );
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
+    data_stack.push_back( operand2 % operand1 );
     ++ip;
     
     if (debug)
@@ -199,8 +199,8 @@ void VM::jump_if_true()
     auto orig_ip = ip;
     
     ++ip;   // Advance to data
-    const auto test = data_stack.top();
-    data_stack.pop();
+    const auto test = data_stack.back();
+    data_stack.pop_back();
     if (test == true)
     {
         ip = program[ip];
@@ -221,8 +221,8 @@ void VM::jump_if_false()
     auto orig_ip = ip;
     
     ++ip;   // Advance to data
-    const auto test = data_stack.top();
-    data_stack.pop();
+    const auto test = data_stack.back();
+    data_stack.pop_back();
     if (test == false)
     {
         ip = program[ip];
@@ -240,18 +240,18 @@ void VM::jump_if_false()
 
 void VM::equal()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
     
     if (operand1 == operand2)
     {
-        data_stack.push(true);
+        data_stack.push_back(true);
     }
     else
     {
-        data_stack.push(false);
+        data_stack.push_back(false);
     }
     ++ip;
     
@@ -263,18 +263,18 @@ void VM::equal()
 
 void VM::less_than()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
     
     if (operand2 < operand1)
     {
-        data_stack.push(true);
+        data_stack.push_back(true);
     }
     else
     {
-        data_stack.push(false);
+        data_stack.push_back(false);
     }
     ++ip;
     
@@ -286,18 +286,18 @@ void VM::less_than()
 
 void VM::greater_than()
 {
-    const auto operand1 = data_stack.top();
-    data_stack.pop();
-    const auto operand2 = data_stack.top();
-    data_stack.pop();
+    const auto operand1 = data_stack.back();
+    data_stack.pop_back();
+    const auto operand2 = data_stack.back();
+    data_stack.pop_back();
     
     if (operand2 > operand1)
     {
-        data_stack.push(true);
+        data_stack.push_back(true);
     }
     else
     {
-        data_stack.push(false);
+        data_stack.push_back(false);
     }
     ++ip;
     
@@ -315,8 +315,8 @@ void VM::call()
     const auto address = program[ip];
     ++ip;   // Advance to number of arguments
     const auto nargs = program[ip];
-    data_stack.push(nargs);
-    call_stack.push(++ip);
+    data_stack.push_back(nargs);
+    call_stack.push_back(++ip);
     ip = address;
     
     if(debug)
@@ -329,8 +329,8 @@ void VM::ret()
 {
     auto orig_ip = ip;
     
-    const auto ret_address = call_stack.top();
-    call_stack.pop();
+    const auto ret_address = call_stack.back();
+    call_stack.pop_back();
     ip = ret_address;
     
     if (debug)
@@ -342,7 +342,7 @@ void VM::ret()
 void VM::load()
 {
     ++ip;   // Advance to data
-    data_stack.push( memory[program[ip]] );
+    data_stack.push_back( memory[program[ip]] );
     ++ip;
     
     if (debug)
@@ -354,9 +354,9 @@ void VM::load()
 void VM::store()
 {
     ++ip;   // Advance to data
-    const auto value = data_stack.top();
+    const auto value = data_stack.back();
     memory[program[ip]] = value;
-    data_stack.pop();
+    data_stack.pop_back();
     ++ip;
     
     if (debug)
@@ -367,8 +367,8 @@ void VM::store()
 
 void VM::print()
 {
-    const auto operand = data_stack.top();
-    data_stack.pop();
+    const auto operand = data_stack.back();
+    data_stack.pop_back();
     std::cout << operand << std::endl;
     ++ip;
     
@@ -380,7 +380,7 @@ void VM::print()
 
 void VM::dup()
 {
-    data_stack.push(data_stack.top());
+    data_stack.push_back(data_stack.back());
     ++ip;
     
     if (debug)
@@ -435,26 +435,28 @@ void VM::debugMessage(std::vector<int32_t>::const_iterator iter,
         lcolumn += join(operands, " ");
     }
     
-    mcolumn = "Data stack: ";
-    if (!data_stack.empty())
+    mcolumn = "Data stack: [ ";
     {
-        mcolumn += '[' + to_string(data_stack.top()) + ']';
+        std::vector<std::string> data_values;
+        for (const auto& i : data_stack)
+        {
+            data_values.emplace_back(to_string(i));
+        }
+        mcolumn += join(data_values, ", ");
     }
-    else
-    {
-        mcolumn += "[]";
-    }
+    mcolumn += " ] ";
     
     
     rcolumn = "Call stack: ";
-    if (!call_stack.empty())
     {
-        rcolumn += '[' + to_string(call_stack.top()) + ']';
+        std::vector<std::string> call_values;
+        for (const auto& i : call_stack)
+        {
+            call_values.emplace_back(to_string(i));
+        }
+        rcolumn += join(call_values, ", ");
     }
-    else
-    {
-        rcolumn += "[]";
-    }
+    rcolumn += " ] ";
     
     std::cout << setw(20) << left << lcolumn
     << setw(40) << left << mcolumn
