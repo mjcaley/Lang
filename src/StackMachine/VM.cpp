@@ -447,7 +447,7 @@ void VM::debugMessage(std::vector<int32_t>::const_iterator iter,
     mcolumn += " ] ";
     
     
-    rcolumn = "Call stack: ";
+    rcolumn = "Call stack: [ ";
     {
         std::vector<std::string> call_values;
         for (const auto& i : call_stack)
