@@ -93,6 +93,7 @@
 		27B58A311CE37BCD00911C79 /* AST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AST.hpp; sourceTree = "<group>"; };
 		27B58A351CE3822D00911C79 /* StackMachine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StackMachine.hpp; sourceTree = "<group>"; };
 		27C1A0551CDD32BE00BB8B83 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		27D6191F1CF89B1000B34C6A /* Stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Stack.hpp; sourceTree = "<group>"; };
 		27F7B92F1CE60AEC00498D62 /* Generator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Generator.hpp; sourceTree = "<group>"; };
 		27F9D3011CD149CF00776417 /* Scope.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scope.hpp; sourceTree = "<group>"; };
 		27F9D3021CD14B2200776417 /* LangObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangObject.hpp; sourceTree = "<group>"; };
@@ -12297,6 +12298,7 @@
 				9B70D9461CE4127300DF6B92 /* Args.cpp */,
 				9B70D9471CE4127300DF6B92 /* Args.hpp */,
 				9B9433EE1CEBE27C00443460 /* DualKeys.hpp */,
+				27D6191F1CF89B1000B34C6A /* Stack.hpp */,
 			);
 			path = StackMachine;
 			sourceTree = "<group>";

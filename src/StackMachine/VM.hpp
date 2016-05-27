@@ -1,17 +1,23 @@
 #pragma once
+#include <boost/algorithm/string/join.hpp>
 #include <cstdint>
+#include <iomanip>
 #include <iostream>
 #include <map>
 #include <stack>
 #include <string>
 #include <vector>
 #include "DualKeys.hpp"
+#include "Stack.hpp"
+#include "Frame.hpp"
 
 
 const bool debug { true };
 
 namespace StackMachine
 {
+    using i32 = int32_t;
+    
     enum InstructionSet
     {
         HALT    = 0x00000000,
@@ -45,7 +51,7 @@ namespace StackMachine
         DUP     = 0x00000013
     };
     
-    static DualKeys<int32_t, std::string> instruction_strings
+    static DualKeys<i32, std::string> instruction_strings
     {
         { HALT, "HALT" },   { PUSH, "PUSH" },   { POP, "POP" },
         { ADD, "ADD" },     { SUB, "SUB" },     { MUL, "MUL" },
@@ -59,7 +65,9 @@ namespace StackMachine
     class VM
     {
     public:
-        void loadProgram(std::vector<int32_t> p) { program = p; };
+        VM() { init(); }
+        
+        void loadProgram(std::vector<i32> p) { program = p; };
         
         bool run();
         
@@ -67,43 +75,95 @@ namespace StackMachine
         unsigned ip { 0 };  // Instruction pointer
         bool running { false };
 
-        std::vector<int32_t> program { 0 };
-        std::vector<int32_t> call_stack;
-        std::vector<int32_t> data_stack;
-        std::map<unsigned, int32_t> memory;
+        std::vector<i32> program { 0 };
         
-        void clearMemory();
+        Stack<std::map<unsigned, i32>>  frame;
+        Stack<i32>                      call;
+        Stack<i32>                      data;
+        
+        void init();
         
         // Arithmetic
-        void add();
-        void subtract();
-        void multiply();
-        void divide();
-        void modulus();
+        void add_op();
+        void subtract_op();
+        void multiply_op();
+        void divide_op();
+        void modulus_op();
         
         // Control flow
-        void jump();
-        void jump_if_true();
-        void jump_if_false();
+        void jump_op();
+        void jump_if_true_op();
+        void jump_if_false_op();
         
-        void equal();
-        void less_than();
-        void greater_than();
+        void equal_op();
+        void less_than_op();
+        void greater_than_op();
         
-        void call();
-        void ret();
+        void call_op();
+        void ret_op();
         
-        void load();
-        void store();
+        void load_op();
+        void store_op();
         
-        void print();
+        void print_op();
         
-        void dup();
+        void dup_op();
         
-        void nullaryDebugMessage(int ip);
-        void unaryDebugMessage(int ip);
-        void binaryDebugMessage(int ip);
-        void debugMessage(std::vector<int32_t>::const_iterator begin,
-                          std::vector<int32_t>::const_iterator end);
+        void nullary_debug_message(int ip);
+        void unary_debug_message(int ip);
+        void binary_debug_message(int ip);
+        
+        template <typename Iterator>
+        void debug_message(Iterator begin, Iterator end)
+        {
+            using std::cout;
+            using std::setw;
+            using std::left;
+            using std::right;
+            using std::endl;
+            using std::to_string;
+            using boost::algorithm::join;
+            
+            
+            std::string lcolumn, mcolumn, rcolumn;
+            
+            lcolumn = instruction_strings[*begin] + ' ';
+            {
+                begin++;
+                std::vector<std::string> operands;
+                for (; begin != end; ++begin)
+                {
+                    operands.emplace_back(to_string(*begin));
+                }
+                lcolumn += join(operands, " ");
+            }
+            
+            mcolumn = "Data stack: [ ";
+            {
+                std::vector<std::string> data_values;
+                for (const auto& i : data)
+                {
+                    data_values.emplace_back(to_string(i));
+                }
+                mcolumn += join(data_values, ", ");
+            }
+            mcolumn += " ] ";
+            
+            rcolumn = "Call stack: [ ";
+            {
+                std::vector<std::string> call_values;
+                for (const auto& i : call)
+                {
+                    call_values.emplace_back(to_string(i));
+                }
+                rcolumn += join(call_values, ", ");
+            }
+            rcolumn += " ] ";
+            
+            std::cout << setw(20) << left << lcolumn
+            << setw(40) << left << mcolumn
+            << setw(20) << left << rcolumn
+            << endl;
+        };
     };
 }
