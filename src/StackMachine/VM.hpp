@@ -11,8 +11,6 @@
 #include "Stack.hpp"
 
 
-const bool debug { true };
-
 namespace StackMachine
 {
     using i32 = int32_t;
@@ -65,6 +63,8 @@ namespace StackMachine
     {
     public:
         VM() { init(); }
+        
+        bool debug { false };
         
         void loadProgram(std::vector<i32> p) { program = p; };
         

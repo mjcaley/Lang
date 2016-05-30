@@ -1,3 +1,7 @@
+#ifndef DEBUG_BUILD
+#define DEBUG_BUILD true
+#endif
+
 #include <algorithm>
 #include <cstdlib>
 #include <fstream>
@@ -86,6 +90,9 @@ bool runProgram(std::string& filename)
     }
     
     auto vm = VM();
+#ifdef DEBUG_BUILD
+    vm.debug = true;
+#endif
     vm.loadProgram(program);
     bool status = vm.run();
     
