@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "DualKeys.hpp"
+#include "StackMachineFile.hpp"
 #include "Stack.hpp"
 
 
@@ -66,7 +67,7 @@ namespace StackMachine
         
         bool debug { false };
         
-        void loadProgram(std::vector<i32> p) { program = p; };
+        void loadProgram(std::unique_ptr<StackMachineFile> program);
         
         bool run();
         
@@ -74,7 +75,7 @@ namespace StackMachine
         unsigned ip { 0 };  // Instruction pointer
         bool running { false };
 
-        std::vector<i32> program { 0 };
+        std::unique_ptr<StackMachineFile> program;
         
         Stack<std::map<unsigned, i32>>  frame;
         Stack<i32>                      call;

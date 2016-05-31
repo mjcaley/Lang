@@ -18,8 +18,6 @@ const int VERSION_MAJOR = 1;
 const int VERSION_MINOR = 0;
 const int VERSION_PATCH = 0;
 
-const std::vector<int32_t> MAGIC { 0x48, 0x52, 0x42, 0x44, 0x52, 0x47, 0x4E, 0x53 };
-
 
 void printUsage()
 {
@@ -33,20 +31,7 @@ void printUsage()
     << '\t' << NAME << " SOURCE_FILE DEST_FILE" << std::endl;
 }
 
-bool verifyFile(std::vector<int32_t>& program)
-{
-    for (int i = 0; i < MAGIC.size(); i++)
-    {
-        if (MAGIC[i] != program[i])
-        {
-            return false;
-        }
-    }
-    
-    return true;
-}
-
-std::pair<bool, std::vector<int32_t>> compile(std::string& program)
+std::pair<bool, std::unique_ptr<StackMachine::StackMachineFile>> compile(std::string& program)
 {
     using namespace StackMachine;
     namespace x3 = boost::spirit::x3;
@@ -65,7 +50,7 @@ std::pair<bool, std::vector<int32_t>> compile(std::string& program)
     else
     {
         std::cout << "Error: could not parse source" << std::endl;
-        return std::make_pair(false, std::vector<int32_t>() );
+        return std::make_pair(false, std::make_unique<StackMachineFile>() );
     }
 }
 
@@ -73,27 +58,13 @@ bool runProgram(std::string& filename)
 {
     using namespace StackMachine;
     
-    std::ifstream in(filename, std::ios::binary);
-    std::vector<int32_t> program;
-    if (in.is_open())
-    {
-        std::vector<int32_t> byte_code(
-            (std::istreambuf_iterator<char>(in)),
-            (std::istreambuf_iterator<char>())
-        );
-        if (!verifyFile(byte_code))
-        {
-            std::cout << "Error: Could not verify file" << std::endl;
-            return false;
-        }
-        program.insert(program.end(), byte_code.begin()+8, byte_code.end());
-    }
+    auto program = StackMachineFile::create(filename);
     
     auto vm = VM();
 #ifdef DEBUG_BUILD
     vm.debug = true;
 #endif
-    vm.loadProgram(program);
+    vm.loadProgram(std::move(program));
     bool status = vm.run();
     
     return status;
@@ -101,7 +72,7 @@ bool runProgram(std::string& filename)
 
 bool compileProgram(std::string& input_filename, std::string& output_filename)
 {
-    std::pair<bool, std::vector<int32_t>> compiled;
+    std::pair<bool, std::unique_ptr<StackMachine::StackMachineFile>> compiled;
     
     {
         std::ifstream in(input_filename);
@@ -118,20 +89,7 @@ bool compileProgram(std::string& input_filename, std::string& output_filename)
         compiled = compile(src);
     }
     
-    {
-        std::ofstream out(output_filename, std::ios::binary);
-        if (out.is_open() && compiled.first)
-        {
-            for (auto& m : MAGIC)
-            {
-                out.put(m);
-            }
-            for (auto& i : compiled.second)
-            {
-                out.put(i);
-            }
-        }
-    }
+    compiled.second->write(output_filename);
     
     return compiled.first;
 }

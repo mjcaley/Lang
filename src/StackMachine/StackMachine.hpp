@@ -4,3 +4,4 @@
 #include "Grammar.hpp"
 #include "AST.hpp"
 #include "Generator.hpp"
+#include "StackMachineFile.hpp"

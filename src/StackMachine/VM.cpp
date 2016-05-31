@@ -11,12 +11,17 @@ void VM::init()
     frame.push();
 }
 
+void VM::loadProgram(std::unique_ptr<StackMachineFile> program)
+{
+    this->program = std::move(program);
+}
+
 bool VM::run()
 {
     running = true;
-    while(running && ip < program.size())
+    while(running && ip < program->length())
     {
-        switch(program[ip])
+        switch(program->byte_code[ip])
         {
             case HALT:
                 running = false;
@@ -28,7 +33,7 @@ bool VM::run()
                 break;
             case PUSH:
                 ++ip;   // Advance to data
-                data.push(program[ip]);
+                data.push(program->byte_code[ip]);
                 ++ip;
                 
                 if (debug)
@@ -186,7 +191,7 @@ void VM::jump_op()
     auto orig_ip = ip;
     
     ++ip;   // Advance to data
-    ip = program[ip];
+    ip = program->byte_code[ip];
     
     if (debug)
     {
@@ -203,7 +208,7 @@ void VM::jump_if_true_op()
     data.pop();
     if (test == true)
     {
-        ip = program[ip];
+        ip = program->byte_code[ip];
     }
     else
     {
@@ -225,7 +230,7 @@ void VM::jump_if_false_op()
     data.pop();
     if (test == false)
     {
-        ip = program[ip];
+        ip = program->byte_code[ip];
     }
     else
     {
@@ -312,9 +317,9 @@ void VM::call_op()
     auto orig_ip = ip;
     
     ++ip;   // Advance to call address
-    const auto address = program[ip];
+    const auto address = program->byte_code[ip];
     ++ip;   // Advance to number of arguments
-    auto nargs = program[ip];
+    auto nargs = program->byte_code[ip];
     data.push(nargs);
     call.push(++ip);
     ip = address;
@@ -347,7 +352,7 @@ void VM::load_op()
 {
     ++ip;   // Advance to data
     auto& local = frame.tos();
-    data.push( local[program[ip]] );
+    data.push( local[program->byte_code[ip]] );
     ++ip;
     
     if (debug)
@@ -361,7 +366,7 @@ void VM::store_op()
     ++ip;   // Advance to data
     const auto value = data.tos();
     auto& local = frame.tos();
-    local[program[ip]] = value;
+    local[program->byte_code[ip]] = value;
     data.pop();
     ++ip;
     
@@ -397,21 +402,21 @@ void VM::dup_op()
 
 void VM::nullary_debug_message(int ip)
 {
-    const auto begin = program.begin() + ip;
-    const auto end = program.begin() + (ip + 1);
+    const auto begin = program->byte_code.begin() + ip;
+    const auto end = program->byte_code.begin() + (ip + 1);
     debug_message(begin, end);
 }
 
 void VM::unary_debug_message(int ip)
 {
-    const auto begin = program.begin() + ip;
-    const auto end = program.begin() + (ip + 2);
+    const auto begin = program->byte_code.begin() + ip;
+    const auto end = program->byte_code.begin() + (ip + 2);
     debug_message(begin, end);
 }
 
 void VM::binary_debug_message(int ip)
 {
-    const auto begin = program.begin() + ip;
-    const auto end = program.begin() + (ip + 3);
+    const auto begin = program->byte_code.begin() + ip;
+    const auto end = program->byte_code.begin() + (ip + 3);
     debug_message(begin, end);
 }

@@ -1,4 +1,5 @@
 #include "AST.hpp"
+#include "StackMachineFile.hpp"
 
 
 namespace StackMachine { namespace AST {
@@ -109,10 +110,10 @@ namespace StackMachine { namespace AST {
         std::map<std::string, int32_t>& label_map;
     };
     
-    std::vector<int32_t> generate_byte_code(Program& instructions)
+    std::unique_ptr<StackMachineFile> generate_byte_code(Program& instructions)
     {
         std::map<std::string, int32_t> label_map;
-        std::vector<int32_t> byte_code;
+        auto smf = std::make_unique<StackMachineFile>();
         
         LabelPreprocessor label_preprocessor(label_map);
         for (auto& ast : instructions)
@@ -120,13 +121,13 @@ namespace StackMachine { namespace AST {
             boost::apply_visitor(label_preprocessor, ast);
         }
         
-        CodeGenerator generator(byte_code, label_map);
+        CodeGenerator generator(smf->byte_code, label_map);
         for (auto& ast : instructions)
         {
             boost::apply_visitor(generator, ast);
         }
         
-        return byte_code;
+        return std::move(smf);
     }
     
 } }
