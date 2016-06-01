@@ -67,27 +67,34 @@ namespace Lang { namespace AST {
         Type type { Type::UNDEFINED };
     };
     
-    struct Literal : public x3::variant< IntegerLiteral, LongLiteral, FloatLiteral, DoubleLiteral, StringLiteral >
+    
+    struct Expression;
+    
+    struct Assignment
+    {
+        Variable variable;
+        x3::forward_ast<Expression> expression;
+    };
+    
+    struct Statement : public x3::variant<Assignment>
     {
         using base_type::base_type;
         using base_type::operator=;
     };
     
-    struct LHS : public x3::variant< Variable >
+    struct Expression : public x3::variant<IntegerLiteral, LongLiteral, FloatLiteral, DoubleLiteral, StringLiteral>
     {
         using base_type::base_type;
         using base_type::operator=;
     };
     
-    struct RHS : public x3::variant< Literal >
+    struct Block : public x3::variant<Statement, Expression>
     {
         using base_type::base_type;
         using base_type::operator=;
     };
     
-    using Token = x3::variant< LHS, RHS >;
-
-    using Program = std::vector<Token>;
+    using Program = std::vector<Block>;
     
 } }
 
@@ -123,3 +130,9 @@ BOOST_FUSION_ADAPT_STRUCT(
                           Lang::AST::StringLiteral,
                           (std::string, value)
                           );
+
+BOOST_FUSION_ADAPT_STRUCT(
+                          Lang::AST::Assignment,
+                          (Lang::AST::Variable, variable),
+                          (Lang::AST::Expression, expression)
+                          )

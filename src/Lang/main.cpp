@@ -15,7 +15,9 @@ int main()
     cout << "Lang 0.1" << std::endl;
     
     std::string program =
-        "number : int = 3;";
+        "num1 : int = 3;"
+        "num2 : int = 4;"
+    ;
     
     auto iter = program.begin();
     auto end = program.end();

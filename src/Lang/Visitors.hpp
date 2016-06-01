@@ -1,15 +1,17 @@
 #pragma once
 #include <vector>
 #include "Lang/AST.hpp"
+#include "StackMachine/AST.hpp"
 #include "StackMachine/StackMachineFile.hpp"
 
 
 namespace Lang { namespace AST {
+    using StackMachine::StackMachineFile;
     
-    struct LiteralVisitor : public boost::static_visitor<>
+    struct ExpressionVisitor : public boost::static_visitor<>
     {
-        LiteralVisitor(std::vector<int32_t>& byte_code) : byte_code(byte_code) {}
-    
+        ExpressionVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
+        
         void operator()(const IntegerLiteral& integer_lit) const;
         void operator()(const LongLiteral& long_lit) const;
         void operator()(const FloatLiteral& float_lit) const;
@@ -17,40 +19,30 @@ namespace Lang { namespace AST {
         void operator()(const StringLiteral& string_lit) const;
         
     private:
-        std::vector<int32_t>& byte_code;
+        StackMachine::AST::Program& ast;
     };
     
-    struct LHSVisitor : public boost::static_visitor<>
+    struct StatementVisitor : public boost::static_visitor<>
     {
-        LHSVisitor(std::vector<int32_t>& byte_code) : byte_code(byte_code) {}
+        StatementVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
         
-        void operator()(const Variable& var) const;
+        void operator()(const Assignment& assignment) const;
         
     private:
-        std::vector<int32_t>& byte_code;
+        StackMachine::AST::Program& ast;
     };
     
-    struct RHSVisitor : public boost::static_visitor<>
+    struct BlockVisitor : public boost::static_visitor<>
     {
-        RHSVisitor(std::vector<int32_t>& byte_code) : byte_code(byte_code) {}
+        BlockVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
         
-        void operator()(const Literal& var) const;
+        void operator()(const Expression& assignment) const;
+        void operator()(const Statement& assignment) const;
         
     private:
-        std::vector<int32_t>& byte_code;
+        StackMachine::AST::Program& ast;
     };
     
-    struct TokenVisitor : public boost::static_visitor<>
-    {
-        TokenVisitor(std::vector<int32_t>& byte_code) : byte_code(byte_code) {}
-        
-        void operator()(const LHS& lhs) const;
-        void operator()(const RHS& rhs) const;
-        
-    private:
-        std::vector<int32_t>& byte_code;
-    };
-    
-    std::unique_ptr<StackMachine::StackMachineFile> generate(Program& ast);
+    std::unique_ptr<StackMachineFile> generate(Program& ast);
     
 } }

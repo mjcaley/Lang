@@ -4,62 +4,61 @@
 using namespace Lang::AST;
 
 
-void LiteralVisitor::operator()(const IntegerLiteral& integer_lit) const
+void ExpressionVisitor::operator()(const IntegerLiteral& integer_lit) const
 {
-    std::cout << "IntegerLiteral visited: " << integer_lit.value << std::endl;
+    std::cout << "(visit) IntegerLiteral visited: " << integer_lit.value << '\n';
 }
 
-void LiteralVisitor::operator()(const LongLiteral& long_lit) const
+void ExpressionVisitor::operator()(const LongLiteral& long_lit) const
 {
-    std::cout << "LongLiteral visited: " << long_lit.value << std::endl;
+    std::cout << "(visit) LongLiteral visited: " << long_lit.value << '\n';
 }
 
-void LiteralVisitor::operator()(const FloatLiteral& float_lit) const
+void ExpressionVisitor::operator()(const FloatLiteral& float_lit) const
 {
-    std::cout << "FloatLiteral visited: " << float_lit.value << std::endl;
+    std::cout << "(visit) FloatLiteral visited: " << float_lit.value << '\n';
 }
 
-void LiteralVisitor::operator()(const DoubleLiteral& double_lit) const
+void ExpressionVisitor::operator()(const DoubleLiteral& double_lit) const
 {
-    std::cout << "DoubleLiteral visited: " << double_lit.value << std::endl;
+    std::cout << "(visit) DoubleLiteral visited: " << double_lit.value << '\n';
 }
 
-void LiteralVisitor::operator()(const StringLiteral& string_lit) const
+void ExpressionVisitor::operator()(const StringLiteral& string_lit) const
 {
-    std::cout << "StringLiteral visited: " << string_lit.value << std::endl;
+    std::cout << "(visit) StringLiteral visited: " << string_lit.value << '\n';
 }
 
-void LHSVisitor::operator()(const Variable& var) const
+void StatementVisitor::operator()(const Assignment& assignment) const
 {
-    std::cout << "Variable visited" << std::endl;
+    std::cout << "(visit) Assignment\n";
+    boost::apply_visitor(ExpressionVisitor(ast), assignment.expression.get());
 }
 
-void RHSVisitor::operator()(const Literal& lit) const
+void BlockVisitor::operator()(const Expression& expression) const
 {
-    std::cout << "Literal visited" << std::endl;
-    boost::apply_visitor(LiteralVisitor(byte_code), lit);
+    std::cout << "(visit) Expression\n";
+    boost::apply_visitor(ExpressionVisitor(ast), expression);
 }
 
-void TokenVisitor::operator()(const LHS& lhs) const
+void BlockVisitor::operator()(const Statement& statement) const
 {
-    std::cout << "LHS visited" <<std::endl;
-    boost::apply_visitor(LHSVisitor(byte_code), lhs);
-}
-
-void TokenVisitor::operator()(const RHS& rhs) const
-{
-    std::cout << "RHS visited" << std::endl;
-    boost::apply_visitor(RHSVisitor(byte_code), rhs);
+    std::cout << "(visit) Statement\n";
+    boost::apply_visitor(StatementVisitor(ast), statement);
 }
 
 std::unique_ptr<StackMachine::StackMachineFile> Lang::AST::generate(Program& ast)
 {
-    auto smf = StackMachine::StackMachineFile::create();
+    StackMachine::AST::Program stackmachine_ast;
     
-    for (auto& token : ast)
+    for (auto& block : ast)
     {
-        boost::apply_visitor(TokenVisitor(smf->byte_code), token);
+        std::cout << "(visit) Block\n";
+        boost::apply_visitor(BlockVisitor(stackmachine_ast), block);
     }
+    
+    auto smf = StackMachine::StackMachineFile::create();
+    // stackmachine_ast to byte code
     
     return std::move(smf);
 }
