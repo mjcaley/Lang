@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 #include <vector>
 #include "Lang/AST.hpp"
 #include "StackMachine/AST.hpp"
@@ -6,11 +7,28 @@
 
 
 namespace Lang { namespace AST {
+    using std::map;
+    using std::shared_ptr;
+    using std::unique_ptr;
+    using std::vector;
     using StackMachine::StackMachineFile;
     
-    struct ExpressionVisitor : public boost::static_visitor<>
+    struct Scope
     {
-        ExpressionVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
+        StackMachine::AST::Program scoped_ast {};
+        map<std::string, std::pair<int, Type>> variables;
+    };
+    
+    struct Environment
+    {
+        vector<Scope> scopes { Scope() };
+        StackMachine::AST::Program ast;
+    };
+    
+    
+    struct ASTVisitor : public boost::static_visitor<>
+    {
+        ASTVisitor(Environment& environment) : environment(environment) {};
         
         void operator()(const IntegerLiteral& integer_lit) const;
         void operator()(const LongLiteral& long_lit) const;
@@ -18,31 +36,20 @@ namespace Lang { namespace AST {
         void operator()(const DoubleLiteral& double_lit) const;
         void operator()(const StringLiteral& string_lit) const;
         
-    private:
-        StackMachine::AST::Program& ast;
-    };
-    
-    struct StatementVisitor : public boost::static_visitor<>
-    {
-        StatementVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
-        
         void operator()(const Assignment& assignment) const;
-        
-    private:
-        StackMachine::AST::Program& ast;
-    };
-    
-    struct BlockVisitor : public boost::static_visitor<>
-    {
-        BlockVisitor(StackMachine::AST::Program& ast) : ast(ast) {}
         
         void operator()(const Expression& assignment) const;
         void operator()(const Statement& assignment) const;
         
     private:
-        StackMachine::AST::Program& ast;
+        Environment& environment;
     };
     
-    std::unique_ptr<StackMachineFile> generate(Program& ast);
-    
 } }
+
+namespace Lang
+{
+    bool stage1(const Lang::AST::Program& ast, Lang::AST::Environment& environment);
+    bool stage2(const StackMachine::AST::Program& ast, StackMachine::StackMachineFile* smf);
+    std::unique_ptr<StackMachine::StackMachineFile> compile(const Lang::AST::Program& ast);
+}

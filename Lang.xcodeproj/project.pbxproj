@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		271DD7F71CFE07CF00F24C21 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271DD7F61CFE07CF00F24C21 /* Visitors.cpp */; };
 		271DD7F81CFE0E5500F24C21 /* StackMachineFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* StackMachineFile.cpp */; };
+		27371F4F1D09DF2D006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
+		27371F501D09DF33006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
+		27371F511D09DF33006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
 		2799CACA1CEB82C000B3D126 /* Factorial.s in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2799CAC61CEB6AE800B3D126 /* Factorial.s */; };
 		27B456EE1CFC9DCD00A543B7 /* StackMachineFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* StackMachineFile.cpp */; };
 		27B456EF1CFC9DCD00A543B7 /* StackMachineFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* StackMachineFile.cpp */; };
@@ -61,6 +64,7 @@
 		270971691CD2A27E00D0FE7B /* LangObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangObject.cpp; sourceTree = "<group>"; };
 		271DD7F51CFE04D100F24C21 /* Visitors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
 		271DD7F61CFE07CF00F24C21 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
+		27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		275625AD1CE10EAA008A8DF6 /* VM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
 		275625AE1CE10EAA008A8DF6 /* VM.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VM.hpp; sourceTree = "<group>"; };
 		275625B31CE113E9008A8DF6 /* StackMachine compile */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "StackMachine compile"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +81,7 @@
 		27B58A351CE3822D00911C79 /* StackMachine.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = StackMachine.hpp; sourceTree = "<group>"; };
 		27C1A0551CDD32BE00BB8B83 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		27D6191F1CF89B1000B34C6A /* Stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Stack.hpp; sourceTree = "<group>"; };
-		27F7B92F1CE60AEC00498D62 /* Generator.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Generator.hpp; sourceTree = "<group>"; };
+		27F7B92F1CE60AEC00498D62 /* Visitors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
 		27F9D3011CD149CF00776417 /* Scope.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Scope.hpp; sourceTree = "<group>"; };
 		27F9D3021CD14B2200776417 /* LangObject.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangObject.hpp; sourceTree = "<group>"; };
 		27FDEECC1CCF9F3900DA931E /* Lang */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lang; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -12264,7 +12268,8 @@
 				27B58A2F1CE37BCD00911C79 /* main.cpp */,
 				27B58A301CE37BCD00911C79 /* Grammar.hpp */,
 				27B58A311CE37BCD00911C79 /* AST.hpp */,
-				27F7B92F1CE60AEC00498D62 /* Generator.hpp */,
+				27F7B92F1CE60AEC00498D62 /* Visitors.hpp */,
+				27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */,
 				275625AD1CE10EAA008A8DF6 /* VM.cpp */,
 				275625AE1CE10EAA008A8DF6 /* VM.hpp */,
 				27B58A351CE3822D00911C79 /* StackMachine.hpp */,
@@ -32704,6 +32709,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27371F501D09DF33006F6EE3 /* Visitors.cpp in Sources */,
 				27B456EE1CFC9DCD00A543B7 /* StackMachineFile.cpp in Sources */,
 				9B70D9491CE4127A00DF6B92 /* Args.cpp in Sources */,
 				27B58A341CE37F1200911C79 /* VM.cpp in Sources */,
@@ -32716,6 +32722,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				271DD7F81CFE0E5500F24C21 /* StackMachineFile.cpp in Sources */,
+				27371F4F1D09DF2D006F6EE3 /* Visitors.cpp in Sources */,
 				271DD7F71CFE07CF00F24C21 /* Visitors.cpp in Sources */,
 				9BF3CC8D1CF3812C00142836 /* main.cpp in Sources */,
 			);
@@ -32725,6 +32732,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27371F511D09DF33006F6EE3 /* Visitors.cpp in Sources */,
 				27B456EF1CFC9DCD00A543B7 /* StackMachineFile.cpp in Sources */,
 				9B70D94C1CE54D8300DF6B92 /* Args.cpp in Sources */,
 				9B70D94D1CE54D8300DF6B92 /* VM.cpp in Sources */,

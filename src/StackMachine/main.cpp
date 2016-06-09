@@ -43,14 +43,16 @@ std::pair<bool, std::unique_ptr<StackMachine::StackMachineFile>> compile(std::st
     
     bool result = x3::phrase_parse(iter, end, grammar, Grammar::skipper, ast);
     
+    auto smf = std::make_unique<StackMachineFile>();
     if (result && iter == end)
     {
-        return std::make_pair(result, AST::generate_byte_code(ast) );
+        compile(ast, smf.get());
+        return std::make_pair(result, std::move(smf));
     }
     else
     {
         std::cout << "Error: could not parse source" << std::endl;
-        return std::make_pair(false, std::make_unique<StackMachineFile>() );
+        return std::make_pair(false, std::move(smf));
     }
 }
 

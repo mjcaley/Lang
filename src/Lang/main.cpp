@@ -24,12 +24,13 @@ int main()
     AST::Program ast;
     auto& grammar = Grammar::program;
     
-    bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+    bool success = x3::phrase_parse(iter, end, grammar, x3::space, ast);
     
-    if (result && iter == end)
+    if (success && iter == end)
     {
         cout << "Success" << endl;
-        generate(ast);
+        auto result = compile(ast);
+        result->write("out.lang");
     }
     else
     {
