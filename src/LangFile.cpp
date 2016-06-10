@@ -1,25 +1,25 @@
-#include "StackMachineFile.hpp"
+#include "LangFile.hpp"
 #include <fstream>
 
-using namespace StackMachine;
+using namespace Lang;
 
 
-std::unique_ptr<StackMachineFile> StackMachineFile::create()
+std::unique_ptr<LangFile> LangFile::create()
 {
-    return std::make_unique<StackMachineFile>();
+    return std::make_unique<LangFile>();
 }
 
-std::unique_ptr<StackMachineFile> StackMachineFile::create(const std::string& filename)
+std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
 {
     using std::istreambuf_iterator;
     
-    auto smf = std::make_unique<StackMachineFile>();
+    auto smf = std::make_unique<LangFile>();
     
     std::ifstream in(filename, std::ios::binary);
     if (in.is_open())
     {
         // Check if valid and advance 8 bytes
-        bool valid = StackMachineFile::isValid(istreambuf_iterator<char>(in),
+        bool valid = LangFile::isValid(istreambuf_iterator<char>(in),
                                                istreambuf_iterator<char>());
         if (valid)
         {
@@ -36,7 +36,7 @@ std::unique_ptr<StackMachineFile> StackMachineFile::create(const std::string& fi
     return std::move(smf);
 }
 
-bool StackMachineFile::write(const std::string &filename)
+bool LangFile::write(const std::string &filename)
 {
     std::ofstream out(filename, std::ios::binary);
     if (out.is_open())
@@ -56,5 +56,5 @@ bool StackMachineFile::write(const std::string &filename)
     return false;
 }
 
-const std::vector<int32_t> StackMachineFile::magic_number
+const std::vector<int32_t> LangFile::magic_number
     { 0x48, 0x52, 0x42, 0x44, 0x52, 0x47, 0x4E, 0x53 };

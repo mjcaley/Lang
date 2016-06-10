@@ -1,11 +1,13 @@
 #pragma once
-#include "AST.hpp"
+#include "Bytecode/AST.hpp"
+#include "VM/VM.hpp"
 
 
-namespace StackMachine { namespace Grammar {
+namespace Lang { namespace Bytecode { namespace Grammar {
     
     namespace x3 = boost::spirit::x3;
-    namespace AST = StackMachine::AST;
+    namespace AST = Lang::Bytecode::AST;
+    using namespace Lang::VM;
     
     using x3::alpha;
     using x3::alnum;
@@ -94,4 +96,4 @@ namespace StackMachine { namespace Grammar {
     BOOST_SPIRIT_DEFINE(call_op);
     BOOST_SPIRIT_DEFINE(program);
     
-} };
+} } };

@@ -1,6 +1,6 @@
-#include "Visitors.hpp"
+#include "Bytecode/Visitors.hpp"
 
-using namespace StackMachine::AST;
+using namespace Lang::Bytecode::AST;
 
 
 void CodeGenerator::operator()(const Jump& jump) const
@@ -34,23 +34,4 @@ void CodeGenerator::operator()(const Binary& binary_op) const
     byte_code.emplace_back(binary_op.instruction);
     byte_code.emplace_back(binary_op.operand1);
     byte_code.emplace_back(binary_op.operand2);
-}
-
-bool StackMachine::compile(const Program &instructions, StackMachineFile *smf)
-{
-    std::map<std::string, int32_t> label_map;
-    
-    LabelPreprocessor label_preprocessor(label_map);
-    for (auto& ast : instructions)
-    {
-        boost::apply_visitor(label_preprocessor, ast);
-    }
-    
-    CodeGenerator generator(smf->byte_code, label_map);
-    for (auto& ast : instructions)
-    {
-        boost::apply_visitor(generator, ast);
-    }
-    
-    return true;
 }

@@ -1,10 +1,11 @@
 #pragma once
-#include "Lang/AST.hpp"
+#include "Language/AST.hpp"
 
 
-namespace Lang { namespace Grammar {
+namespace Lang { namespace Language { namespace Grammar {
     
     namespace x3 = boost::spirit::x3;
+    namespace AST = Lang::Language::AST;
     
     using x3::alpha;
     using x3::alnum;
@@ -84,4 +85,4 @@ namespace Lang { namespace Grammar {
     
     BOOST_SPIRIT_DEFINE(program);
     
-} }
+} } }

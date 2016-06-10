@@ -7,13 +7,13 @@
 #include <stack>
 #include <string>
 #include <vector>
-#include "DualKeys.hpp"
-#include "StackMachineFile.hpp"
-#include "Stack.hpp"
+#include "LangFile.hpp"
+#include "VM/DualKeys.hpp"
+#include "VM/Stack.hpp"
 
 
-namespace StackMachine
-{
+namespace Lang { namespace VM {
+    
     using i32 = int32_t;
     
     enum InstructionSet
@@ -67,7 +67,7 @@ namespace StackMachine
         
         bool debug { false };
         
-        void loadProgram(std::unique_ptr<StackMachineFile> program);
+        void loadProgram(std::unique_ptr<LangFile> program);
         
         bool run();
         
@@ -75,7 +75,7 @@ namespace StackMachine
         unsigned ip { 0 };  // Instruction pointer
         bool running { false };
 
-        std::unique_ptr<StackMachineFile> program;
+        std::unique_ptr<LangFile> program;
         
         Stack<std::map<unsigned, i32>>  frame;
         Stack<i32>                      call;
@@ -166,4 +166,5 @@ namespace StackMachine
             << endl;
         };
     };
-}
+    
+} }

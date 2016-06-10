@@ -5,7 +5,7 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 
-namespace Lang { namespace AST {
+namespace Lang { namespace Language { namespace AST {
     
     namespace x3 = boost::spirit::x3;
     using x3::int_;
@@ -96,43 +96,43 @@ namespace Lang { namespace AST {
     
     using Program = std::vector<Block>;
     
-} }
+} } }
 
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::Variable,
+                          Lang::Language::AST::Variable,
                           (std::string, name),
-                          (Lang::AST::Type, type)
+                          (Lang::Language::AST::Type, type)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::IntegerLiteral,
+                          Lang::Language::AST::IntegerLiteral,
                           (int, value)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::LongLiteral,
+                          Lang::Language::AST::LongLiteral,
                           (long, value)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::FloatLiteral,
+                          Lang::Language::AST::FloatLiteral,
                           (float, value)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::DoubleLiteral,
+                          Lang::Language::AST::DoubleLiteral,
                           (double, value)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::StringLiteral,
+                          Lang::Language::AST::StringLiteral,
                           (std::string, value)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          Lang::AST::Assignment,
-                          (Lang::AST::Variable, variable),
-                          (Lang::AST::Expression, expression)
+                          Lang::Language::AST::Assignment,
+                          (Lang::Language::AST::Variable, variable),
+                          (Lang::Language::AST::Expression, expression)
                           )

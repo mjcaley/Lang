@@ -4,9 +4,9 @@
 #include <vector>
 
 
-namespace StackMachine
+namespace Lang
 {
-    class StackMachineFile
+    class LangFile
     {
     /**
      File format:
@@ -18,8 +18,8 @@ namespace StackMachine
      0 ... function count-1: (int)index; (str)name; (int)ip; (int)num of param
     **/
     public:
-        static std::unique_ptr<StackMachineFile> create();
-        static std::unique_ptr<StackMachineFile> create(const std::string& filename);
+        static std::unique_ptr<LangFile> create();
+        static std::unique_ptr<LangFile> create(const std::string& filename);
         
         template<typename Iterator>
         static bool isValid(Iterator begin, Iterator end)

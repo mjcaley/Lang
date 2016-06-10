@@ -1,9 +1,9 @@
 #pragma once
-#include "AST.hpp"
-#include "StackMachineFile.hpp"
+#include <map>
+#include "Bytecode/AST.hpp"
 
 
-namespace StackMachine { namespace AST {
+namespace Lang { namespace Bytecode { namespace AST {
     
     struct LabelPreprocessor : public boost::static_visitor<>
     {
@@ -83,9 +83,4 @@ namespace StackMachine { namespace AST {
         std::map<std::string, int32_t>& label_map;
     };
     
-} }
-
-namespace StackMachine
-{
-    bool compile(const AST::Program& instructions, StackMachineFile* smf);
-}
+} } }

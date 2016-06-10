@@ -4,7 +4,7 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 
-namespace StackMachine { namespace AST {
+namespace Lang { namespace Bytecode { namespace AST {
 
     namespace x3 = boost::spirit::x3;
     
@@ -61,38 +61,38 @@ namespace StackMachine { namespace AST {
     
     using Program = std::vector<InstructionCode>;
 
-} }
+} } }
 
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          StackMachine::AST::Nullary,
-                          (StackMachine::AST::Instruction, instruction)
+                          Lang::Bytecode::AST::Nullary,
+                          (Lang::Bytecode::AST::Instruction, instruction)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          StackMachine::AST::Unary,
-                          (StackMachine::AST::Instruction, instruction),
-                          (StackMachine::AST::Operand, operand)
+                          Lang::Bytecode::AST::Unary,
+                          (Lang::Bytecode::AST::Instruction, instruction),
+                          (Lang::Bytecode::AST::Operand, operand)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          StackMachine::AST::Binary,
-                          (StackMachine::AST::Instruction, instruction),
-                          (StackMachine::AST::Operand, operand1),
-                          (StackMachine::AST::Operand, operand2)
+                          Lang::Bytecode::AST::Binary,
+                          (Lang::Bytecode::AST::Instruction, instruction),
+                          (Lang::Bytecode::AST::Operand, operand1),
+                          (Lang::Bytecode::AST::Operand, operand2)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          StackMachine::AST::Call,
-                          (StackMachine::AST::Instruction, instruction),
-                          (StackMachine::AST::JumpArg, position),
-                          (StackMachine::AST::Operand, operand)
+                          Lang::Bytecode::AST::Call,
+                          (Lang::Bytecode::AST::Instruction, instruction),
+                          (Lang::Bytecode::AST::JumpArg, position),
+                          (Lang::Bytecode::AST::Operand, operand)
                           );
 
-BOOST_FUSION_ADAPT_STRUCT(StackMachine::AST::Label, (std::string, name));
+BOOST_FUSION_ADAPT_STRUCT(Lang::Bytecode::AST::Label, (std::string, name));
 
 BOOST_FUSION_ADAPT_STRUCT(
-                          StackMachine::AST::Jump,
-                          (StackMachine::AST::Instruction, instruction),
-                          (StackMachine::AST::JumpArg, position)
+                          Lang::Bytecode::AST::Jump,
+                          (Lang::Bytecode::AST::Instruction, instruction),
+                          (Lang::Bytecode::AST::JumpArg, position)
                           );

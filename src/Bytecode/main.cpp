@@ -10,7 +10,8 @@
 #include <string>
 #include <utility>
 #include "Args.hpp"
-#include "StackMachine.hpp"
+#include "Bytecode/Bytecode.hpp"
+#include "StackMachineFile.hpp"
 
 
 const std::string NAME = "StackMachine";

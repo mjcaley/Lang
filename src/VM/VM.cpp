@@ -1,6 +1,6 @@
-#include "VM.hpp"
+#include "VM/VM.hpp"
 
-using namespace StackMachine;
+using namespace Lang::VM;
 
 
 void VM::init()
@@ -11,7 +11,7 @@ void VM::init()
     frame.push();
 }
 
-void VM::loadProgram(std::unique_ptr<StackMachineFile> program)
+void VM::loadProgram(std::unique_ptr<LangFile> program)
 {
     this->program = std::move(program);
 }

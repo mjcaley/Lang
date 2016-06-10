@@ -2,8 +2,8 @@
 #include <vector>
 
 
-namespace StackMachine
-{
+namespace Lang { namespace VM {
+    
     template <typename T>
     class Stack
     {
@@ -48,4 +48,5 @@ namespace StackMachine
     private:
         std::vector<T> stack;
     };
-}
+    
+} }
