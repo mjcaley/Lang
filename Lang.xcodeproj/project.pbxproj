@@ -12,7 +12,7 @@
 		27371F4F1D09DF2D006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
 		27371F501D09DF33006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
 		27371F511D09DF33006F6EE3 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
-		27371F7B1D0B1707006F6EE3 /* Test.lang in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27371F7A1D0B1122006F6EE3 /* Test.lang */; };
+		27371F7B1D0B1707006F6EE3 /* Test.langs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27371F7A1D0B1122006F6EE3 /* Test.langs */; };
 		2799CACA1CEB82C000B3D126 /* Factorial.s in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2799CAC61CEB6AE800B3D126 /* Factorial.s */; };
 		27B456EE1CFC9DCD00A543B7 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		27B456EF1CFC9DCD00A543B7 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
@@ -80,7 +80,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				27371F7B1D0B1707006F6EE3 /* Test.lang in CopyFiles */,
+				27371F7B1D0B1707006F6EE3 /* Test.langs in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 		271DD7F51CFE04D100F24C21 /* Visitors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
 		271DD7F61CFE07CF00F24C21 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
-		27371F7A1D0B1122006F6EE3 /* Test.lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.lang; sourceTree = "<group>"; };
+		27371F7A1D0B1122006F6EE3 /* Test.langs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.langs; sourceTree = "<group>"; };
 		275625AD1CE10EAA008A8DF6 /* VM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
 		275625AE1CE10EAA008A8DF6 /* VM.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VM.hpp; sourceTree = "<group>"; };
 		275625B31CE113E9008A8DF6 /* StackMachine compile */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "StackMachine compile"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -12302,7 +12302,7 @@
 			isa = PBXGroup;
 			children = (
 				2799CAC61CEB6AE800B3D126 /* Factorial.s */,
-				27371F7A1D0B1122006F6EE3 /* Test.lang */,
+				27371F7A1D0B1122006F6EE3 /* Test.langs */,
 			);
 			path = Test;
 			sourceTree = "<group>";
@@ -32953,7 +32953,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -33001,7 +33001,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -33329,6 +33329,7 @@
 				27DC0ACA1D0B3D6700D4E438 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		27FDEEC51CCF9F2800DA931E /* Build configuration list for PBXProject "Lang" */ = {
 			isa = XCConfigurationList;
