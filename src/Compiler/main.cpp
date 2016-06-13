@@ -2,6 +2,7 @@
 #include <iostream>
 #include <boost/program_options.hpp>
 #include <boost/spirit/home/x3.hpp>
+#include <boost/spirit/include/support_multi_pass.hpp>
 #include "Language/Language.hpp"
 #include "Bytecode/Bytecode.hpp"
 
@@ -14,25 +15,20 @@ const int VERSION_MINOR = 1;
 bool compile(const std::string& src, const std::string& dest)
 {
     namespace x3 = boost::spirit::x3;
+    using boost::spirit::make_default_multi_pass;
     using namespace Lang;
     
     std::basic_ifstream<char32_t> in(src);
     in.unsetf(std::ios::skipws);
     
-    std::u32string src_str;
-    if (in.is_open())
-    {
-        std::basic_ostringstream<char32_t> contents;
-        contents << in.rdbuf();
-        src_str = contents.str();
-    }
-    else
+    if (!in.is_open())
     {
         return false;
     }
     
-    auto iter = src_str.begin();
-    auto end = src_str.end();
+    using stream_iterator = std::istreambuf_iterator<char32_t>;
+    auto iter = make_default_multi_pass(stream_iterator(in));
+    auto end = make_default_multi_pass(stream_iterator());
     
     Lang::Language::AST::Program ast;
     auto& grammar = Lang::Language::Grammar::program;
