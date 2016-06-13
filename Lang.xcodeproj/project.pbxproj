@@ -87,6 +87,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		27122B831D0EE144005E3003 /* InstructionSet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InstructionSet.hpp; sourceTree = "<group>"; };
 		271DD7F51CFE04D100F24C21 /* Visitors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
 		271DD7F61CFE07CF00F24C21 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
@@ -12313,6 +12314,7 @@
 				27B58A351CE3822D00911C79 /* Bytecode.hpp */,
 				27B58A311CE37BCD00911C79 /* AST.hpp */,
 				27B58A301CE37BCD00911C79 /* Grammar.hpp */,
+				27122B831D0EE144005E3003 /* InstructionSet.hpp */,
 				27F7B92F1CE60AEC00498D62 /* Visitors.hpp */,
 				27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */,
 				27DC0ABD1D0B397C00D4E438 /* Functions.hpp */,

@@ -1,5 +1,5 @@
+#include "Bytecode/InstructionSet.hpp"
 #include "Language/Visitors.hpp"
-#include "VM/VM.hpp"
 #include <iostream>
 
 using namespace Lang::Language::AST;
@@ -9,7 +9,7 @@ void ASTVisitor::operator()(const IntegerLiteral &integer_lit) const
 {
     std::cout << "(visit) IntegerLiteral visited: " << integer_lit.value << '\n';
     Bytecode::AST::InstructionCode push;
-    push = Bytecode::AST::Unary { VM::InstructionSet::PUSH, integer_lit.value };
+    push = Bytecode::AST::Unary { PUSH, integer_lit.value };
     environment.ast.emplace_back(push);
 }
 
@@ -39,7 +39,7 @@ void ASTVisitor::operator()(const Assignment &assignment) const
     boost::apply_visitor(*this, assignment.expression.get());
     // Added to byte code
     Bytecode::AST::InstructionCode store;
-    store = Bytecode::AST::Unary { VM::InstructionSet::STORE, 0 };
+    store = Bytecode::AST::Unary { STORE, 0 };
     environment.ast.emplace_back(store);
 }
 

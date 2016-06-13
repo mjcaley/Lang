@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "LangFile.hpp"
+#include "Bytecode/InstructionSet.hpp"
 #include "VM/DualKeys.hpp"
 #include "VM/Stack.hpp"
 
@@ -15,39 +16,6 @@
 namespace Lang { namespace VM {
     
     using i32 = int32_t;
-    
-    enum InstructionSet
-    {
-        HALT    = 0x00000000,
-        
-        PUSH    = 0x00000001,
-        POP     = 0x00000002,
-        
-        ADD     = 0x00000003,
-        SUB     = 0x00000004,
-        MUL     = 0x00000005,
-        DIV     = 0x00000006,
-        MOD     = 0x00000007,
-        
-        JMP     = 0x00000008,
-        JT      = 0x00000009,   // Jump if true
-        JF      = 0x0000000A,   // Jump if false
-        
-        EQ      = 0x0000000B,    // Equal
-        LT      = 0x0000000C,    // Less than
-        GT      = 0x0000000D,    // Greater than
-        
-        
-        LOAD    = 0x0000000E,
-        STORE   = 0x0000000F,
-        
-        PRNT    = 0x00000010,
-        
-        CALL    = 0x00000011,
-        RET     = 0x00000012,
-        
-        DUP     = 0x00000013
-    };
     
     static DualKeys<i32, std::string> instruction_strings
     {
