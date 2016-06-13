@@ -16,13 +16,13 @@ bool compile(const std::string& src, const std::string& dest)
     namespace x3 = boost::spirit::x3;
     using namespace Lang;
     
-    std::ifstream in(src);
+    std::basic_ifstream<char32_t> in(src);
     in.unsetf(std::ios::skipws);
     
-    std::string src_str;
+    std::u32string src_str;
     if (in.is_open())
     {
-        std::ostringstream contents;
+        std::basic_ostringstream<char32_t> contents;
         contents << in.rdbuf();
         src_str = contents.str();
     }
