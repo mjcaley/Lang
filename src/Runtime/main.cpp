@@ -1,3 +1,4 @@
+#include "FileFormatException.hpp"
 #include "LangFile.hpp"
 #include "VM/VM.hpp"
 #include <boost/program_options.hpp>
@@ -31,11 +32,20 @@ int main(int argc, char* argv[])
     }
     else if (var_map.count("source"))
     {
-        auto file = LangFile::create(var_map["source"].as<string>());
-        
         auto vm = VM::VM();
         vm.debug = true;
-        vm.loadProgram(std::move(file));
+        
+        try
+        {
+            auto file = LangFile::create(var_map["source"].as<string>());
+            vm.loadProgram(std::move(file));
+        }
+        catch(const Exception::FileFormatException& e)
+        {
+            cout << "Error: " << e.what() << endl;
+            return 1;
+        }
+        
         vm.run();
     }
     else

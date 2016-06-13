@@ -88,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		27122B831D0EE144005E3003 /* InstructionSet.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = InstructionSet.hpp; sourceTree = "<group>"; };
+		27122B841D0F0481005E3003 /* FileFormatException.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileFormatException.hpp; sourceTree = "<group>"; };
 		271DD7F51CFE04D100F24C21 /* Visitors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
 		271DD7F61CFE07CF00F24C21 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
@@ -12375,6 +12376,7 @@
 				27DC0ABE1D0B3C1200D4E438 /* Runtime */,
 				27B456EC1CFC901100A543B7 /* LangFile.hpp */,
 				27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */,
+				27122B841D0F0481005E3003 /* FileFormatException.hpp */,
 				27DC0AB71D0B2DB800D4E438 /* VM */,
 				9B2960921CF3535000AFBBA4 /* Language */,
 				27B58A2E1CE37B2600911C79 /* Bytecode */,

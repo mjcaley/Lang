@@ -1,4 +1,5 @@
 #include "LangFile.hpp"
+#include "FileFormatException.hpp"
 #include <fstream>
 
 using namespace Lang;
@@ -20,7 +21,7 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
     {
         // Check if valid and advance 8 bytes
         bool valid = LangFile::isValid(istreambuf_iterator<char>(in),
-                                               istreambuf_iterator<char>());
+                                       istreambuf_iterator<char>());
         if (valid)
         {
             smf->byte_code.insert(smf->byte_code.begin(),
@@ -29,7 +30,7 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
         }
         else
         {
-            return nullptr;
+            throw Exception::FileFormatException();
         }
     }
     

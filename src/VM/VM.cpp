@@ -13,11 +13,19 @@ void VM::init()
 
 void VM::loadProgram(std::unique_ptr<LangFile> program)
 {
-    this->program = std::move(program);
+    if (program)
+    {
+        this->program = std::move(program);
+    }
 }
 
 bool VM::run()
 {
+    if (!program)
+    {
+        return false;
+    }
+    
     running = true;
     while(running && ip < program->length())
     {
