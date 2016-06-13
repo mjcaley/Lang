@@ -4,6 +4,11 @@
 #include <boost/program_options.hpp>
 
 
+const std::string EXEC_NAME = "lang";
+const int VERSION_MAJOR = 0;
+const int VERSION_MINOR = 1;
+
+
 int main(int argc, char* argv[])
 {
     using std::cout;
@@ -50,7 +55,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        cout << desc << endl;
+        cout << EXEC_NAME << '\n' << desc << endl;
     }
     
     return 0;
