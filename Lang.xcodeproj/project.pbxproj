@@ -13,6 +13,7 @@
 		2768155B1D104EC10084B9A6 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2768155A1D104EC10084B9A6 /* LangFile.cpp */; };
 		2768155E1D10515F0084B9A6 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		276815601D10543B0084B9A6 /* LangFile-bad_format.lang in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2768155F1D1053620084B9A6 /* LangFile-bad_format.lang */; };
+		27D012C01D1088C000076A60 /* LangFile-blank_compiled.lang in CopyFiles */ = {isa = PBXBuildFile; fileRef = 276815631D1057580084B9A6 /* LangFile-blank_compiled.lang */; };
 		27DC0AB81D0B332300D4E438 /* VM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275625AD1CE10EAA008A8DF6 /* VM.cpp */; };
 		27DC0AB91D0B332300D4E438 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		27DC0ABA1D0B332300D4E438 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271DD7F61CFE07CF00F24C21 /* Visitors.cpp */; };
@@ -33,6 +34,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				27D012C01D1088C000076A60 /* LangFile-blank_compiled.lang in CopyFiles */,
 				276815601D10543B0084B9A6 /* LangFile-bad_format.lang in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -83,6 +85,7 @@
 		27B58A311CE37BCD00911C79 /* AST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AST.hpp; sourceTree = "<group>"; };
 		27B58A351CE3822D00911C79 /* Bytecode.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Bytecode.hpp; sourceTree = "<group>"; };
 		27C1A0551CDD32BE00BB8B83 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		27D012BF1D10862000076A60 /* FileNotFoundException.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileNotFoundException.hpp; sourceTree = "<group>"; };
 		27D6191F1CF89B1000B34C6A /* Stack.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Stack.hpp; sourceTree = "<group>"; };
 		27DC0ABD1D0B397C00D4E438 /* Functions.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Functions.hpp; sourceTree = "<group>"; };
 		27DC0ABF1D0B3C3C00D4E438 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -12357,6 +12360,7 @@
 				27B456EC1CFC901100A543B7 /* LangFile.hpp */,
 				27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */,
 				27122B841D0F0481005E3003 /* FileFormatException.hpp */,
+				27D012BF1D10862000076A60 /* FileNotFoundException.hpp */,
 				27DC0AB71D0B2DB800D4E438 /* VM */,
 				9B2960921CF3535000AFBBA4 /* Language */,
 				27B58A2E1CE37B2600911C79 /* Bytecode */,

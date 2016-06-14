@@ -3,6 +3,7 @@
 #include <fstream>
 #include "LangFile.hpp"
 #include "FileFormatException.hpp"
+#include "FileNotFoundException.hpp"
 #include "Bytecode/InstructionSet.hpp"
 
 using namespace Lang;
@@ -24,6 +25,12 @@ TEST_CASE( "LangFile throws exception with incorrect format", "[LangFile]" )
 {
     REQUIRE_THROWS_AS(LangFile::create("LangFile-bad_format.lang"),
                       Exception::FileFormatException);
+}
+
+TEST_CASE( "LangFile throws exception for file not found", "[LangFile]" )
+{
+    REQUIRE_THROWS_AS(LangFile::create("LangFile-fake_name.lang"),
+                      Exception::FileNotFoundException);
 }
 
 TEST_CASE( "LangFile test if valid", "[LangFile]" )

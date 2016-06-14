@@ -1,4 +1,5 @@
 #include "FileFormatException.hpp"
+#include "FileNotFoundException.hpp"
 #include "LangFile.hpp"
 #include "VM/VM.hpp"
 #include <boost/program_options.hpp>
@@ -49,6 +50,11 @@ int main(int argc, char* argv[])
         {
             cout << "Error: " << e.what() << endl;
             return 1;
+        }
+        catch(const Exception::FileNotFoundException& e)
+        {
+            cout << "Error: " << e.what() << endl;
+            return 2;
         }
         
         vm.run();

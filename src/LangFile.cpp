@@ -1,5 +1,6 @@
 #include "LangFile.hpp"
 #include "FileFormatException.hpp"
+#include "FileNotFoundException.hpp"
 #include <fstream>
 
 using namespace Lang;
@@ -32,6 +33,10 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
         {
             throw Exception::FileFormatException();
         }
+    }
+    else
+    {
+        throw Exception::FileNotFoundException(filename);
     }
     
     return std::move(smf);
