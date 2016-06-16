@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		27371F7B1D0B1707006F6EE3 /* Test.langs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27371F7A1D0B1122006F6EE3 /* Test.langs */; };
 		2760F1AB1D12F9F300708C51 /* Bytecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AA1D12F9F300708C51 /* Bytecode.cpp */; };
+		2760F1AD1D13152600708C51 /* Language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AC1D13152600708C51 /* Language.cpp */; };
 		276815571D104C6A0084B9A6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276815561D104C6A0084B9A6 /* main.cpp */; };
 		276815591D104E9F0084B9A6 /* VM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276815581D104E9F0084B9A6 /* VM.cpp */; };
 		2768155B1D104EC10084B9A6 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2768155A1D104EC10084B9A6 /* LangFile.cpp */; };
@@ -71,6 +72,7 @@
 		275625AD1CE10EAA008A8DF6 /* VM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
 		275625AE1CE10EAA008A8DF6 /* VM.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VM.hpp; sourceTree = "<group>"; };
 		2760F1AA1D12F9F300708C51 /* Bytecode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Bytecode.cpp; sourceTree = "<group>"; };
+		2760F1AC1D13152600708C51 /* Language.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Language.cpp; sourceTree = "<group>"; };
 		276815491D104BA20084B9A6 /* catch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = catch.hpp; sourceTree = "<group>"; };
 		2768154E1D104C020084B9A6 /* Test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Test; sourceTree = BUILT_PRODUCTS_DIR; };
 		276815561D104C6A0084B9A6 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -12287,8 +12289,9 @@
 			isa = PBXGroup;
 			children = (
 				276815561D104C6A0084B9A6 /* main.cpp */,
-				2768155A1D104EC10084B9A6 /* LangFile.cpp */,
 				2760F1AA1D12F9F300708C51 /* Bytecode.cpp */,
+				2760F1AC1D13152600708C51 /* Language.cpp */,
+				2768155A1D104EC10084B9A6 /* LangFile.cpp */,
 				276815581D104E9F0084B9A6 /* VM.cpp */,
 				276815631D1057580084B9A6 /* LangFile-blank_compiled.lang */,
 				2768155F1D1053620084B9A6 /* LangFile-bad_format.lang */,
@@ -32771,6 +32774,7 @@
 				2760F1AB1D12F9F300708C51 /* Bytecode.cpp in Sources */,
 				2768155E1D10515F0084B9A6 /* LangFile.cpp in Sources */,
 				276815591D104E9F0084B9A6 /* VM.cpp in Sources */,
+				2760F1AD1D13152600708C51 /* Language.cpp in Sources */,
 				2768155B1D104EC10084B9A6 /* LangFile.cpp in Sources */,
 				276815571D104C6A0084B9A6 /* main.cpp in Sources */,
 			);
