@@ -12238,6 +12238,7 @@
 		9BCCFFFD1CE79E6C009862AC /* pointlike_linear.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointlike_linear.hpp; sourceTree = "<group>"; };
 		9BCCFFFE1CE79E6C009862AC /* pointlike_pointlike.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pointlike_pointlike.hpp; sourceTree = "<group>"; };
 		9BCCFFFF1CE79E6C009862AC /* ring_properties.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ring_properties.hpp; sourceTree = "<group>"; };
+		9BE6E9C51D21D4FD00226123 /* pb.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = pb.py; sourceTree = "<group>"; };
 		9BF3CC8E1CF381CF00142836 /* Language.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Language.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -12338,6 +12339,7 @@
 		27FDEEC11CCF9F2800DA931E = {
 			isa = PBXGroup;
 			children = (
+				9BE6E9C41D21D4BC00226123 /* Tools */,
 				9B91EF831D0A1D170090C02C /* lib */,
 				274E266E1CE508D2005C8900 /* Test */,
 				27FDEED51CCF9FB000DA931E /* include */,
@@ -32672,6 +32674,14 @@
 				9BCC00081CE79E6C009862AC /* visit_info.hpp */,
 			);
 			path = overlay;
+			sourceTree = "<group>";
+		};
+		9BE6E9C41D21D4BC00226123 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				9BE6E9C51D21D4FD00226123 /* pb.py */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
