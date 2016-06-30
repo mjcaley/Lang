@@ -8,6 +8,7 @@ class InstructionSet(object):
     
     NULLARY = 0
     UNARY = 1
+    BINARY = 2
     
     def __init__(self, instructions):
         if instructions:
@@ -60,7 +61,7 @@ def init_instruction_set():
                      ("store",15, InstructionSet.UNARY),
                     
                      ("prnt", 16, InstructionSet.NULLARY),
-                     ("call", 17, InstructionSet.UNARY),
+                     ("call", 17, InstructionSet.BINARY),
                      ("ret",  18, InstructionSet.NULLARY),
                     
                      ("dup",  19, InstructionSet.NULLARY),
@@ -84,7 +85,7 @@ class LangFile(object):
 
         self._index = 0
             
-        self._format = "{:>8}:  {:<6} {}"
+        self._format = "{:>8}:  {:<6} {} {}"
 
     def _magic(self):
         m = self.file.read(8)
@@ -107,12 +108,18 @@ class LangFile(object):
         if name[1] == InstructionSet.NULLARY:
             index = self._index
             self._index += 1
-            return self._format.format(str(index), name[0], '')
+            return self._format.format(str(index), name[0], '', '')
         elif name[1] == InstructionSet.UNARY:
             operand = ord(self.file.read(1))
             index = self._index
             self._index += 2
-            return self._format.format(str(index), name[0], str(operand))
+            return self._format.format(str(index), name[0], str(operand), '')
+        elif name[1] == InstructionSet.BINARY:
+            operand1 = ord(self.file.read(1))
+            operand2 = ord(self.file.read(1))
+            index = self._index
+            self._index += 3
+            return self._format.format(str(index), name[0], str(operand1), str(operand2))
 
 
 def main():
