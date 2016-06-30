@@ -105,19 +105,17 @@ class LangFile(object):
             raise StopIteration()
         
         name = self.inc_set.get_name(ord(instruction))
+        index = self._index
         if name[1] == InstructionSet.NULLARY:
-            index = self._index
             self._index += 1
             return self._format.format(str(index), name[0], '', '')
         elif name[1] == InstructionSet.UNARY:
             operand = ord(self.file.read(1))
-            index = self._index
             self._index += 2
             return self._format.format(str(index), name[0], str(operand), '')
         elif name[1] == InstructionSet.BINARY:
             operand1 = ord(self.file.read(1))
             operand2 = ord(self.file.read(1))
-            index = self._index
             self._index += 3
             return self._format.format(str(index), name[0], str(operand1), str(operand2))
 
