@@ -50,7 +50,6 @@ namespace Lang { namespace Bytecode { namespace AST {
     {
         Instruction instruction;
         JumpArg position;
-        Operand operand;
     };
     
     struct InstructionCode : x3::variant< Binary, Unary, Nullary, Label, Jump, Call >
@@ -85,8 +84,7 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
                           Lang::Bytecode::AST::Call,
                           (Lang::Bytecode::AST::Instruction, instruction),
-                          (Lang::Bytecode::AST::JumpArg, position),
-                          (Lang::Bytecode::AST::Operand, operand)
+                          (Lang::Bytecode::AST::JumpArg, position)
                           );
 
 BOOST_FUSION_ADAPT_STRUCT(Lang::Bytecode::AST::Label, (std::string, name));

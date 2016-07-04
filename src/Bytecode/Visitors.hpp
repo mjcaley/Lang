@@ -37,7 +37,7 @@ namespace Lang { namespace Bytecode { namespace AST {
         
         void operator()(const Call& call_op)
         {
-            address += 3;
+            address += 2;
         }
         
     private:

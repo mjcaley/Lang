@@ -326,17 +326,28 @@ void VM::call_op()
     
     ++ip;   // Advance to call address
     const auto address = program->byte_code[ip];
-    ++ip;   // Advance to number of arguments
-    auto nargs = program->byte_code[ip];
-    data.push(nargs);
+    const auto nargs = data.tos();
+    data.pop();
+    
+    frame.push();
+    {
+        auto i { 0 };
+        auto riter = data.rbegin();
+        const auto end = data.rbegin() + nargs;
+        auto& cur_frame = frame.tos();
+        for (; riter != end; ++i, ++riter)
+        {
+            cur_frame[i] = *riter;
+            data.pop();
+        }
+    }
+
     call.push(++ip);
     ip = address;
     
-    frame.push();
-    
     if(debug)
     {
-        binary_debug_message(orig_ip);
+        unary_debug_message(orig_ip);
     }
 }
 
@@ -419,12 +430,5 @@ void VM::unary_debug_message(int ip)
 {
     const auto begin = program->byte_code.begin() + ip;
     const auto end = program->byte_code.begin() + (ip + 2);
-    debug_message(begin, end);
-}
-
-void VM::binary_debug_message(int ip)
-{
-    const auto begin = program->byte_code.begin() + ip;
-    const auto end = program->byte_code.begin() + (ip + 3);
     debug_message(begin, end);
 }

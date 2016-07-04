@@ -79,7 +79,6 @@ namespace Lang { namespace VM {
         
         void nullary_debug_message(int ip);
         void unary_debug_message(int ip);
-        void binary_debug_message(int ip);
         
         template <typename Iterator>
         void debug_message(Iterator begin, Iterator end)

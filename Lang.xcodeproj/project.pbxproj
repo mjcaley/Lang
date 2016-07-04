@@ -11,6 +11,7 @@
 		271535DF1D2AB0350073319C /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B91EF841D0A1D540090C02C /* libboost_program_options.a */; };
 		271535E01D2AB14B0073319C /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		271535E11D2AB14B0073319C /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
+		271535E21D2AE6EA0073319C /* Factorial.s in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2799CAC61CEB6AE800B3D126 /* Factorial.s */; };
 		27371F7B1D0B1707006F6EE3 /* Test.langs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27371F7A1D0B1122006F6EE3 /* Test.langs */; };
 		2760F1AB1D12F9F300708C51 /* Bytecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AA1D12F9F300708C51 /* Bytecode.cpp */; };
 		2760F1AD1D13152600708C51 /* Language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AC1D13152600708C51 /* Language.cpp */; };
@@ -35,12 +36,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		271535D51D2AB0120073319C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				271535E21D2AE6EA0073319C /* Factorial.s in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2768154C1D104C020084B9A6 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;

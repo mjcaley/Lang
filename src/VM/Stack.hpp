@@ -23,6 +23,8 @@ namespace Lang { namespace VM {
         
         typename std::vector<T>::iterator iterator;
         typename std::vector<T>::const_iterator const_iterator;
+        typename std::vector<T>::reverse_iterator reverse_iterator;
+        typename std::vector<T>::const_reverse_iterator const_reverse_iterator;
         
         typename std::vector<T>::iterator begin()
         {
@@ -34,14 +36,55 @@ namespace Lang { namespace VM {
             return stack.end();
         };
         
-        typename std::vector<T>::const_iterator begin() const
+        typename std::vector<T>::const_iterator cbegin() const
         {
             return stack.cbegin();
         };
         
-        typename std::vector<T>::const_iterator end() const
+        typename std::vector<T>::const_iterator begin() const
+        {
+            return cbegin();
+        };
+        
+        typename std::vector<T>::const_iterator cend() const
         {
             return stack.cend();
+        };
+        
+        typename std::vector<T>::const_iterator end() const
+        {
+            return cend();
+        };
+        
+        
+        typename std::vector<T>::reverse_iterator rbegin()
+        {
+            return stack.rbegin();
+        };
+        
+        typename std::vector<T>::reverse_iterator rend()
+        {
+            return stack.rend();
+        };
+        
+        typename std::vector<T>::const_reverse_iterator crbegin() const
+        {
+            return stack.crbegin();
+        };
+        
+        typename std::vector<T>::const_reverse_iterator rbegin() const
+        {
+            return crbegin();
+        };
+        
+        typename std::vector<T>::const_reverse_iterator crend() const
+        {
+            return stack.crend();
+        };
+        
+        typename std::vector<T>::const_reverse_iterator rend() const
+        {
+            return crend();
         };
         
         

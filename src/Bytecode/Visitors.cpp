@@ -15,7 +15,6 @@ void CodeGenerator::operator()(const Call& call) const
     byte_code.emplace_back(call.instruction);
     JumpArgGen arg_generator(byte_code, label_map);
     boost::apply_visitor(arg_generator, call.position);
-    byte_code.emplace_back(call.operand);
 }
 
 void CodeGenerator::operator()(const Unary& unary_op) const
