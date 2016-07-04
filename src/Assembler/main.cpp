@@ -29,12 +29,21 @@ bool compile(const std::string& src, const std::string& dest)
     auto iter = make_default_multi_pass(stream_iterator(in));
     auto end = make_default_multi_pass(stream_iterator());
     
-    Lang::Bytecode::AST::Program ast;
-    auto& grammar = Lang::Bytecode::Grammar::program;
-    bool success = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+    Bytecode::AST::Program ast;
+    auto& grammar = Bytecode::Grammar::program;
+    bool success { false };
+    success = x3::phrase_parse(iter, end, grammar, Bytecode::Grammar::skipper, ast);
+
     auto lf = LangFile::create();
-    auto smf = Lang::Bytecode::compile(ast, *lf);
-    lf->write(dest);
+    if (success)
+    {
+        success = Bytecode::compile(ast, *lf);
+    }
+    
+    if (success)
+    {
+        lf->write(dest);
+    }
     
     return success;
 }
@@ -67,6 +76,11 @@ int main(int argc, char* argv[])
     {
         bool success = compile(var_map["source"].as<string>(),
                                var_map["destination"].as<string>());
+        if (!success)
+        {
+            cout << "Error: Failed to compile" << endl;
+            std::exit(1);
+        }
     }
     else
     {
