@@ -105,7 +105,7 @@ namespace Lang { namespace VM {
                 lcolumn += join(operands, " ");
             }
             
-            mcolumn = "Data stack: [ ";
+            mcolumn = "\n\tData stack: [ ";
             {
                 std::vector<std::string> data_values;
                 for (const auto& i : data)
@@ -116,7 +116,7 @@ namespace Lang { namespace VM {
             }
             mcolumn += " ] ";
             
-            rcolumn = "Call stack: [ ";
+            rcolumn = "\n\tCall stack: [ ";
             {
                 std::vector<std::string> call_values;
                 for (const auto& i : call)
