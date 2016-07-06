@@ -189,7 +189,7 @@ TEST_CASE( "Call parsing", "[Bytecode]")
     namespace AST = Lang::Bytecode::AST;
     namespace Grammar = Lang::Bytecode::Grammar;
     
-    std::string program = "call 0 3";
+    std::string program = "call 0";
     auto iter = program.begin();
     auto end = program.end();
     AST::Call ast;
