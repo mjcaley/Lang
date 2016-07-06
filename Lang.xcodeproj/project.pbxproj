@@ -11,7 +11,6 @@
 		271535DF1D2AB0350073319C /* libboost_program_options.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B91EF841D0A1D540090C02C /* libboost_program_options.a */; };
 		271535E01D2AB14B0073319C /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		271535E11D2AB14B0073319C /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
-		271535E21D2AE6EA0073319C /* Factorial.s in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2799CAC61CEB6AE800B3D126 /* Factorial.s */; };
 		27371F7B1D0B1707006F6EE3 /* Test.langs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27371F7A1D0B1122006F6EE3 /* Test.langs */; };
 		2760F1AB1D12F9F300708C51 /* Bytecode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AA1D12F9F300708C51 /* Bytecode.cpp */; };
 		2760F1AD1D13152600708C51 /* Language.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2760F1AC1D13152600708C51 /* Language.cpp */; };
@@ -40,7 +39,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				271535E21D2AE6EA0073319C /* Factorial.s in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,7 +94,6 @@
 		2768155A1D104EC10084B9A6 /* LangFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangFile.cpp; sourceTree = "<group>"; };
 		2768155F1D1053620084B9A6 /* LangFile-bad_format.lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LangFile-bad_format.lang"; sourceTree = "<group>"; };
 		276815631D1057580084B9A6 /* LangFile-blank_compiled.lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LangFile-blank_compiled.lang"; sourceTree = "<group>"; };
-		2799CAC61CEB6AE800B3D126 /* Factorial.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Factorial.s; sourceTree = "<group>"; };
 		27A24F3B1D0B2557009F5155 /* Functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Functions.hpp; sourceTree = "<group>"; };
 		27B456EC1CFC901100A543B7 /* LangFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangFile.hpp; sourceTree = "<group>"; };
 		27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangFile.cpp; sourceTree = "<group>"; };
@@ -12301,7 +12298,6 @@
 		274E266E1CE508D2005C8900 /* Test */ = {
 			isa = PBXGroup;
 			children = (
-				2799CAC61CEB6AE800B3D126 /* Factorial.s */,
 				27371F7A1D0B1122006F6EE3 /* Test.langs */,
 			);
 			path = Test;
@@ -33260,6 +33256,7 @@
 				271535DD1D2AB0130073319C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		276815521D104C020084B9A6 /* Build configuration list for PBXNativeTarget "Test" */ = {
 			isa = XCConfigurationList;

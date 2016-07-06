@@ -199,3 +199,43 @@ TEST_CASE( "Call parsing", "[Bytecode]")
     
     REQUIRE((result && iter == end) == true);
 }
+
+TEST_CASE( "Implement recursive factorial", "[Bytecode]")
+{
+    namespace x3 = boost::spirit::x3;
+    namespace AST = Lang::Bytecode::AST;
+    namespace Grammar = Lang::Bytecode::Grammar;
+    
+    std::string program =
+    "               jmp main\n"
+    "factorial:\n"
+    "               load 0              ; 10\n"
+    "               dup                 ; 10 10\n"
+    "               push 1              ; 10 10 1\n"
+    "               sub                 ; 10 9\n"
+    "               dup                 ; 10 9 9\n"
+    "               push 2              ; 10 9 9 2\n"
+    "               lt                  ; 10 9 0\n"
+    "               jt factorial_ret    ; 10 9\n"
+    "               push 1              ; 10 9 1\n"
+    "               call factorial\n"
+    "factorial_ret:\n"
+    "               mul\n"
+    "               ret\n"
+    
+    "main:\n"
+    "               push 10\n"
+    "               push 1\n"
+    "               call factorial\n"
+    "               prnt\n"
+    "               halt\n";
+    
+    auto iter = program.begin();
+    auto end = program.end();
+    AST::Program ast;
+    auto& grammar = Grammar::program;
+    
+    bool result = x3::phrase_parse(iter, end, grammar, Grammar::skipper, ast);
+    
+    REQUIRE((result && iter == end) == true);
+}
