@@ -5,6 +5,8 @@
 
 using namespace Lang;
 
+using i32 = int32_t;
+
 
 std::unique_ptr<LangFile> LangFile::create()
 {
@@ -62,5 +64,5 @@ bool LangFile::write(const std::string &filename)
     return false;
 }
 
-const std::vector<int32_t> LangFile::magic_number
+const std::vector<i32> LangFile::magic_number
     { 0x48, 0x52, 0x42, 0x44, 0x52, 0x47, 0x4E, 0x53 };

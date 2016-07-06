@@ -8,6 +8,8 @@
 
 using namespace Lang;
 
+using i32 = int32_t;
+
 
 TEST_CASE( "LangFile opens file", "[LangFile]" )
 {
@@ -46,7 +48,7 @@ TEST_CASE( "LangFile writes file", "[LangFile]" )
     
     auto lf = LangFile::create();
     lf->version = 1;
-    lf->byte_code = { PUSH, (int32_t)3, PUSH, (int32_t)4, MUL, PRNT, HALT };
+    lf->byte_code = { PUSH, (i32)3, PUSH, (i32)4, MUL, PRNT, HALT };
     bool result = lf->write(filename);
     REQUIRE(result == true);
     

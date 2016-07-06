@@ -4,12 +4,14 @@
 #include <boost/fusion/include/adapt_struct.hpp>
 
 
+using i32 = int32_t;
+
 namespace Lang { namespace Bytecode { namespace AST {
 
     namespace x3 = boost::spirit::x3;
     
-    using Operand = int32_t;
-    using Instruction = int32_t;
+    using Operand = i32;
+    using Instruction = i32;
     
     struct Nullary
     {
@@ -34,7 +36,7 @@ namespace Lang { namespace Bytecode { namespace AST {
         std::string name;
     };
     
-    struct JumpArg : x3::variant< int32_t, std::string >
+    struct JumpArg : x3::variant< i32, std::string >
     {
         using base_type::base_type;
         using base_type::operator=;

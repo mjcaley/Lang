@@ -3,11 +3,13 @@
 #include "Bytecode/AST.hpp"
 
 
+using i32 = int32_t;
+
 namespace Lang { namespace Bytecode { namespace AST {
     
     struct LabelPreprocessor : public boost::static_visitor<>
     {
-        LabelPreprocessor(std::map<std::string, int32_t>& label_map)
+        LabelPreprocessor(std::map<std::string, i32>& label_map)
         : label_map(label_map) {}
         
         void operator()(const Label& label)
@@ -42,16 +44,16 @@ namespace Lang { namespace Bytecode { namespace AST {
         
     private:
         int address { 0 };
-        std::map<std::string, int32_t>& label_map;
+        std::map<std::string, i32>& label_map;
     };
     
     struct JumpArgGen : public boost::static_visitor<>
     {
-        JumpArgGen(std::vector<int32_t>& byte_code,
-                   std::map<std::string, int32_t>& label_map)
+        JumpArgGen(std::vector<i32>& byte_code,
+                   std::map<std::string, i32>& label_map)
         : byte_code(byte_code), label_map(label_map) {};
         
-        void operator()(const int32_t& position)
+        void operator()(const i32& position)
         {
             byte_code.emplace_back(position);
         }
@@ -62,13 +64,13 @@ namespace Lang { namespace Bytecode { namespace AST {
         }
         
     private:
-        std::vector<int32_t>& byte_code;
-        std::map<std::string, int32_t>& label_map;
+        std::vector<i32>& byte_code;
+        std::map<std::string, i32>& label_map;
     };
     
     struct CodeGenerator : public boost::static_visitor<>
     {
-        CodeGenerator(std::vector<int32_t>& byte_code, std::map<std::string, int32_t>& label_map)
+        CodeGenerator(std::vector<i32>& byte_code, std::map<std::string, i32>& label_map)
         : byte_code(byte_code), label_map(label_map) {}
         
         void operator()(const Label& label) const {}
@@ -79,8 +81,8 @@ namespace Lang { namespace Bytecode { namespace AST {
         void operator()(const Binary& binary_op) const;
         
     private:
-        std::vector<int32_t>& byte_code;
-        std::map<std::string, int32_t>& label_map;
+        std::vector<i32>& byte_code;
+        std::map<std::string, i32>& label_map;
     };
     
 } } }

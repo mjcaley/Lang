@@ -13,9 +13,9 @@
 #include "VM/Stack.hpp"
 
 
+using i32 = int32_t;
+
 namespace Lang { namespace VM {
-    
-    using i32 = int32_t;
     
     static DualKeys<i32, std::string> instruction_strings
     {

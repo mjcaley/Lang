@@ -3,6 +3,8 @@
 #include "VM/VM.hpp"
 
 
+using i32 = int32_t;
+
 namespace Lang { namespace Bytecode { namespace Grammar {
     
     namespace x3 = boost::spirit::x3;
@@ -20,7 +22,7 @@ namespace Lang { namespace Bytecode { namespace Grammar {
     
     auto const skipper = space | lexeme[ ';' >> *(char_ - eol) >> eol ];
     
-    const symbols<int32_t> nullary_sym
+    const symbols<i32> nullary_sym
     {
         { "HALT", HALT },   { "halt", HALT },
         { "POP", POP },     { "pop", POP },
@@ -37,21 +39,21 @@ namespace Lang { namespace Bytecode { namespace Grammar {
         { "DUP", DUP },     { "dup", DUP }
     };
     
-    const symbols<int32_t> unary_sym
+    const symbols<i32> unary_sym
     {
         { "PUSH", PUSH },   { "push", PUSH },
         { "LOAD", LOAD },   { "load", LOAD },
         { "STORE", STORE }, { "store", STORE }
     };
     
-    const symbols<int32_t> jump_sym
+    const symbols<i32> jump_sym
     {
         { "JMP", JMP },     { "jmp", JMP },
         { "JT", JT },       { "jt", JT },
         { "JF", JF },       { "jf", JF }
     };
     
-    const symbols<int32_t> call_sym
+    const symbols<i32> call_sym
     {
         { "CALL", CALL },     { "call", CALL }
     };

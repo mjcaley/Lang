@@ -4,6 +4,8 @@
 #include <vector>
 
 
+using i32 = int32_t;
+
 namespace Lang
 {
     class LangFile
@@ -44,12 +46,12 @@ namespace Lang
         using name_index_param = std::tuple<std::string, unsigned, int>;
         std::map<unsigned, name_index_param> functions;
         std::map<unsigned, std::string> constants;
-        std::vector<int32_t> byte_code;
+        std::vector<i32> byte_code;
         
         std::size_t length() const { return byte_code.size(); };
         bool write(const std::string& filename);
         
     private:
-        static const std::vector<int32_t> magic_number;
+        static const std::vector<i32> magic_number;
     };
 }
