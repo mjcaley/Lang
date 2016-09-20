@@ -103,47 +103,59 @@ TEST_CASE( "Lang variable definition parsing", "[Language]" )
     AST::Variable ast;
     auto& grammar = Grammar::variable;
     
-    // integer
-    program = "variable : int";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Declare integer" )
+    {
+        program = "variable : int";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
     
-    // long
-    program = "variable : long";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Declare long" )
+    {
+        program = "variable : long";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
     
-    // float
-    program = "variable : float";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Declare float" )
+    {
+        program = "variable : float";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
     
-    // double
-    program = "variable : double";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Declare double" )
+    {
+        program = "variable : double";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
     
-    // no spaces
-    program = "variable:int";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Declare integer with no spaces" )
+    {
+        program = "variable:int";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
     
-    // no type
-    program = "variable";
-    iter = program.begin();
-    end = program.end();
-    result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
-    REQUIRE((result && iter == end) == true);
+    SECTION( "Variable with no type" )
+    {
+        program = "variable";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
 }
 
 TEST_CASE( "Lang variable assignment", "[Language]" )
@@ -158,17 +170,162 @@ TEST_CASE( "Lang variable assignment", "[Language]" )
     AST::Assignment ast;
     auto& grammar = Grammar::assignment;
     
-    // with variable declaration
-    program = "variable: int = 3";
+    SECTION( "No type declaration" )
+    {
+        AST::Assignment ast;
+        program = "variable = 3";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Assigning integer" )
+    {
+        AST::Assignment ast;
+        program = "variable: int = 3";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Assigning long" )
+    {
+        AST::Assignment ast;
+        program = "variable: long = 3";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Assigning float" )
+    {
+        AST::Assignment ast;
+        program = "variable: float = 4e2";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Assigning double" )
+    {
+        AST::Assignment ast;
+        program = "variable: double = 4.2";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Assigning string" )
+    {
+        AST::Assignment ast;
+        program = "variable: string = \"Hello world!\"";
+        iter = program.begin();
+        end = program.end();
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+}
+
+TEST_CASE( "Lang block of code" , "[Language]")
+{
+    namespace x3 = boost::spirit::x3;
+    namespace AST = Lang::Language::AST;
+    namespace Grammar = Lang::Language::Grammar;
+    
+    std::string program;
+    std::string::const_iterator iter, end;
+    bool result { false };
+    auto& grammar = Grammar::block;
+
+    program = "variable: int = 4;"
+              "variable2: int = 2;";
     iter = program.begin();
     end = program.end();
+    AST::Block ast;
     result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
     REQUIRE((result && iter == end) == true);
+}
+
+TEST_CASE( "Lang function definition", "[Language]")
+{
+    namespace x3 = boost::spirit::x3;
+    namespace AST = Lang::Language::AST;
+    namespace Grammar = Lang::Language::Grammar;
     
-    // without variable declaration
-    program = "variable = 3";
+    std::string program;
+    std::string::const_iterator iter, end;
+    bool result { false };
+    auto& grammar = Grammar::function;
+    
+    SECTION( "Empty function" )
+    {
+        program = "int main() {}";
+        iter = program.begin();
+        end = program.end();
+        AST::Function ast;
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Empty function on multiple lines" )
+    {
+        program = "float main()\n"
+        "{\n"
+        "}\n";
+        iter = program.begin();
+        end = program.end();
+        AST::Function ast;
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Function with multiple code lines" )
+    {
+        program = "int main()\n"
+        "{\n"
+        "    variable: int = 3;\n"
+        "    variable2: int = 4;\n"
+        //"    variable2: float = 4.0;\n"
+        //"    variable_number_3: string = \"some words\";\n"
+        "}";
+        iter = program.begin();
+        end = program.end();
+        AST::Function ast;
+        result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        REQUIRE((result && iter == end) == true);
+    }
+}
+
+TEST_CASE( "Lang program", "[Language]")
+{
+    namespace x3 = boost::spirit::x3;
+    namespace AST = Lang::Language::AST;
+    namespace Grammar = Lang::Language::Grammar;
+    
+    std::string program;
+    std::string::const_iterator iter, end;
+    bool result { false };
+    auto& grammar = Grammar::program;
+    
+    program = "int add()\n"
+    "{\n"
+    "    anothervariable: int = 42;\n"
+    "}\n"
+    ""
+    "int main()\n"
+    "{\n"
+    "    variable: int = 3;\n"
+    //"    variable2: float = 4.0;\n"
+    "    variable3: string = \"some words\";\n"
+    "}";
     iter = program.begin();
     end = program.end();
+    AST::Program ast;
     result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
     REQUIRE((result && iter == end) == true);
 }

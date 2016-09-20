@@ -8,10 +8,6 @@
 namespace Lang { namespace Language { namespace AST {
     
     namespace x3 = boost::spirit::x3;
-    using x3::int_;
-    using x3::long_;
-    using x3::float_;
-    using x3::double_;
     
     struct IntegerLiteral
     {
@@ -88,13 +84,23 @@ namespace Lang { namespace Language { namespace AST {
         using base_type::operator=;
     };
     
-    struct Block : public x3::variant<Statement, Expression>
+    struct Line : public x3::variant<Statement, Expression>
     {
         using base_type::base_type;
         using base_type::operator=;
     };
     
-    using Program = std::vector<Block>;
+    using Block = std::vector<Line>;
+    
+    struct Function
+    {
+        Type return_type;
+        std::string name;
+        //std::vector<Variable> parameters;
+        Block code;
+    };
+    
+    using Program = std::vector<Function>;
     
 } } }
 
@@ -135,4 +141,11 @@ BOOST_FUSION_ADAPT_STRUCT(
                           Lang::Language::AST::Assignment,
                           (Lang::Language::AST::Variable, variable),
                           (Lang::Language::AST::Expression, expression)
+                          )
+
+BOOST_FUSION_ADAPT_STRUCT(
+                          Lang::Language::AST::Function,
+                          (Lang::Language::AST::Type, return_type),
+                          (std::string, name),
+                          (Lang::Language::AST::Block, code)
                           )

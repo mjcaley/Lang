@@ -46,6 +46,10 @@ namespace Lang { namespace Language { namespace Grammar {
     
     x3::rule<class statement, AST::Statement> const statement("statement");
     x3::rule<class expression, AST::Expression> const expression("expression");
+    x3::rule<class line, AST::Line> const line("line");
+    x3::rule<class block, AST::Block> const block("block");
+    
+    x3::rule<class function, AST::Function> const function("function");
     
     x3::rule<class program, AST::Program> const program("program");
     
@@ -57,7 +61,7 @@ namespace Lang { namespace Language { namespace Grammar {
     auto const float_lit_def = float_;
     auto const double_lit_def = double_;
     auto const string_lit_def = '"' >> no_skip[*(char_ - '"' )] >> '"';
-    auto const literal = (int_lit | long_lit | float_lit | double_lit | string_lit );
+    auto const literal = (int_lit | long_lit | float_lit | double_lit | string_lit);
     
     auto const variable_def = identifier >> -( ':' >> types );
     
@@ -65,8 +69,12 @@ namespace Lang { namespace Language { namespace Grammar {
     
     auto const statement_def = assignment;
     auto const expression_def = literal;
+    auto const line_def = ( statement | expression ) >> ';';
+    auto const block_def = +line;
     
-    auto const program_def = *( (statement | expression) >> ';');
+    auto const function_def = types >> identifier >> '(' >> /* *(types >> identifier >> *(',') ) */ ')' >> '{' >> -block >> '}';
+    
+    auto const program_def = +function;
     
     
     BOOST_SPIRIT_DEFINE(identifier);
@@ -82,6 +90,10 @@ namespace Lang { namespace Language { namespace Grammar {
     
     BOOST_SPIRIT_DEFINE(statement);
     BOOST_SPIRIT_DEFINE(expression);
+    BOOST_SPIRIT_DEFINE(line);
+    BOOST_SPIRIT_DEFINE(block);
+    
+    BOOST_SPIRIT_DEFINE(function);
     
     BOOST_SPIRIT_DEFINE(program);
     
