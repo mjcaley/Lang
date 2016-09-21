@@ -34,6 +34,12 @@ namespace Lang { namespace Language { namespace AST {
         std::string value;
     };
     
+    struct Literal : public x3::variant<IntegerLiteral, LongLiteral, FloatLiteral, DoubleLiteral, StringLiteral>
+    {
+        using base_type::base_type;
+        using base_type::operator=;
+    };
+    
     enum class Operator
     {
         ASSIGN,
@@ -78,7 +84,7 @@ namespace Lang { namespace Language { namespace AST {
         using base_type::operator=;
     };
     
-    struct Expression : public x3::variant<IntegerLiteral, LongLiteral, FloatLiteral, DoubleLiteral, StringLiteral>
+    struct Expression : public x3::variant<Literal>
     {
         using base_type::base_type;
         using base_type::operator=;

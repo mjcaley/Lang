@@ -16,6 +16,7 @@ namespace Lang { namespace Language { namespace Grammar {
     using x3::float_;
     using x3::double_;
     using x3::lexeme;
+    using x3::lit;
     using x3::no_skip;
     using x3::space;
     using x3::symbols;
@@ -39,6 +40,7 @@ namespace Lang { namespace Language { namespace Grammar {
     x3::rule<class float_lit, AST::FloatLiteral> const float_lit("float_lit");
     x3::rule<class double_lit, AST::DoubleLiteral> const double_lit("double_lit");
     x3::rule<class string_lit, AST::StringLiteral> const string_lit("string_lit");
+    x3::rule<class literal, AST::Literal> const literal("literal");
     
     x3::rule<class variable, AST::Variable> const variable("variable declaration");
     
@@ -58,10 +60,10 @@ namespace Lang { namespace Language { namespace Grammar {
     
     auto const int_lit_def = int_;
     auto const long_lit_def = long_;
-    auto const float_lit_def = float_;
-    auto const double_lit_def = double_;
+    auto const float_lit_def = float_ >> lit('f');
+    auto const double_lit_def = double_ >> lit('d');
     auto const string_lit_def = '"' >> no_skip[*(char_ - '"' )] >> '"';
-    auto const literal = (int_lit | long_lit | float_lit | double_lit | string_lit);
+    auto const literal_def = float_lit | double_lit | int_lit | long_lit | string_lit;
     
     auto const variable_def = identifier >> -( ':' >> types );
     
@@ -83,6 +85,7 @@ namespace Lang { namespace Language { namespace Grammar {
     BOOST_SPIRIT_DEFINE(float_lit);
     BOOST_SPIRIT_DEFINE(double_lit);
     BOOST_SPIRIT_DEFINE(string_lit);
+    BOOST_SPIRIT_DEFINE(literal);
     
     BOOST_SPIRIT_DEFINE(variable);
     
