@@ -5,13 +5,13 @@
 #include <string>
 #include <boost/spirit/home/x3.hpp>
 
+namespace x3 = boost::spirit::x3;
+namespace AST = Lang::Language::AST;
+namespace Grammar = Lang::Language::Grammar;
+
 
 TEST_CASE( "Lang integer literal parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program = "1";
     auto iter = program.begin();
     auto end = program.end();
@@ -25,10 +25,6 @@ TEST_CASE( "Lang integer literal parsing", "[Language]" )
 
 TEST_CASE( "Lang long literal parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program = "6000000000";
     auto iter = program.begin();
     auto end = program.end();
@@ -42,10 +38,6 @@ TEST_CASE( "Lang long literal parsing", "[Language]" )
 
 TEST_CASE( "Lang float literal parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program = "0.123f";
     auto iter = program.begin();
     auto end = program.end();
@@ -59,10 +51,6 @@ TEST_CASE( "Lang float literal parsing", "[Language]" )
 
 TEST_CASE( "Lang double literal parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program = "0.123d";
     auto iter = program.begin();
     auto end = program.end();
@@ -76,10 +64,6 @@ TEST_CASE( "Lang double literal parsing", "[Language]" )
 
 TEST_CASE( "Lang string literal parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program = "\"This is a string\"";
     auto iter = program.begin();
     auto end = program.end();
@@ -93,10 +77,6 @@ TEST_CASE( "Lang string literal parsing", "[Language]" )
 
 TEST_CASE( "Lang variable definition parsing", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -160,10 +140,6 @@ TEST_CASE( "Lang variable definition parsing", "[Language]" )
 
 TEST_CASE( "Literal value", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -173,10 +149,6 @@ TEST_CASE( "Literal value", "[Language]" )
 
 TEST_CASE( "Lang variable assignment", "[Language]" )
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -246,10 +218,6 @@ TEST_CASE( "Lang variable assignment", "[Language]" )
 
 TEST_CASE( "Lang block of code" , "[Language]")
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -266,10 +234,6 @@ TEST_CASE( "Lang block of code" , "[Language]")
 
 TEST_CASE( "Lang function definition", "[Language]")
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -303,8 +267,8 @@ TEST_CASE( "Lang function definition", "[Language]")
         "{\n"
         "    variable: int = 3;\n"
         "    variable2: int = 4;\n"
-        //"    variable2: float = 4.0;\n"
-        //"    variable_number_3: string = \"some words\";\n"
+        "    variable2: float = 4.0f;\n"
+        "    variable_number_3: string = \"some words\";\n"
         "}";
         iter = program.begin();
         end = program.end();
@@ -316,10 +280,6 @@ TEST_CASE( "Lang function definition", "[Language]")
 
 TEST_CASE( "Lang program", "[Language]")
 {
-    namespace x3 = boost::spirit::x3;
-    namespace AST = Lang::Language::AST;
-    namespace Grammar = Lang::Language::Grammar;
-    
     std::string program;
     std::string::const_iterator iter, end;
     bool result { false };
@@ -333,7 +293,7 @@ TEST_CASE( "Lang program", "[Language]")
     "int main()\n"
     "{\n"
     "    variable: int = 3;\n"
-    //"    variable2: float = 4.0;\n"
+    "    variable2: float = 4.0f;\n"
     "    variable3: string = \"some words\";\n"
     "}";
     iter = program.begin();
