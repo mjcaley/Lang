@@ -10,6 +10,74 @@ namespace AST = Lang::Language::AST;
 namespace Grammar = Lang::Language::Grammar;
 
 
+TEST_CASE( "Valid identifier names", "[Language]" )
+{
+    SECTION( "Alpha only" )
+    {
+        std::string program = "variable";
+        auto iter = program.begin();
+        auto end = program.end();
+        
+        std::string ast;
+        auto& grammar = Grammar::identifier;
+        bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Alpha and numeric", "[Language]" )
+    {
+        std::string program = "variable42";
+        auto iter = program.begin();
+        auto end = program.end();
+        
+        std::string ast;
+        auto& grammar = Grammar::identifier;
+        bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Alpha and underscore", "[Language]" )
+    {
+        std::string program = "my_variable";
+        auto iter = program.begin();
+        auto end = program.end();
+        
+        std::string ast;
+        auto& grammar = Grammar::identifier;
+        bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Starts with underscore", "[Language]" )
+    {
+        std::string program = "_variable";
+        auto iter = program.begin();
+        auto end = program.end();
+        
+        std::string ast;
+        auto& grammar = Grammar::identifier;
+        bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        
+        REQUIRE((result && iter == end) == true);
+    }
+    
+    SECTION( "Can't start with number", "[Language]" )
+    {
+        std::string program = "42variable";
+        auto iter = program.begin();
+        auto end = program.end();
+        
+        std::string ast;
+        auto& grammar = Grammar::identifier;
+        bool result = x3::phrase_parse(iter, end, grammar, x3::space, ast);
+        
+        REQUIRE((result && iter == end) == false);
+    }
+}
+
 TEST_CASE( "Lang integer literal parsing", "[Language]" )
 {
     std::string program = "1";
