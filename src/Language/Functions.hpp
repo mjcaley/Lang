@@ -16,11 +16,14 @@ namespace Lang { namespace Language {
     
     bool stage1(const AST::Program& ast, Environment& environment)
     {
-        for (auto& block : ast)
+        AST::PrintAST visitor(environment);
+        for (auto& function : ast)
         {
-            std::cout << "(visit) Block\n";
-            boost::apply_visitor(AST::ASTVisitor(environment), block);
-            std::cout << "end of line" << std::endl;
+            //std::cout << "(visit) Block\n";
+            //boost::apply_visitor(AST::ASTVisitor(environment), block);
+            //std::cout << "end of line" << std::endl;
+            
+            visitor(function);
         }
         
         return true;
@@ -38,7 +41,7 @@ namespace Lang { namespace Language {
         auto s1_result = stage1(ast, environment);
         
         auto file = LangFile::create();
-        auto s2_result = stage2(environment.ast, *file);
+        //auto s2_result = stage2(environment.ast, *file);
         
         return std::move(file);
     }
