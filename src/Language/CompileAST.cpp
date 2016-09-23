@@ -1,11 +1,11 @@
-#include "Bytecode/InstructionSet.hpp"
-#include "Language/Visitors.hpp"
+#include "CompileAST.hpp"
 #include <iostream>
+#include "Bytecode/InstructionSet.hpp"
 
 using namespace Lang::Language::AST;
 
 
-void ASTVisitor::operator()(const IntegerLiteral &integer_lit) const
+void CompileAST::operator()(const IntegerLiteral &integer_lit)
 {
     std::cout << "(visit) IntegerLiteral visited: " << integer_lit.value << '\n';
     Bytecode::AST::InstructionCode push;
@@ -13,27 +13,38 @@ void ASTVisitor::operator()(const IntegerLiteral &integer_lit) const
     environment.ast.emplace_back(push);
 }
 
-void ASTVisitor::operator()(const LongLiteral &long_lit) const
+void CompileAST::operator()(const LongLiteral &long_lit)
 {
     std::cout << "(visit) LongLiteral visited: " << long_lit.value << '\n';
 }
 
-void ASTVisitor::operator()(const FloatLiteral &float_lit) const
+void CompileAST::operator()(const FloatLiteral &float_lit)
 {
     std::cout << "(visit) FloatLiteral visited: " << float_lit.value << '\n';
 }
 
-void ASTVisitor::operator()(const DoubleLiteral &double_lit) const
+void CompileAST::operator()(const DoubleLiteral &double_lit)
 {
     std::cout << "(visit) DoubleLiteral visited: " << double_lit.value << '\n';
 }
 
-void ASTVisitor::operator()(const StringLiteral &string_lit) const
+void CompileAST::operator()(const StringLiteral &string_lit)
 {
     std::cout << "(visit) StringLiteral visited: " << string_lit.value << '\n';
 }
 
-void ASTVisitor::operator()(const Assignment &assignment) const
+void CompileAST::operator()(const Literal& literal)
+{
+    boost::apply_visitor(*this, literal);
+}
+
+void CompileAST::operator()(const Variable& variable)
+{
+    std::cout << "[Variable] " << "name: " << variable.name << "type: ";
+    std::cout << '\n';
+}
+
+void CompileAST::operator()(const Assignment &assignment)
 {
     std::cout << "(visit) Assignment\n";
     boost::apply_visitor(*this, assignment.expression.get());
@@ -43,14 +54,34 @@ void ASTVisitor::operator()(const Assignment &assignment) const
     environment.ast.emplace_back(store);
 }
 
-void ASTVisitor::operator()(const Expression &expression) const
+void CompileAST::operator()(const Expression &expression)
 {
     std::cout << "(visit) Expression\n";
     boost::apply_visitor(*this, expression);
 }
 
-void ASTVisitor::operator()(const Statement &statement) const
+void CompileAST::operator()(const Statement &statement)
 {
     std::cout << "(visit) Statement\n";
     boost::apply_visitor(*this, statement);
+}
+
+void CompileAST::operator()(const Line& line)
+{
+    
+}
+
+void CompileAST::operator()(const Block& block)
+{
+    
+}
+
+void CompileAST::operator()(const Function& function)
+{
+    
+}
+
+void CompileAST::operator()(const Program& program)
+{
+    
 }

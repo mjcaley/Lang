@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 #include <map>
-#include "Language/Visitors.hpp"
+#include "Language/CompileAST.hpp"
+#include "Language/PrintAST.hpp"
 #include "Language/AST.hpp"
 #include "LangFile.hpp"
 #include "Bytecode/Functions.hpp"
@@ -16,12 +17,8 @@ namespace Lang { namespace Language {
     
     bool stage1(const AST::Program& ast, Environment& environment)
     {
-        for (auto& block : ast)
-        {
-            std::cout << "(visit) Block\n";
-            boost::apply_visitor(AST::ASTVisitor(environment), block);
-            std::cout << "end of line" << std::endl;
-        }
+        AST::CompileAST visitor(environment);
+        visitor(ast);
         
         return true;
     }
@@ -34,13 +31,21 @@ namespace Lang { namespace Language {
     
     std::unique_ptr<LangFile> compile(const AST::Program& ast)
     {
-        auto environment = Environment();
+        Environment environment;
         auto s1_result = stage1(ast, environment);
         
         auto file = LangFile::create();
         auto s2_result = stage2(environment.ast, *file);
         
         return std::move(file);
+    }
+    
+    
+    void print(const AST::Program& ast)
+    {
+        Environment environment;
+        AST::PrintAST visitor(environment);
+        visitor(ast);
     }
     
 } }

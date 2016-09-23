@@ -19,10 +19,11 @@
 		2768155B1D104EC10084B9A6 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2768155A1D104EC10084B9A6 /* LangFile.cpp */; };
 		2768155E1D10515F0084B9A6 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
 		276815601D10543B0084B9A6 /* LangFile-bad_format.lang in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2768155F1D1053620084B9A6 /* LangFile-bad_format.lang */; };
+		276C627D1D95AA4A00E9AD30 /* PrintAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276C627B1D95AA4A00E9AD30 /* PrintAST.cpp */; };
+		276C62831D95AB0F00E9AD30 /* CompileAST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 276C62811D95AB0F00E9AD30 /* CompileAST.cpp */; };
 		27D012C01D1088C000076A60 /* LangFile-blank_compiled.lang in CopyFiles */ = {isa = PBXBuildFile; fileRef = 276815631D1057580084B9A6 /* LangFile-blank_compiled.lang */; };
 		27DC0AB81D0B332300D4E438 /* VM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 275625AD1CE10EAA008A8DF6 /* VM.cpp */; };
 		27DC0AB91D0B332300D4E438 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
-		27DC0ABA1D0B332300D4E438 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 271DD7F61CFE07CF00F24C21 /* Visitors.cpp */; };
 		27DC0ABB1D0B332300D4E438 /* Visitors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */; };
 		27DC0ACB1D0B3DA600D4E438 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DC0ABF1D0B3C3C00D4E438 /* main.cpp */; };
 		27DC0ACC1D0B3DA600D4E438 /* LangFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */; };
@@ -79,8 +80,6 @@
 		27122B841D0F0481005E3003 /* FileFormatException.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FileFormatException.hpp; sourceTree = "<group>"; };
 		271535D21D2AAF690073319C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		271535D71D2AB0120073319C /* Assembler */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Assembler; sourceTree = BUILT_PRODUCTS_DIR; };
-		271DD7F51CFE04D100F24C21 /* Visitors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Visitors.hpp; sourceTree = "<group>"; };
-		271DD7F61CFE07CF00F24C21 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		27371F4E1D09DF2C006F6EE3 /* Visitors.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Visitors.cpp; sourceTree = "<group>"; };
 		27371F7A1D0B1122006F6EE3 /* Test.langs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Test.langs; sourceTree = "<group>"; };
 		275625AD1CE10EAA008A8DF6 /* VM.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VM.cpp; sourceTree = "<group>"; };
@@ -94,6 +93,11 @@
 		2768155A1D104EC10084B9A6 /* LangFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangFile.cpp; sourceTree = "<group>"; };
 		2768155F1D1053620084B9A6 /* LangFile-bad_format.lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LangFile-bad_format.lang"; sourceTree = "<group>"; };
 		276815631D1057580084B9A6 /* LangFile-blank_compiled.lang */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LangFile-blank_compiled.lang"; sourceTree = "<group>"; };
+		276C627B1D95AA4A00E9AD30 /* PrintAST.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrintAST.cpp; sourceTree = "<group>"; };
+		276C627C1D95AA4A00E9AD30 /* PrintAST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PrintAST.hpp; sourceTree = "<group>"; };
+		276C627F1D95AABE00E9AD30 /* ASTVisitor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ASTVisitor.hpp; sourceTree = "<group>"; };
+		276C62811D95AB0F00E9AD30 /* CompileAST.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CompileAST.cpp; sourceTree = "<group>"; };
+		276C62821D95AB0F00E9AD30 /* CompileAST.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CompileAST.hpp; sourceTree = "<group>"; };
 		27A24F3B1D0B2557009F5155 /* Functions.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Functions.hpp; sourceTree = "<group>"; };
 		27B456EC1CFC901100A543B7 /* LangFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = LangFile.hpp; sourceTree = "<group>"; };
 		27B456ED1CFC9DCD00A543B7 /* LangFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LangFile.cpp; sourceTree = "<group>"; };
@@ -12415,11 +12419,14 @@
 				9BF3CC8E1CF381CF00142836 /* Language.hpp */,
 				9B2960931CF3538100AFBBA4 /* AST.hpp */,
 				9B2960941CF353AA00AFBBA4 /* Grammar.hpp */,
-				271DD7F51CFE04D100F24C21 /* Visitors.hpp */,
-				271DD7F61CFE07CF00F24C21 /* Visitors.cpp */,
 				27A24F3B1D0B2557009F5155 /* Functions.hpp */,
 				27DC0ACF1D0B4FAD00D4E438 /* Environment.hpp */,
 				27DC0AD01D0B500700D4E438 /* Scope.hpp */,
+				276C627F1D95AABE00E9AD30 /* ASTVisitor.hpp */,
+				276C627B1D95AA4A00E9AD30 /* PrintAST.cpp */,
+				276C627C1D95AA4A00E9AD30 /* PrintAST.hpp */,
+				276C62811D95AB0F00E9AD30 /* CompileAST.cpp */,
+				276C62821D95AB0F00E9AD30 /* CompileAST.hpp */,
 			);
 			path = Language;
 			sourceTree = "<group>";
@@ -32860,9 +32867,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				27DC0AB81D0B332300D4E438 /* VM.cpp in Sources */,
+				276C62831D95AB0F00E9AD30 /* CompileAST.cpp in Sources */,
 				27DC0AB91D0B332300D4E438 /* LangFile.cpp in Sources */,
-				27DC0ABA1D0B332300D4E438 /* Visitors.cpp in Sources */,
 				27DC0ABB1D0B332300D4E438 /* Visitors.cpp in Sources */,
+				276C627D1D95AA4A00E9AD30 /* PrintAST.cpp in Sources */,
 				9B91EF821D0A167C0090C02C /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
