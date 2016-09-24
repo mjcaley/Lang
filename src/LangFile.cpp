@@ -41,7 +41,7 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
         throw Exception::FileNotFoundException(filename);
     }
     
-    return std::move(smf);
+    return smf;
 }
 
 bool LangFile::write(const std::string &filename)

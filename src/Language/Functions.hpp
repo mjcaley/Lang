@@ -37,7 +37,7 @@ namespace Lang { namespace Language {
         auto file = LangFile::create();
         auto s2_result = stage2(environment.ast, *file);
         
-        return std::move(file);
+        return file;
     }
     
     
