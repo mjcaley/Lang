@@ -65,20 +65,32 @@ int main(int argc, char* argv[])
     using std::endl;
     using std::string;
     
-    po::options_description desc("Allowed options");
+    po::options_description desc("Program options");
     desc.add_options()
         ("help,h", "Display this help message")
         ("source", po::value<std::string>(), "source file")
         ("destination", po::value<std::string>()->default_value("a.lang"), "destination file")
-        ("print-ast", po::bool_switch()->default_value(false), "Print out the AST after each stage")
     ;
-    
     po::positional_options_description pos_desc;
     pos_desc.add("source", -1);
     
+    po::options_description debug_desc("Debug options");
+    debug_desc.add_options()
+        ("print-ast", po::bool_switch()->default_value(false), "Print out the AST after each stage")
+    ;
+    
     po::variables_map var_map;
     po::store(po::command_line_parser(argc, argv).
-              options(desc).positional(pos_desc).run(), var_map);
+              options(desc).
+              positional(pos_desc).
+              allow_unregistered().
+              run(),
+              var_map);
+    po::store(po::command_line_parser(argc, argv).
+              options(debug_desc).
+              allow_unregistered().
+              run(),
+              var_map);
     po::notify(var_map);
     
     if (var_map.count("help"))
@@ -93,7 +105,7 @@ int main(int argc, char* argv[])
     }
     else
     {
-        cout << EXEC_NAME << '\n' << desc << endl;
+        cout << EXEC_NAME << '\n' << desc << '\n' << debug_desc << endl;
     }
     
     return 0;
