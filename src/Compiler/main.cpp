@@ -36,7 +36,7 @@ make_spirit_stream(std::basic_ifstream<T>& file)
     return iter_pair;
 }
 
-bool compile(const std::string& src, const std::string& dest)
+bool compile(const std::string& src, const std::string& dest, bool print_ast = false)
 {
     namespace x3 = boost::spirit::x3;
     using namespace Lang;
@@ -51,28 +51,8 @@ bool compile(const std::string& src, const std::string& dest)
     Lang::Language::AST::Program ast;
     auto& grammar = Lang::Language::Grammar::program;
     bool success = x3::phrase_parse(iter.first, iter.second, grammar, x3::space, ast);
-    auto smf = Lang::Language::compile(ast);
+    auto smf = Lang::Language::compile(ast, print_ast);
     smf->write(dest);
-    
-    return success;
-}
-
-bool print_ast(const std::string& src)
-{
-    namespace x3 = boost::spirit::x3;
-    using namespace Lang;
-    
-    auto in = make_istream<char32_t>(src);
-    if (!in.is_open())
-    {
-        return false;
-    }
-    auto iter = make_spirit_stream<char32_t>(in);
-    
-    Lang::Language::AST::Program ast;
-    auto& grammar = Lang::Language::Grammar::program;
-    bool success = x3::phrase_parse(iter.first, iter.second, grammar, x3::space, ast);
-    Lang::Language::print(ast);
     
     return success;
 }
@@ -88,9 +68,9 @@ int main(int argc, char* argv[])
     po::options_description desc("Allowed options");
     desc.add_options()
         ("help,h", "Display this help message")
-        ("print-ast", "Print out the AST")
         ("source", po::value<std::string>(), "source file")
-        ("destination", po::value<std::string>(), "destination file")
+        ("destination", po::value<std::string>()->default_value("a.lang"), "destination file")
+        ("print-ast", po::bool_switch()->default_value(false), "Print out the AST after each stage")
     ;
     
     po::positional_options_description pos_desc;
@@ -105,14 +85,11 @@ int main(int argc, char* argv[])
     {
         cout << desc << endl;
     }
-    else if (var_map.count("source") && var_map.count("print-ast"))
-    {
-        print_ast(var_map["source"].as<string>());
-    }
-    else if (var_map.count("source") && var_map.count("destination"))
+    else if (var_map.count("source"))
     {
         bool success = compile(var_map["source"].as<string>(),
-                               var_map["destination"].as<string>());
+                               var_map["destination"].as<string>(),
+                               var_map["print-ast"].as<bool>());
     }
     else
     {

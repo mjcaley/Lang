@@ -4,15 +4,12 @@
 #include "Bytecode/AST.hpp"
 #include "Language/AST.hpp"
 #include "LangFile.hpp"
-#include "Language/Environment.hpp"
 
 
 namespace Lang { namespace Language { namespace AST {
     
     struct ASTVisitor : public boost::static_visitor<>
     {
-        ASTVisitor(Lang::Language::Environment& environment) : environment(environment) {};
-        
         virtual void operator()(const IntegerLiteral& integer_lit) = 0;
         virtual void operator()(const LongLiteral& long_lit) = 0;
         virtual void operator()(const FloatLiteral& float_lit) = 0;
@@ -32,9 +29,6 @@ namespace Lang { namespace Language { namespace AST {
         virtual void operator()(const Function& function) = 0;
         
         virtual void operator()(const Program& program) = 0;
-        
-    protected:
-        Environment& environment;
     };
     
 } } }

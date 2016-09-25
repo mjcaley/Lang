@@ -6,8 +6,6 @@ namespace Lang { namespace Language { namespace AST {
 
     struct PrintAST : public ASTVisitor
     {
-        PrintAST(Lang::Language::Environment& environment) : ASTVisitor(environment) {};
-        
         void operator()(const IntegerLiteral& integer_lit) override;
         void operator()(const LongLiteral& long_lit) override;
         void operator()(const FloatLiteral& float_lit) override;
