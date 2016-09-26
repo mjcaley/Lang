@@ -3,10 +3,6 @@ project(Lang)
 cmake_minimum_required(VERSION 3.5)
 
 
-### CMake options ###
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-
-
 ### Compiler options ###
 # Enable C++14 standard
 set(CMAKE_CXX_STANDARD 14)
@@ -27,8 +23,9 @@ link_directories(${LANG_LIB})
 set(CATCH_PATH "include/catch_1_5_6")
 
 # Define Boost include directory
-set(BOOST_INCLUDE "include/boost_1_61_0")
-
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost 1.61.0 REQUIRED COMPONENTS program_options)
+set(LANG_BOOST_INCLUDE "include/boost_1_61_0")
 
 ### Project source and headers ###
 set(LANG_ROOT_PATH ${LANG_SRC})
@@ -99,7 +96,8 @@ set(LANG_SOURCE ${LANG_ROOT_SOURCE} ${LANG_LANGUAGE_SOURCE} ${LANG_BYTECODE_SOUR
 # Test
 add_executable(Test ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE} ${LANG_TEST_SOURCE} ${LANG_TEST_MAIN})
 target_include_directories(Test BEFORE PUBLIC
-                               ${BOOST_INCLUDE}
+                               #${Boost_INCLUDE_DIRS}   # bug in boost release for Windows
+                               ${LANG_BOOST_INCLUDE}
                                ${CATCH_PATH}
                                ${LANG_INCLUDE}
 )
@@ -111,10 +109,11 @@ add_executable(langc ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE}
                      ${LANG_COMPILER_MAIN}
 )
 target_include_directories(langc BEFORE PUBLIC
-                           ${BOOST_INCLUDE}
+                           #${Boost_INCLUDE_DIRS}
+                           ${LANG_BOOST_INCLUDE}
                            ${LANG_INCLUDE}
 )
-target_link_libraries(langc boost_program_options)
+target_link_libraries(langc ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
 # lang (runtime)
 add_executable(lang ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE}
@@ -123,10 +122,11 @@ add_executable(lang ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE}
                     ${LANG_RUNTIME_MAIN}
 )
 target_include_directories(lang BEFORE PUBLIC
-                           ${BOOST_INCLUDE}
+                           #${Boost_INCLUDE_DIRS}
+                           ${LANG_BOOST_INCLUDE}
                            ${LANG_INCLUDE}
 )
-target_link_libraries(lang boost_program_options)
+target_link_libraries(lang ${Boost_PROGRAM_OPTIONS_LIBRARY})
 
 # langasm (assembler)
 add_executable(langasm ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE}
@@ -134,8 +134,9 @@ add_executable(langasm ${LANG_ROOT_HEADERS} ${LANG_ROOT_SOURCE}
                        ${LANG_ASSEMBLER_MAIN}
 )
 target_include_directories(langasm BEFORE PUBLIC
-                           ${BOOST_INCLUDE}
+                           #${Boost_INCLUDE_DIRS}
+                           ${LANG_BOOST_INCLUDE}
                            ${LANG_INCLUDE}
 )
 
-target_link_libraries(langasm boost_program_options)
+target_link_libraries(langasm ${Boost_PROGRAM_OPTIONS_LIBRARY})
