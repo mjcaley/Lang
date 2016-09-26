@@ -17,7 +17,7 @@ bool compile(const std::string& src, const std::string& dest)
     using boost::spirit::make_default_multi_pass;
     using namespace Lang;
     
-    std::basic_ifstream<char32_t> in(src);
+    std::ifstream in(src);
     in.unsetf(std::ios::skipws);
     
     if (!in.is_open())
@@ -25,9 +25,8 @@ bool compile(const std::string& src, const std::string& dest)
         return false;
     }
     
-    using stream_iterator = std::istreambuf_iterator<char32_t>;
-    auto iter = make_default_multi_pass(stream_iterator(in));
-    auto end = make_default_multi_pass(stream_iterator());
+    auto iter = make_default_multi_pass(std::istreambuf_iterator<char>(in));
+    auto end = make_default_multi_pass(std::istreambuf_iterator<char>());
     
     Bytecode::AST::Program ast;
     auto& grammar = Bytecode::Grammar::program;

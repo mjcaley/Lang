@@ -19,17 +19,17 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
     
     auto smf = std::make_unique<LangFile>();
     
-    std::basic_ifstream<char32_t> in(filename, std::ios::binary);
+    std::ifstream in(filename, std::ios::binary);
     if (in.is_open())
     {
         // Check if valid and advance 8 bytes
-        bool valid = LangFile::isValid(istreambuf_iterator<char32_t>(in),
-                                       istreambuf_iterator<char32_t>());
+        bool valid = LangFile::isValid(istreambuf_iterator<char>(in),
+                                       istreambuf_iterator<char>());
         if (valid)
         {
             smf->byte_code.insert(smf->byte_code.begin(),
-                                  istreambuf_iterator<char32_t>(in),
-                                  istreambuf_iterator<char32_t>());
+                                  istreambuf_iterator<char>(in),
+                                  istreambuf_iterator<char>());
         }
         else
         {
@@ -46,7 +46,7 @@ std::unique_ptr<LangFile> LangFile::create(const std::string& filename)
 
 bool LangFile::write(const std::string &filename)
 {
-    std::basic_ofstream<char32_t> out(filename, std::ios::binary);
+    std::ofstream out(filename, std::ios::binary);
     if (out.is_open())
     {
         for (auto& m : magic_number)

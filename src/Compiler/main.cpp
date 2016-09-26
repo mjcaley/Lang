@@ -41,12 +41,12 @@ bool compile(const std::string& src, const std::string& dest, bool print_ast = f
     namespace x3 = boost::spirit::x3;
     using namespace Lang;
     
-    auto in = make_istream<char32_t>(src);
+    auto in = make_istream<char>(src);
     if (!in.is_open())
     {
         return false;
     }
-    auto iter = make_spirit_stream<char32_t>(in);
+    auto iter = make_spirit_stream<char>(in);
     
     Lang::Language::AST::Program ast;
     auto& grammar = Lang::Language::Grammar::program;
