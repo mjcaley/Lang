@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <memory>
 #include <stack>
 #include <string>
 #include <vector>
@@ -35,7 +36,7 @@ namespace Lang { namespace VM {
         
         bool debug { false };
         
-        void loadProgram(std::unique_ptr<LangFile> program);
+        void loadProgram(std::unique_ptr<Lang::LangFile> program);
         
         bool run();
         
