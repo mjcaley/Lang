@@ -1,5 +1,6 @@
 #include "VM/VM.hpp"
 
+using Lang::LangFile;
 using namespace Lang::VM;
 
 
