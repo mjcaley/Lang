@@ -138,5 +138,4 @@ target_include_directories(langasm BEFORE PUBLIC
                            ${LANG_BOOST_INCLUDE}
                            ${LANG_INCLUDE}
 )
-
 target_link_libraries(langasm ${Boost_PROGRAM_OPTIONS_LIBRARY})
